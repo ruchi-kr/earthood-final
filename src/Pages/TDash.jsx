@@ -101,12 +101,14 @@ export default function TDash() {
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
+    
     setPagination(pagination);
     Setloader(true);
   };
 
   const handleTabChange = (key) => {
-
+    setFromDate('');
+    setToDate('');
     setActiveKey(key)
 
     setPagination(prevPagination => ({
@@ -405,12 +407,12 @@ export default function TDash() {
     <>
 
       <div className='container-fluid'>
-        <div className="row mx-5">
+        <div className="row">
           <Tabs defaultActiveKey='1' centered activeKey={activeKey} onChange={handleTabChange}>
 
             <Tabs.TabPane
               tab={
-                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
+                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor  tab_dashboard_size'>
                   <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
                   <p className='font14px textlightgreen text-capitalize mt-4'>proposal received from PT</p>
                   <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_received_pt}</p>
@@ -443,7 +445,7 @@ export default function TDash() {
 
             <Tabs.TabPane
               tab={
-                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
+                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor  tab_dashboard_size'>
                   <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
                   <p className='font14px textlightgreen text-capitalize mt-4'>proposal sent for clarification</p>
                   <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_sent_clarify}</p>
@@ -455,7 +457,14 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-end align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                      {/* Date Range Picker */}
+                      <div>
+                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}/>
+                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}/>
+                        <Button onClick={handleSearchByDateRange}>Search</Button>
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
+                      </div>
                       <div>
                         <Input.Search />
                       </div>
@@ -469,7 +478,7 @@ export default function TDash() {
 
             <Tabs.TabPane
               tab={
-                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor tab_dashboard_size'>
+                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor tab_dashboard_size'>
                   <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
                   <p className='font14px textlightgreen text-capitalize mt-4'>approved proposal</p>
                   <p className='textcolorblue' style={{ fontSize: '35px' }}>{approved_proposal}</p>
@@ -480,7 +489,14 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-end align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                      {/* Date Range Picker */}
+                      <div>
+                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}/>
+                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}/>
+                        <Button onClick={handleSearchByDateRange}>Search</Button>
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
+                      </div>
                       <div>
                         <Input.Search />
                       </div>
@@ -494,7 +510,7 @@ export default function TDash() {
 
             <Tabs.TabPane
               tab={
-                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor tab_dashboard_size'>
+                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor tab_dashboard_size'>
                   <FontAwesomeIcon icon={faFileSignature} size="2xl" className='iconcolor' />
                   <p className='font14px textlightgreen text-capitalize mt-4'>signed contract</p>
                   <p className='textcolorblue' style={{ fontSize: '35px' }}>{signed_contract}</p>
@@ -505,7 +521,14 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-end align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                      {/* Date Range Picker */}
+                      <div>
+                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}/>
+                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}/>
+                        <Button onClick={handleSearchByDateRange}>Search</Button>
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
+                      </div>
                       <div>
                         <Input.Search />
                       </div>
