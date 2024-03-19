@@ -198,14 +198,22 @@ export default function PTDash({callApi,openClientEdit}) {
       }
     },
     {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Details</span>,
-      render: (text, record) => (
-        <span className='lh-1'>
-          <p className='textcolorblue'>{record.contact_email}</p>
-          <p className='textlightgreen'>{record.contact_mobile}</p>
-        </span>
-      )
+      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Continents</span>,
+      render: (text, record) => {
+        return (
+          <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.continent}</span>
+        );
+      }
     },
+    // {
+    //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Details</span>,
+    //   render: (text, record) => (
+    //     <span className='lh-1'>
+    //       <p className='textcolorblue'>{record.contact_email}</p>
+    //       <p className='textlightgreen'>{record.contact_mobile}</p>
+    //     </span>
+    //   )
+    // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Status</span>,
       render: (text, record) => {
@@ -269,9 +277,13 @@ export default function PTDash({callApi,openClientEdit}) {
         }
       }
     },
+    // {
+    //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
+    //   dataIndex: 'contact_person',
+    // },
     {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
-      dataIndex: 'contact_person',
+      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Continent</span>,
+      dataIndex: 'continent',
     },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
@@ -357,7 +369,7 @@ export default function PTDash({callApi,openClientEdit}) {
       tab={
         <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
         <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-          <p className='font14px textlightgreen text-capitalize text'>Proposal Under Verification</p>
+          <p className='font14px textlightgreen text-capitalize text'>Proposal Under Approval</p>
           <p className='textcolorblue stat_text'>{status1}</p>
         </div>
       } 

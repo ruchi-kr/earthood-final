@@ -21,6 +21,8 @@ export default function Dashboard() {
   const { Option } = Select;
 
   const [clientform] = Form.useForm();
+  const [continent_list, setContinentList] = useState([]);
+
   const [country_list, setCountryList] = useState([]);
   let [client_id,SetClientId]=useState(null);
 
@@ -30,6 +32,7 @@ export default function Dashboard() {
     name: '',
     email: '',
     mobile_number: '',
+    continent:'',
     country: '',
     address: '',
     contact_person:'',
@@ -58,10 +61,20 @@ export default function Dashboard() {
     }
 
   }
+  const getContinent=async()=>{
 
+    try{
+      const result=await axios.get(`${getCountryList}`);
+      setContinentList(result.data.data);
+    }catch(error){
+
+    }
+
+  }
   const openClientAdd=()=>{
     SetModalVisible(true);
     getCountry();
+    getContinent();
     SetClientId(null);
     clientform.setFieldsValue(clientData);
     SetFormDisabled(false)
@@ -75,6 +88,7 @@ export default function Dashboard() {
           "client_id": id
       }
       getCountry();
+      getContinent();
 
       const response = await axios.post(`${getClientDetails}`,payload, API_HEADER);
   
@@ -85,6 +99,7 @@ export default function Dashboard() {
           name: clientrecord.name,
           email: clientrecord.email,
           mobile_number: clientrecord.mobile_number,
+          continent: clientrecord.continent,
           country: clientrecord.country,
           address: clientrecord.address,
           contact_person:clientrecord.contact_person,
@@ -203,7 +218,7 @@ export default function Dashboard() {
         <Col span={12} >
           <Form.Item name="mobile_number" label="Contact No."
             rules={[
-              { required: true, message: 'Mobile is required' },
+              // { required: true, message: 'Mobile is required' },
               { pattern: /^[0-9]+$/, message: 'Mobile number must contain only digits' },
               { len: 10, message: 'Mobile number must be exactly 10 digits' },
             ]}>
@@ -221,6 +236,23 @@ export default function Dashboard() {
         </Col>
 
         <Col span={12}>
+          <Form.Item name="continent" label="Continent"
+           rules={[
+            { required: true, message: 'Continent is required' },
+          ]}>
+            <Select placeholder="Select Continent">
+              <Option value="">Select Continent</Option>
+              {
+                 continent_list.map((item, index) => {
+                     return (
+                         <Option key={index} value={item.id}>{item.name}</Option>
+                     )
+                 })
+             }              
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col span={12}>
           <Form.Item name="country" label="Country"
            rules={[
             { required: true, message: 'Country is required' },
@@ -237,7 +269,6 @@ export default function Dashboard() {
             </Select>
           </Form.Item>
         </Col>
-
         <Col span={24}>
           <Form.Item name="address" label="Address">
              <Input.TextArea/>

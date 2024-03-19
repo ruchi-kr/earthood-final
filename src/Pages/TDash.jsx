@@ -180,14 +180,39 @@ export default function TDash() {
       fixed: 'left',
       dataIndex: 'earthood_id',
     },
+    // {
+    //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Project Name</span>,
+    //   render: (text, record) => {
+    //     return (
+    //       <span className='text-capitalize textcolor font14px fw-bold'>{record.project_name}</span>
+    //     );
+    //   }
+    // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Project Name</span>,
       render: (text, record) => {
+        // Calculate the difference between proposal received date and action taken date
+        const proposalReceivedDate = new Date(record.created_at);
+        const actionTakenDate = new Date(record.updated_at);
+        const differenceInDays = Math.floor((actionTakenDate - proposalReceivedDate) / (1000 * 60 * 60 * 24));
+        
+        let projectNameStyle = {}; // Style object to be applied to project name
+        
+        // Case 1: Difference is 3 days, show red dot
+        if (differenceInDays === 3) {
+          projectNameStyle = { color: 'red' }; // Apply red color
+        }
+        // Case 2: Difference is more than 5 days, show project name in red
+        else if (differenceInDays > 5) {
+          projectNameStyle = { color: 'red' }; // Apply red color
+        }
+    
         return (
-          <span className='text-capitalize textcolor font14px fw-bold'>{record.project_name}</span>
+          <span className='text-capitalize textcolor font14px fw-bold' style={projectNameStyle}>{record.project_name}</span>
         );
       }
     },
+    
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
       render: (text, record) => {
@@ -210,10 +235,10 @@ export default function TDash() {
         }
       }
     },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
-      dataIndex: 'contact_person',
-    },
+    // {
+    //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
+    //   dataIndex: 'contact_person',
+    // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
       render: (text, record) => {
@@ -301,10 +326,10 @@ export default function TDash() {
         }
       }
     },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
-      dataIndex: 'contact_person',
-    },
+    // {
+    //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
+    //   dataIndex: 'contact_person',
+    // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
       render: (text, record) => {
@@ -383,10 +408,10 @@ export default function TDash() {
         }
       }
     },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
-      dataIndex: 'contact_person',
-    },
+    // {
+    //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
+    //   dataIndex: 'contact_person',
+    // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
       render: (text, record) => {
