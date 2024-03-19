@@ -125,3 +125,8 @@ border: 1px solid #1EA74A;
 	font-weight: 600;
 }
 
+.table-pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 16px; /* Adjust as needed */
+  }

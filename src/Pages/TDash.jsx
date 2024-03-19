@@ -2,7 +2,7 @@ import { Input, Table, Tabs, DatePicker, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'; 
 // import CustomTable from '../Components/CustomTable';
-import { faFileSignature, faFileArrowDown, faFileCircleCheck, faFileCircleQuestion,faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faFileSignature, faFileArrowDown, faFileCircleCheck, faFileCircleQuestion,faMagnifyingGlass,faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { get_proposal_detail_url } from '../config';
@@ -155,7 +155,23 @@ export default function TDash() {
   useEffect(() => {
     getDashData()
   }, [])
-
+  const handleClientNameSearch = (e) => {
+    const value = e.target.value.toLowerCase(); // Convert input value to lowercase for case-insensitive comparison
+    const filteredData = value
+      ? alldata.filter(item => item.client_name.toLowerCase().includes(value))
+      : alldata; // If value is empty, return original data
+      setAlldata(filteredData.length > 0 || value == '' ? filteredData : []);
+  };
+  
+  const handleCountrySearch = (e) => {
+    const value = e.target.value.toLowerCase(); // Convert input value to lowercase for case-insensitive comparison
+    const filteredData = value
+      ? alldata.filter(item => item.country.toLowerCase().includes(value))
+      : alldata; // If value is empty, return original data
+    setAlldata(filteredData);
+  };
+  
+  
   const columnProposalReceivedPT = [
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
@@ -197,18 +213,22 @@ export default function TDash() {
         const differenceInDays = Math.floor((actionTakenDate - proposalReceivedDate) / (1000 * 60 * 60 * 24));
         
         let projectNameStyle = {}; // Style object to be applied to project name
-        
+        let delayDays = '';
+        let redDot = false;
         // Case 1: Difference is 3 days, show red dot
         if (differenceInDays === 3) {
-          projectNameStyle = { color: 'red' }; // Apply red color
+          projectNameStyle = { color: 'yellow' }; // Apply red color
+          redDot = true;
         }
         // Case 2: Difference is more than 5 days, show project name in red
         else if (differenceInDays > 5) {
           projectNameStyle = { color: 'red' }; // Apply red color
+          delayDays = differenceInDays - 5;
+          redDot = false;
         }
     
         return (
-          <span className='text-capitalize textcolor font14px fw-bold' style={projectNameStyle}>{record.project_name}</span>
+          <span className='text-capitalize textcolor font14px fw-bold' style={projectNameStyle}>{redDot ? <span><FontAwesomeIcon icon={faCircle} style={{ color: 'red' }} /></span> : '' }{record.project_name}{delayDays ? ` (${delayDays} days)` : ''}</span>
         );
       }
     },
@@ -440,7 +460,7 @@ export default function TDash() {
     <>
 
       <div className='container-fluid'>
-        <div className="row">
+        <div className="row mx-0">
           <Tabs defaultActiveKey='1' centered activeKey={activeKey} onChange={handleTabChange}>
 
             <Tabs.TabPane
@@ -456,7 +476,7 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                    <div className="d-flex justify-content-evenly align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
                       {/* Date Range Picker */}
                       <div className='d-flex align-items-center'>
                         <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}/>
@@ -464,6 +484,16 @@ export default function TDash() {
                         <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
                         {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
                       </div>
+                      
+                        {/* Filter by Client Name */}
+                        <div>
+                          <Input.Search style={{ marginRight: '10px' }} placeholder="Search by Client Name" onChange={handleClientNameSearch} />
+                        </div>
+                        {/* Filter by Country */}
+                        <div>
+                          <Input.Search placeholder="Search by Country" onChange={handleCountrySearch} />
+                        </div>
+                     
                       <div>
                         <Input.Search />
                       </div>
