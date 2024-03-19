@@ -1,5 +1,6 @@
 import { Input, Table, Tabs, DatePicker, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
+import moment from 'moment'; 
 // import CustomTable from '../Components/CustomTable';
 import { faFileSignature, faFileArrowDown, faFileCircleCheck, faFileCircleQuestion,faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -23,9 +24,17 @@ export default function TDash() {
 
   const handleSearchByDateRange = (value) => {
     // Filter the data based on the entered date value
-    // const filteredData = alldata.filter(item => item.created_at.includes(value));
-    // setAlldata(filteredData);
-    Setloader(true);
+    const currentDate = moment(); // Get the current date
+  if (fromDate && fromDate.isAfter(currentDate)) {
+    toast.error("From date cannot be a future date");
+  } else if (toDate && toDate.isAfter(currentDate)) {
+    toast.error("To date cannot be a future date");
+  } else if (fromDate && toDate && fromDate.isAfter(toDate)) {
+    toast.error("From date cannot be greater than to date");
+    }
+    else {
+      Setloader(true);
+    }
 
   }
 
