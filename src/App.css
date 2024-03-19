@@ -1,38 +1,127 @@
-.App {
-  text-align: center;
+* {
+  font-family: "Source Serif 4", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.textcolor {
+  color: #1EA74A;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.textlightgreen{
+  color: #008C87;
+}
+.iconcolor {
+	color: #07b6af;
   }
+.bg-body-tertiary {
+    background-color: white !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.textgrey {
+  color: #515151;
 }
 
-.App-link {
-  color: #61dafb;
+.textcolorblue {
+  color: #103054;
+}
+.lightgreen{
+  color: #07B6AF;
+}
+.bg_green {
+  background-color: #1EA74A;
+}
+.borderlightgreen{
+  border: 1px solid #07B6AF;
+}
+.boxwidth {
+  width: 359px;
+  height: 517px;
+  top: 157px;
+  gap: 25px;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.borderlightgreen{
+border : 1px solid #07B6AF;
 }
+.bordergreen{
+border: 1px solid #1EA74A;
+}
+
+.font14px{
+  font-size: 14px;
+}
+
+.btnhovergrey:hover{
+  background-color: rgb(81, 81, 81,0.1);
+  color: #fff;
+  border-radius: 14px;
+}
+
+.tab_dashboard_size{
+  height: 159px;
+  width: 250px;
+}
+.otpinput::-webkit-inner-spin-button,
+.otpinput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+ 
+ .loginbg{
+	height: 100%;
+  width: 100%;
+	background-color: hsla(200,40%,30%,.4);
+	background-image:		
+		url('https://78.media.tumblr.com/66445d34fe560351d474af69ef3f2fb0/tumblr_p7n908E1Jb1uy4lhuo1_1280.png'),
+		url('https://78.media.tumblr.com/8cd0a12b7d9d5ba2c7d26f42c25de99f/tumblr_p7n8kqHMuD1uy4lhuo2_1280.png'),
+		url('https://78.media.tumblr.com/5ecb41b654f4e8878f59445b948ede50/tumblr_p7n8on19cV1uy4lhuo1_1280.png'),
+		url('https://78.media.tumblr.com/28bd9a2522fbf8981d680317ccbf4282/tumblr_p7n8kqHMuD1uy4lhuo3_1280.png');
+	background-repeat: repeat-x;
+	background-position: 
+		0 20%,
+		0 100%,
+		0 50%,
+		0 100%,
+		0 0;
+	background-size: 
+		2500px,
+		800px,
+		500px 200px,
+		1000px,
+		400px 260px;
+	animation: 80s para infinite linear;
+	}
+
+@keyframes para {
+	100% {
+		background-position: 
+			-5000px 20%,
+			-800px 95%,
+			500px 50%,
+			1000px 100%,
+			400px 0;
+		}
+	}
+.blurloginbox{
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+} 
+
+
+
+.ant-tabs-tab-active .ant-tabs-tab {
+	background-color: #1890ff;
+	color: #fff;
+	border-color: #1890ff; 
+}
+
+.stat_text{
+	font-size: 40px;
+	font-weight: 600;
+}
+
