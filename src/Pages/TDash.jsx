@@ -4,10 +4,15 @@ import moment from 'moment';
 // import CustomTable from '../Components/CustomTable';
 import { faFileSignature, faFileArrowDown, faFileCircleCheck, faFileCircleQuestion,faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { get_proposal_detail_url } from '../config';
+
 import { API_HEADER, getDashboardData, getAllProposals } from '../config';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import viewicon from '../assets/viewicon.png';
+import PtActions from './PtActions'
+import { useNavigate } from 'react-router-dom';
 
 export default function TDash() {
   const dateFormat = 'DD/MM/YYYY';
@@ -37,7 +42,7 @@ export default function TDash() {
     }
 
   }
-
+  const navigate = useNavigate();
   const [proposal_received_pt, setProposal_received_pt] = useState(0)
   const [proposal_sent_clarify, setProposal_sent_clarify] = useState(0)
   const [approved_proposal, setApproved_proposal] = useState(0)
@@ -73,6 +78,16 @@ export default function TDash() {
       console.log(error)
     }
 
+  }
+  const handlePtActions = async(record)=>{
+    const payload={
+      proposal_id:record.proposal_id
+    }
+      
+    const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
+    const data=response.data.record;
+    console.log(data)
+    navigate('/ptactions', { state: { data } })
   }
 
   const allData = async () => {
@@ -218,17 +233,9 @@ export default function TDash() {
       dataIndex: '',
       key: 'x',
       fixed: 'right',
-      render: () => <a>
-        <div className="dropdown-center dropend">
-          <button className="btn btn-sm btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Action
-          </button>
-          <ul className="dropdown-menu z-3 position-absolute">
-            <li><a className="dropdown-item" href="#">Clarification Required</a></li>
-            <li><a className="dropdown-item" href="#">Approve</a></li>
-          </ul>
-        </div>
-      </a>,
+      render: (record) =>
+      <EditOutlined style={{ marginRight: '8px',color:'blue'}}  onClick={() => handlePtActions(record)} />
+ 
     },
   ];
 
@@ -318,7 +325,8 @@ export default function TDash() {
       key: 'x',
       fixed: 'right',
       width: 130,
-      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;</a>,
+      render: (record) =>
+          <EyeOutlined style={{ marginRight: '8px',color:'blue'}}  onClick={() => handlePtActions(record)} />
     },
   ];
 
@@ -414,7 +422,7 @@ export default function TDash() {
               tab={
                 <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor  tab_dashboard_size'>
                   <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                  <p className='font14px textlightgreen text-capitalize mt-4'>proposal received from PT</p>
+                  <p className='font14px textlightgreen text-capitalize mt-4'>proposal received</p>
                   <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_received_pt}</p>
                 </div>
               }
@@ -425,10 +433,10 @@ export default function TDash() {
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
                     <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
                       {/* Date Range Picker */}
-                      <div>
+                      <div className='d-flex align-items-center'>
                         <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}/>
                         <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}/>
-                        <Button onClick={handleSearchByDateRange}>Search</Button>
+                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
                         {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
                       </div>
                       <div>

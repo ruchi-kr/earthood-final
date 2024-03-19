@@ -77,6 +77,13 @@ const AllProjects = () => {
           color='yellow';
         }else if(record.status==1){
           msg='Proposal Submitted'
+        }
+        else if(record.status==3){
+          msg='Clarification Required'
+          color='volcano';
+        }
+        else if(record.status==5){
+          msg='Approved'
         }else{
           msg=record.status
         }

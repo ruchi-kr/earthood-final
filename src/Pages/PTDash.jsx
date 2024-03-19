@@ -293,7 +293,7 @@ export default function PTDash({callApi,openClientEdit}) {
       key: 'x',
       fixed: 'right',
       render: (text, record) => <a className=''>
-          <EditOutlined style={{ marginRight: '8px',color:'blue'}}/>
+          <EditOutlined style={{ marginRight: '8px',color:'blue'}} />
       </a>,
     },
   ];

@@ -21,6 +21,8 @@ export const get_country_url = `${user_api_url}/getCountryList`;
 export const get_assesment_url = `${user_api_url}/get_atlists`;
 export const get_proposal_detail_url = `${user_api_url}/getProposalDetails`;
 export const get_all_propoposal_url = `${user_api_url}/getAllProposals`;
+export const pt_tm_proposalaction_url = `${user_api_url}/tm_proposalaction`;
+
 
 const API_HEADER2 = {                                         
     headers: {
