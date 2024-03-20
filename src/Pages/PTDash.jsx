@@ -1,6 +1,6 @@
 import { Input, Table, Tabs, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
-import groupicon from '../assets/Group 4.png'
+// import groupicon from '../assets/Group 4.png'
 import axios from 'axios';
 import { API_HEADER, getDashboardData, getAllClients, getAllProposals } from '../config';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';

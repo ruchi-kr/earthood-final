@@ -57,7 +57,7 @@ export default function Dashboard() {
       const result=await axios.get(`${getCountryList}`);
       setCountryList(result.data.data);
     }catch(error){
-
+      console.log(error)
     }
 
   }
