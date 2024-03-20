@@ -6,7 +6,7 @@ import SDash from './SDash';
 import Header from './Header';
 import { Col, Form, Input, Modal, Row, Select } from 'antd';
 import axios from 'axios';
-import { API_HEADER, getClientDetails, getCountryList, saveClient } from '../config';
+import { API_HEADER, getClientDetails, getCountryList, saveClient,get_regions_url } from '../config';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export default function Dashboard() {
 
   const [clientform] = Form.useForm();
   const [continent_list, setContinentList] = useState([]);
-
+  const [region, setRegion] = useState([]);
   const [country_list, setCountryList] = useState([]);
   let [client_id,SetClientId]=useState(null);
 
@@ -51,10 +51,11 @@ export default function Dashboard() {
   },[])
 
 
-  const getCountry=async()=>{
+  const getCountry=async(value)=>{
 
     try{
-      const result=await axios.get(`${getCountryList}`);
+
+       const result = await axios.get(`${getCountryList}?region_id=${value}`);
       setCountryList(result.data.data);
     }catch(error){
       console.log(error)
@@ -64,7 +65,8 @@ export default function Dashboard() {
   const getContinent=async()=>{
 
     try{
-      const result=await axios.get(`${getCountryList}`);
+      const result=await axios.get(`${get_regions_url}`);
+      console.log("regions:",result.data.data);
       setContinentList(result.data.data);
     }catch(error){
 
@@ -73,7 +75,6 @@ export default function Dashboard() {
   }
   const openClientAdd=()=>{
     SetModalVisible(true);
-    getCountry();
     getContinent();
     SetClientId(null);
     clientform.setFieldsValue(clientData);
@@ -87,7 +88,6 @@ export default function Dashboard() {
       const payload = {
           "client_id": id
       }
-      getCountry();
       getContinent();
 
       const response = await axios.post(`${getClientDetails}`,payload, API_HEADER);
@@ -125,6 +125,11 @@ export default function Dashboard() {
 
   };
 
+  const handleRegion=(value)=>{
+    setRegion(value);
+    getCountry(value);
+    
+  }
   const clientFormSubmit=(values)=>{
     clientform.validateFields()
     .then((values) => {
@@ -236,12 +241,12 @@ export default function Dashboard() {
         </Col>
 
         <Col span={12}>
-          <Form.Item name="continent" label="Continent"
+          <Form.Item name="region" label="Region"
            rules={[
-            { required: true, message: 'Continent is required' },
+            { required: true, message: 'Region is required' },
           ]}>
-            <Select placeholder="Select Continent">
-              <Option value="">Select Continent</Option>
+            <Select placeholder="Select Region" onChange={handleRegion}>
+              <Option value="">Select Region</Option>
               {
                  continent_list.map((item, index) => {
                      return (

@@ -2,7 +2,7 @@ import { Input, Table, Tabs, DatePicker, Button, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment';
 // import CustomTable from '../Components/CustomTable';
-import { faFileSignature, faFileArrowDown, faFileCircleCheck, faFileCircleQuestion, faMagnifyingGlass, faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faFileSignature, faFileArrowDown, faFileCircleCheck, faFileCircleQuestion, faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { get_proposal_detail_url, getCountryList, get_client_name_url } from '../config';
@@ -16,9 +16,12 @@ import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 export default function TDash() {
 
+  // local storage get data
+  const mail_data = JSON.parse(localStorage.getItem('mail_reminder'))
+     console.log("my mail data",mail_data.mail_days_warning);
   // country search filter
   const [countryList, setCountryList] = useState([]);
-
+  const [clientname, setClientname] = useState([]);
   const getCountry = async () => {
     try {
       const result = await axios.get(`${getCountryList}`);
@@ -28,40 +31,29 @@ export default function TDash() {
       toast.error('Error fetching country list')
     }
   };
-  // function filterDropdown() {
-  //   var input, filter, dropdown, options, option, i, txtValue;
-  //   input = document.getElementById('searchInput');
-  //   filter = input.value.toUpperCase();
-  //   dropdown = document.getElementById("dropdown");
-  //   options = dropdown.getElementsByTagName('option');
-
-  //   for (i = 0; i < options.length; i++) {
-  //     option = options[i];
-  //     txtValue = option.textContent || option.innerText;
-  //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-  //       option.style.display = "";
-  //     } else {
-  //       option.style.display = "none";
-  //     }
-  //   }
-  // }
-  const onChange = (value) => {
-    console.log(`selected ${value}`);
+  const getClientname = async () => {
+    try {
+      const result = await axios.get(`${get_client_name_url}`);
+      setClientname(result.data.data);
+    } catch (error) {
+      // Handle error
+      toast.error('Error fetching Clientname list')
+    }
   };
-
-  const onSearch = (value) => {
-    console.log('search:', value);
-  };
-
+  
   const filterOption = (input, option) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-    useEffect(() => {
-      getCountry();
-    }, []);
+
+  useEffect(() => {
+    getCountry();
+    getClientname();
+  }, []);
 
   const dateFormat = 'DD/MM/YYYY';
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [client_id, setClient_id] = useState(null);
 
   const handleFromDateChange = (date) => {
     setFromDate(date);
@@ -142,6 +134,8 @@ export default function TDash() {
         limit: pagination.pageSize,
         fromDate: fromDate ? fromDate.format('YYYY-MM-DD') : null,
         toDate: toDate ? toDate.format('YYYY-MM-DD') : null,
+        country: country ? country : null,
+        client_id: client_id ? client_id : null
       }
       const response = await axios.post(`${getAllProposals}`, payload, API_HEADER);
       setAlldata(response.data.data);
@@ -200,23 +194,19 @@ export default function TDash() {
     getDashData()
   }, [])
 
-  const [filteredData, setFilteredData] = useState([]);
-  const handleClientNameSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    const filteredData = alldata.filter(item => item.client_name.toLowerCase().includes(value));
-    setFilteredData(filteredData);
+  
+  const handleClientNameSearch = (value) => {
+    setClient_id(value);
+    Setloader(true);
   };
 
-  // Function to filter data by country
-  const handleCountrySearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    const filteredData = alldata.filter(item => item.country.toLowerCase().includes(value));
-    setFilteredData(filteredData);
+  
+  const handleCountrySearch = (value) => {
+    // Ensure value is a string before calling toLowerCase
+    setCountry(value);
+    Setloader(true);
+
   };
-
-  // // Use filteredData if available, otherwise use alldata
-  // const dataSource = filteredData.length > 0 ? filteredData : alldata;
-
 
 
   const columnProposalReceivedPT = [
@@ -370,36 +360,36 @@ export default function TDash() {
         const proposalReceivedDateParts = record.pt_submit_date.split(' ')[0].split('-');
         const proposalReceivedDate = new Date(`${proposalReceivedDateParts[2]}-${proposalReceivedDateParts[1]}-${proposalReceivedDateParts[0]}`);
         console.log(proposalReceivedDate);
-    
+
         // Parse action taken date (similarly as above)
         const actionTakenDateParts = record.tm_action_date.split(' ')[0].split('-');
         const actionTakenDate = new Date(`${actionTakenDateParts[2]}-${actionTakenDateParts[1]}-${actionTakenDateParts[0]}`);
         console.log(actionTakenDate);
         const differenceInDays = Math.floor((actionTakenDate - proposalReceivedDate) / (1000 * 60 * 60 * 24));
-    
-        let projectNameStyle = {color:'green'}; // Style object to be applied to project name
+
+        let projectNameStyle = { color: 'green' }; // Style object to be applied to project name
         let delayDays = '';
         let redDot = false;
         // Case 1: Difference is 3 days, show red dot
-        if (differenceInDays == 3) {
-            redDot = true;
+        if (differenceInDays == mail_data.mail_days_warning) {
+          redDot = true;
         }
         // Case 2: Difference is more than 5 days, show project name in red
-        else if (differenceInDays > 5) {
-            projectNameStyle = { color: 'red' }; // Apply red color
-            delayDays = differenceInDays-5;
-            redDot = false;
+        else if (differenceInDays > mail_data.mail_days_danger) {
+          projectNameStyle = { color: 'red' }; // Apply red color
+          delayDays = differenceInDays - 5;
+          redDot = false;
         }
-    
+
         return (
-            <span className='text-capitalize font14px fw-bold' style={projectNameStyle}>
-                {redDot ? <span><FontAwesomeIcon icon={faCircle} size='2xs' style={{ color: 'red' }} /></span> : ''}
-                &nbsp;{record.project_name}
-                {delayDays ? ` (${delayDays} days)` : ''}
-            </span>
+          <span className='text-capitalize font14px fw-bold' style={projectNameStyle}>
+            {redDot ? <span><FontAwesomeIcon icon={faCircle} size='2xs' style={{ color: 'red' }} /></span> : ''}
+            &nbsp;{record.project_name}
+            {delayDays ? ` (${delayDays} days)` : ''}
+          </span>
         );
-    }
-    
+      }
+
     },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
@@ -553,82 +543,73 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-evenly align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                    <div className="d-flex justify-content-evenly align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
                       {/* Date Range Picker */}
                       <div className='d-flex align-items-center'>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat} />
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat} />
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                        </div>
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                        </div>
+                       
                         <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
-                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
 
                       {/* Filter by Client Name onChange={handleClientNameSearch}*/}
-                      <div>
-                        <Input.Search style={{ marginRight: '10px' }} placeholder="Search by Client Name" onChange={handleClientNameSearch} />
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                        <Select
+                          showSearch
+                          placeholder="Select client name"
+                          optionFilterProp="children"
+                          filterOption={filterOption}
+                          onChange={handleClientNameSearch}
+                        >
+                       
+                          {clientname.map((client, index) => (
+                            <Option key={index} value={client.id} label={client.name}>
+                              {client.name}
+                            </Option>
+                          ))}
+                        </Select>
                       </div>
                       {/* Filter by Country  onChange={handleCountrySearch}  */}
-                      <div>
-                        {/* <Input.Search placeholder="Search by Country" /> */}
-                        {/* <Form.Item> */}
-                        {/* <Col span={12}>
-          <Form.Item name="country" label="Country"
-           rules={[
-            { required: true, message: 'Country is required' },
-          ]}>
-            <Select placeholder="Select Country">
-              <Option value="">Select Country</Option>
-              {
-                 country_list.map((item, index) => {
-                     return (
-                         <Option key={index} value={item.id}>{item.name}</Option>
-                     )
-                 })
-             }              
-            </Select>
-          </Form.Item>
-        </Col> */}
-                        {/* </Form.Item> */}
-                        {/* <input type="text" id="searchInput" onkeyup="filterDropdown()" placeholder="Search Country..." />
-                        <select id="dropdown">
-                          <option value="">Select Country</option>
-                          {
-                            country_list.map((item, index) => {
-                              return (
-                                <option key={index} value={item.id}>{item.name}</option>
-                              )
-                            })
-                          }
-                        </select> */}
+                      <div className='d-grid mb-3'>                    
+                      <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                         <Select
                           showSearch
                           placeholder="Select country"
                           optionFilterProp="children"
-                          onChange={onChange}
-                          onSearch={onSearch}
                           filterOption={filterOption}
                           onChange={handleCountrySearch}
                         >
-                          {countryList.map((item, index) => (
-                            // <Option key={country.value} value={country.value}>
-                            //   {country.label}
-                            // </Option>
-                             <Option key={index} value={item.id}>{item.name}
-                              {item.label}
-                             </Option>
+                       
+                          {countryList.map((country, index) => (
+                            <Option key={index} value={country.id} label={country.name}>
+                              {country.name}
+                            </Option>
                           ))}
                         </Select>
                       </div>
-
-                      <div>
+                      {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
                         <Input.Search />
                       </div>
                     </div>
                     {/* table */}
-                    <Table columns={columnProposalReceivedPT} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
+                    <Table columns={columnProposalReceivedPT} loading={loader}
+                     dataSource={alldata} 
+                     rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} 
+                     />
                   </div>
                 </div>
               </div>
-              {/* <CustomTable columns={columnProposalReceivedPT} loading={loader} dataSource={alldata} rowKey='proposal_id'  pagination={pagination} onChange={handleTableChange} /> */}
+           
             </Tabs.TabPane>
 
             <Tabs.TabPane
@@ -645,15 +626,61 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                  <div className="d-flex justify-content-evenly align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
                       {/* Date Range Picker */}
-                      <div>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat} />
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat} />
-                        <Button onClick={handleSearchByDateRange}>Search</Button>
-                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
+                      <div className='d-flex align-items-center'>
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                        </div>
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                        </div>
+                       
+                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
-                      <div>
+
+                      {/* Filter by Client Name onChange={handleClientNameSearch}*/}
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                        <Select
+                          showSearch
+                          placeholder="Select client name"
+                          optionFilterProp="children"
+                          filterOption={filterOption}
+                          onChange={handleClientNameSearch}
+                        >
+                       
+                          {clientname.map((client, index) => (
+                            <Option key={index} value={client.id} label={client.name}>
+                              {client.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      </div>
+                      {/* Filter by Country  onChange={handleCountrySearch}  */}
+                      <div className='d-grid mb-3'>                    
+                      <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
+                        <Select
+                          showSearch
+                          placeholder="Select country"
+                          optionFilterProp="children"
+                          filterOption={filterOption}
+                          onChange={handleCountrySearch}
+                        >
+                       
+                          {countryList.map((country, index) => (
+                            <Option key={index} value={country.id} label={country.name}>
+                              {country.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      </div>
+                      {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
                         <Input.Search />
                       </div>
                     </div>
@@ -677,15 +704,61 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                  <div className="d-flex justify-content-evenly align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
                       {/* Date Range Picker */}
-                      <div>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat} />
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat} />
-                        <Button onClick={handleSearchByDateRange}>Search</Button>
-                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
+                      <div className='d-flex align-items-center'>
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                        </div>
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                        </div>
+                       
+                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
-                      <div>
+
+                      {/* Filter by Client Name onChange={handleClientNameSearch}*/}
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                        <Select
+                          showSearch
+                          placeholder="Select client name"
+                          optionFilterProp="children"
+                          filterOption={filterOption}
+                          onChange={handleClientNameSearch}
+                        >
+                       
+                          {clientname.map((client, index) => (
+                            <Option key={index} value={client.id} label={client.name}>
+                              {client.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      </div>
+                      {/* Filter by Country  onChange={handleCountrySearch}  */}
+                      <div className='d-grid mb-3'>                    
+                      <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
+                        <Select
+                          showSearch
+                          placeholder="Select country"
+                          optionFilterProp="children"
+                          filterOption={filterOption}
+                          onChange={handleCountrySearch}
+                        >
+                       
+                          {countryList.map((country, index) => (
+                            <Option key={index} value={country.id} label={country.name}>
+                              {country.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      </div>
+                      {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
                         <Input.Search />
                       </div>
                     </div>
@@ -709,15 +782,61 @@ export default function TDash() {
               <div className='container-fluid'>
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                  <div className="d-flex justify-content-evenly align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
                       {/* Date Range Picker */}
-                      <div>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat} />
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat} />
-                        <Button onClick={handleSearchByDateRange}>Search</Button>
-                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='2xl'/>  */}
+                      <div className='d-flex align-items-center'>
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                        </div>
+                        <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                        </div>
+                       
+                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
-                      <div>
+
+                      {/* Filter by Client Name onChange={handleClientNameSearch}*/}
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                        <Select
+                          showSearch
+                          placeholder="Select client name"
+                          optionFilterProp="children"
+                          filterOption={filterOption}
+                          onChange={handleClientNameSearch}
+                        >
+                       
+                          {clientname.map((client, index) => (
+                            <Option key={index} value={client.id} label={client.name}>
+                              {client.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      </div>
+                      {/* Filter by Country  onChange={handleCountrySearch}  */}
+                      <div className='d-grid mb-3'>                    
+                      <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
+                        <Select
+                          showSearch
+                          placeholder="Select country"
+                          optionFilterProp="children"
+                          filterOption={filterOption}
+                          onChange={handleCountrySearch}
+                        >
+                       
+                          {countryList.map((country, index) => (
+                            <Option key={index} value={country.id} label={country.name}>
+                              {country.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      </div>
+                      {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
+                      <div className='d-grid mb-3'>
+                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
                         <Input.Search />
                       </div>
                     </div>

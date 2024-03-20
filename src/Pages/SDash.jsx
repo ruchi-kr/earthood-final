@@ -386,6 +386,32 @@ const columnSignedContract = [
       </div>
       </div>
       </Tabs.TabPane>
+      
+      {/* <Tabs.TabPane
+      tab={
+        <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
+            <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
+            <p className='font14px textlightgreen text-capitalize mt-4'>Proposal sent to Client</p>
+            <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_sent_client}</p>
+
+        </div>
+    }
+      key='2'>
+      
+      <div className='container-fluid'>
+       <div className="row mx-3">
+        <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
+          <div className="d-flex justify-content-end align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+            <div>
+              <Input.Search />
+            </div>
+          </div>
+          <Table columns={columnProposalSent} loading={loader} dataSource={alldata} rowKey='proposal_id'  pagination={pagination} onChange={handleTableChange} />
+        </div>
+      </div>
+      </div>
+
+      </Tabs.TabPane> */}
       <Tabs.TabPane
       tab={
         <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
@@ -412,32 +438,6 @@ const columnSignedContract = [
 
       </Tabs.TabPane>
       <Tabs.TabPane
-      tab={
-        <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
-            <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
-            <p className='font14px textlightgreen text-capitalize mt-4'>Proposal sent to Client</p>
-            <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_sent_client}</p>
-
-        </div>
-    }
-      key='3'>
-      
-      <div className='container-fluid'>
-       <div className="row mx-3">
-        <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-          <div className="d-flex justify-content-end align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
-            <div>
-              <Input.Search />
-            </div>
-          </div>
-          <Table columns={columnProposalSent} loading={loader} dataSource={alldata} rowKey='proposal_id'  pagination={pagination} onChange={handleTableChange} />
-        </div>
-      </div>
-      </div>
-
-      </Tabs.TabPane>
-
-      <Tabs.TabPane
      tab={
       <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor tab_dashboard_size'>
           <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
@@ -445,7 +445,7 @@ const columnSignedContract = [
           <p className='textcolorblue' style={{ fontSize: '35px' }}>{signed_contract}</p>
       </div>
      }
-      key='4'>
+      key='3'>
 
       <div className='container-fluid'>
        <div className="row mx-3">

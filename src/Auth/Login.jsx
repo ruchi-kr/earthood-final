@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ErrorMessage, Field, Formik } from 'formik';
 import loginSchema from '../Schema/LoginSchema';
 import axios from 'axios';
-import { login_url } from '../config';
+import { login_url,mail_reminder_url } from '../config';
 import { toast } from 'react-toastify';
 import logo from '../assets/logo.png'
 
@@ -23,14 +23,16 @@ export default function Login() {
             if(result.status===200 && result.data.status===true){
                 
                 toast.success('Login Successfully');
-
+                const mail_reminder = await axios.get(`${mail_reminder_url}`);
+                console.log(mail_reminder.data.data);
+                localStorage.setItem('mail_reminder', JSON.stringify(mail_reminder.data.data));
                 sessionStorage.setItem("token", result.data.user.token);
                 sessionStorage.setItem("designation_id", result.data.user.designation_id);
                 sessionStorage.setItem("name", result.data.user.name);
                 sessionStorage.setItem('user', JSON.stringify(result.data.user));
 
                 navigate('/dashboard')
-                window.location.reload()
+                // window.location.reload()
 
             }else{
 
