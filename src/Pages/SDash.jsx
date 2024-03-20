@@ -57,7 +57,7 @@ export default function SDash() {
         country: country ? country : null,
         client_id: client_id ? client_id : null,
         scope: scope ? scope : null,
-        search : search ? search : null
+        search: search ? search : null
       }
       const response = await axios.post(`${getAllProposals}`, payload, API_HEADER);
       setAlldata(response.data.data);
@@ -82,7 +82,7 @@ export default function SDash() {
     setClient_id(null);
     setScope(null);
     setSearch(null);
-    
+
     setActiveKey(key)
 
     setPagination(prevPagination => ({
@@ -126,7 +126,7 @@ export default function SDash() {
   const [toDate, setToDate] = useState(null);
   const [country, setCountry] = useState(null);
   const [client_id, setClient_id] = useState(null);
-  const[search,setSearch] = useState(null);
+  const [search, setSearch] = useState(null);
   const handleFromDateChange = (date) => {
     setFromDate(date);
   };
@@ -221,7 +221,7 @@ export default function SDash() {
       title: 'S.No',
       dataIndex: 'id',
       fixed: 'left',
-      width: 80,
+      width: 70,
       render: (id, record, index) => {
         const pageIndex = (pagination.current - 1) * pagination.pageSize;
         return pageIndex + index + 1;
@@ -229,6 +229,7 @@ export default function SDash() {
     },
     {
       title: 'Proposal Recd.Date',
+      width: 150,
       render: (text, record) => {
         return (
           <span className='font14px fw-bold'>{record.created_at.slice(0, 10)}</span>
@@ -293,6 +294,7 @@ export default function SDash() {
       dataIndex: '',
       key: 'x',
       fixed: 'right',
+      width: 100,
       render: () => <a className='d-flex'><img src={viewicon} alt="view icon" />&nbsp;<button className='btn btn-success'>Send</button></a>,
     },
   ];
@@ -302,7 +304,7 @@ export default function SDash() {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
       dataIndex: 'id',
       fixed: 'left',
-      width: 80,
+      width: 70,
       render: (id, record, index) => {
         const pageIndex = (pagination.current - 1) * pagination.pageSize;
         return pageIndex + index + 1;
@@ -310,6 +312,7 @@ export default function SDash() {
     },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Submission Date</span>,
+      width: 150,
       render: (text, record) => {
         return (
           <span className='font14px fw-bold'>{record.created_at.slice(0, 10)}</span>
@@ -374,7 +377,7 @@ export default function SDash() {
       dataIndex: '',
       key: 'x',
       fixed: 'right',
-      width: 130,
+      width: 100,
       render: () => <a><img src={viewicon} alt="view icon" />&nbsp;</a>,
     },
   ];
@@ -384,7 +387,7 @@ export default function SDash() {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
       dataIndex: 'id',
       fixed: 'left',
-      width: 80,
+      width: 70,
       render: (id, record, index) => {
         const pageIndex = (pagination.current - 1) * pagination.pageSize;
         return pageIndex + index + 1;
@@ -393,6 +396,7 @@ export default function SDash() {
     },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contract signing Date</span>,
+      width: 150,
       render: (text, record) => {
         return (
           <span className='font14px fw-bold'>{record.created_at.slice(0, 10)}</span>
@@ -401,6 +405,7 @@ export default function SDash() {
     },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>uploading Date</span>,
+      width: 150,
       render: (text, record) => {
         return (
           <span className='font14px fw-bold'>{record.created_at.slice(0, 10)}</span>
@@ -464,7 +469,7 @@ export default function SDash() {
       dataIndex: '',
       key: 'x',
       fixed: 'right',
-      width: 130,
+      width: 100,
       render: () => <a><img src={viewicon} alt="view icon" />&nbsp;</a>,
     },
   ];
@@ -473,297 +478,305 @@ export default function SDash() {
     <>
       <div className='container-fluid'>
         <div className="row mx-5">
-          <Tabs defaultActiveKey='1' centered activeKey={activeKey} onChange={handleTabChange}>
+          <div className="col-12">
+            <Tabs defaultActiveKey='1' centered activeKey={activeKey} onChange={handleTabChange}>
 
-            <Tabs.TabPane
-              tab={
-                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
-                  <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                  <p className='font14px textlightgreen text-capitalize mt-4'>Proposal received</p>
-                  <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_received_pt}</p>
-                </div>
-              }
-              key='1'>
+              <Tabs.TabPane
+                tab={
+                  <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
+                    <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
+                    <p className='font14px textlightgreen text-capitalize mt-4'>Proposal received</p>
+                    <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_received_pt}</p>
+                  </div>
+                }
+                key='1'>
 
-              <div className='container-fluid'>
-                <div className="row mx-3">
-                  <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                    <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
-                      {/* Date Range Picker */}
-                      <div className='d-flex align-items-center'>
-                        <div className='d-grid mb-3'>
-                          <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
-                          <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
+                <div className='container-fluid'>
+                  <div className="row mx-3">
+                    <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
+                      <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                        {/* Date Range Picker */}
+                        <div className='d-flex align-items-center'>
+                          <div className='d-grid mb-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                            <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
+                          </div>
+                          <div className='d-grid mb-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                            <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
+                          </div>
+                          <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
+                          {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                         </div>
+
+                        {/* Filter by Client Name onChange={handleClientNameSearch}*/}
                         <div className='d-grid mb-3'>
-                          <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
-                          <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Client Name"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleClientNameSearch}
+                          >
+
+                            {clientname.map((client, index) => (
+                              <Option key={index} value={client.id} label={client.name}>
+                                {client.name}
+                              </Option>
+                            ))}
+                          </Select>
                         </div>
-                        <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
-                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
-                      </div>
+                        {/* Filter by Country  onChange={handleCountrySearch}  */}
+                        <div className='d-grid mb-3'>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Country"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleCountrySearch}
+                          >
 
-                      {/* Filter by Client Name onChange={handleClientNameSearch}*/}
-                      <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Client Name"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleClientNameSearch}
-                        >
+                            {countryList.map((country, index) => (
+                              <Option key={index} value={country.id} label={country.name}>
+                                {country.name}
+                              </Option>
+                            ))}
+                          </Select>
+                        </div>
+                        <div className='d-grid mb-3 mx-3'>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Scope"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleScopeSearch}
+                          >
 
-                          {clientname.map((client, index) => (
-                            <Option key={index} value={client.id} label={client.name}>
-                              {client.name}
-                            </Option>
-                          ))}
-                        </Select>
+                            {scopeList.map((scope, index) => (
+                              <Option key={index} value={scope.id} label={scope.scope}>
+                                {scope.scope}
+                              </Option>
+                            ))}
+                          </Select>
+                        </div>
+                        <div>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
+                          <Input.Search allowClear onChange={handleSearchAll} placeholder="Search EID, Project Name" />
+                        </div>
                       </div>
-                      {/* Filter by Country  onChange={handleCountrySearch}  */}
-                      <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Country"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleCountrySearch}
-                        >
-
-                          {countryList.map((country, index) => (
-                            <Option key={index} value={country.id} label={country.name}>
-                              {country.name}
-                            </Option>
-                          ))}
-                        </Select>
-                      </div>
-                      <div className='d-grid mb-3 mx-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Scope"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleScopeSearch}
-                        >
-
-                          {scopeList.map((scope, index) => (
-                            <Option key={index} value={scope.id} label={scope.scope}>
-                              {scope.scope}
-                            </Option>
-                          ))}
-                        </Select>
-                      </div>
-                      <div>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search allowClear onChange={handleSearchAll} placeholder="Search EID, Project Name" />
-                      </div>
+                      <Table  scroll={{
+                          x: 1500,
+                        }}  columns={columnProposalReceivedPT} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
                     </div>
-                    <Table columns={columnProposalReceivedPT} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
                   </div>
                 </div>
-              </div>
-            </Tabs.TabPane>
+              </Tabs.TabPane>
 
 
-            <Tabs.TabPane
-              tab={
-                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
-                  <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
-                  <p className='font14px textlightgreen text-capitalize mt-4'>Proposal under negotiation</p>
-                  <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_under_nego}</p>
+              <Tabs.TabPane
+                tab={
+                  <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
+                    <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
+                    <p className='font14px textlightgreen text-capitalize mt-4'>Proposal under negotiation</p>
+                    <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_under_nego}</p>
 
-                </div>
-              }
-              key='2'>
+                  </div>
+                }
+                key='2'>
 
-              <div className='container-fluid'>
-                <div className="row mx-3">
-                  <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                  <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
-                      {/* Date Range Picker */}
-                      <div className='d-flex align-items-center'>
-                        <div className='d-grid mb-3'>
-                          <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
-                          <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
+                <div className='container-fluid'>
+                  <div className="row mx-3">
+                    <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
+                      <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                        {/* Date Range Picker */}
+                        <div className='d-flex align-items-center'>
+                          <div className='d-grid mb-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                            <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
+                          </div>
+                          <div className='d-grid mb-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                            <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
+                          </div>
+                          <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
+                          {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                         </div>
+
+                        {/* Filter by Client Name onChange={handleClientNameSearch}*/}
                         <div className='d-grid mb-3'>
-                          <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
-                          <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Client Name"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleClientNameSearch}
+                          >
+
+                            {clientname.map((client, index) => (
+                              <Option key={index} value={client.id} label={client.name}>
+                                {client.name}
+                              </Option>
+                            ))}
+                          </Select>
                         </div>
-                        <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
-                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
-                      </div>
+                        {/* Filter by Country  onChange={handleCountrySearch}  */}
+                        <div className='d-grid mb-3'>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Country"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleCountrySearch}
+                          >
 
-                      {/* Filter by Client Name onChange={handleClientNameSearch}*/}
-                      <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Client Name"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleClientNameSearch}
-                        >
+                            {countryList.map((country, index) => (
+                              <Option key={index} value={country.id} label={country.name}>
+                                {country.name}
+                              </Option>
+                            ))}
+                          </Select>
+                        </div>
+                        <div className='d-grid mb-3 mx-3'>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Scope"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleScopeSearch}
+                          >
 
-                          {clientname.map((client, index) => (
-                            <Option key={index} value={client.id} label={client.name}>
-                              {client.name}
-                            </Option>
-                          ))}
-                        </Select>
+                            {scopeList.map((scope, index) => (
+                              <Option key={index} value={scope.id} label={scope.scope}>
+                                {scope.scope}
+                              </Option>
+                            ))}
+                          </Select>
+                        </div>
+                        <div>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
+                          <Input.Search allowClear onChange={handleSearchAll} placeholder="Search EID, Project Name" />
+                        </div>
                       </div>
-                      {/* Filter by Country  onChange={handleCountrySearch}  */}
-                      <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Country"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleCountrySearch}
-                        >
-
-                          {countryList.map((country, index) => (
-                            <Option key={index} value={country.id} label={country.name}>
-                              {country.name}
-                            </Option>
-                          ))}
-                        </Select>
-                      </div>
-                      <div className='d-grid mb-3 mx-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Scope"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleScopeSearch}
-                        >
-
-                          {scopeList.map((scope, index) => (
-                            <Option key={index} value={scope.id} label={scope.scope}>
-                              {scope.scope}
-                            </Option>
-                          ))}
-                        </Select>
-                      </div>
-                      <div>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search allowClear onChange={handleSearchAll} placeholder="Search EID, Project Name" />
-                      </div>
+                      <Table  scroll={{
+                          x: 1500,
+                        }} columns={columnProposalSent} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
                     </div>
-                    <Table columns={columnProposalSent} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
                   </div>
                 </div>
-              </div>
 
-            </Tabs.TabPane>
-            <Tabs.TabPane
-              tab={
-                <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor tab_dashboard_size'>
-                  <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
-                  <p className='font14px textlightgreen text-capitalize mt-4'>Signed contract</p>
-                  <p className='textcolorblue' style={{ fontSize: '35px' }}>{signed_contract}</p>
-                </div>
-              }
-              key='3'>
+              </Tabs.TabPane>
+              <Tabs.TabPane
+                tab={
+                  <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor tab_dashboard_size'>
+                    <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
+                    <p className='font14px textlightgreen text-capitalize mt-4'>Signed contract</p>
+                    <p className='textcolorblue' style={{ fontSize: '35px' }}>{signed_contract}</p>
+                  </div>
+                }
+                key='3'>
 
-              <div className='container-fluid'>
-                <div className="row mx-3">
-                  <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                  <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
-                      {/* Date Range Picker */}
-                      <div className='d-flex align-items-center'>
-                        <div className='d-grid mb-3'>
-                          <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
-                          <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
+                <div className='container-fluid'>
+                  <div className="row mx-3">
+                    <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
+                      <div className="d-flex justify-content-between align-items-center p-2 bg-white border-0 shadow-sm rounded-top-3">
+                        {/* Date Range Picker */}
+                        <div className='d-flex align-items-center'>
+                          <div className='d-grid mb-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                            <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
+                          </div>
+                          <div className='d-grid mb-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                            <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
+                          </div>
+                          <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
+                          {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                         </div>
+
+                        {/* Filter by Client Name onChange={handleClientNameSearch}*/}
                         <div className='d-grid mb-3'>
-                          <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
-                          <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Client Name"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleClientNameSearch}
+                          >
+
+                            {clientname.map((client, index) => (
+                              <Option key={index} value={client.id} label={client.name}>
+                                {client.name}
+                              </Option>
+                            ))}
+                          </Select>
                         </div>
-                        <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
-                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
-                      </div>
+                        {/* Filter by Country  onChange={handleCountrySearch}  */}
+                        <div className='d-grid mb-3'>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Country"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleCountrySearch}
+                          >
 
-                      {/* Filter by Client Name onChange={handleClientNameSearch}*/}
-                      <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Client Name"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleClientNameSearch}
-                        >
+                            {countryList.map((country, index) => (
+                              <Option key={index} value={country.id} label={country.name}>
+                                {country.name}
+                              </Option>
+                            ))}
+                          </Select>
+                        </div>
+                        <div className='d-grid mb-3 mx-3'>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder="Select Scope"
+                            optionFilterProp="children"
+                            filterOption={filterOption}
+                            onChange={handleScopeSearch}
+                          >
 
-                          {clientname.map((client, index) => (
-                            <Option key={index} value={client.id} label={client.name}>
-                              {client.name}
-                            </Option>
-                          ))}
-                        </Select>
+                            {scopeList.map((scope, index) => (
+                              <Option key={index} value={scope.id} label={scope.scope}>
+                                {scope.scope}
+                              </Option>
+                            ))}
+                          </Select>
+                        </div>
+                        <div>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
+                          <Input.Search allowClear onChange={handleSearchAll} placeholder="Search EID, Project Name" />
+                        </div>
                       </div>
-                      {/* Filter by Country  onChange={handleCountrySearch}  */}
-                      <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Country"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleCountrySearch}
-                        >
-
-                          {countryList.map((country, index) => (
-                            <Option key={index} value={country.id} label={country.name}>
-                              {country.name}
-                            </Option>
-                          ))}
-                        </Select>
-                      </div>
-                      <div className='d-grid mb-3 mx-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder="Select Scope"
-                          optionFilterProp="children"
-                          filterOption={filterOption}
-                          onChange={handleScopeSearch}
-                        >
-
-                          {scopeList.map((scope, index) => (
-                            <Option key={index} value={scope.id} label={scope.scope}>
-                              {scope.scope}
-                            </Option>
-                          ))}
-                        </Select>
-                      </div>
-                      <div>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search allowClear onChange={handleSearchAll} placeholder="Search EID, Project Name" />
-                      </div>
+                      <Table  scroll={{
+                          x: 1500,
+                        }} columns={columnSignedContract} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
                     </div>
-                    <Table columns={columnSignedContract} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
                   </div>
                 </div>
-              </div>
 
-            </Tabs.TabPane>
+              </Tabs.TabPane>
 
-          </Tabs>
+            </Tabs>
+          </div>
         </div>
       </div>
     </>

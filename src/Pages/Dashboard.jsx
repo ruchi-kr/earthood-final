@@ -172,15 +172,11 @@ export default function Dashboard() {
         <div>
           <h5 className='textcolorblue'>Welcome Back, {username}</h5>
         </div>
-        <div className="d-flex gap-2 align-items-center mx-5">
-
-     
-      <button className='btn border-light-subtle textcolor bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
-
-      {designation_id==6?
-        <button className='btn border-0 btn-success text-white bg_green' style={{ fontSize: '14px' }} onClick={openClientAdd}>Add Client</button>:''
-        }    
-
+        <div className="d-flex gap-2 align-items-center mx-5">   
+         <button className='btn border-light-subtle textcolor bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
+         {designation_id==6?
+         <button className='btn border-0 btn-success text-white bg_green' style={{ fontSize: '14px' }} onClick={openClientAdd}>Add Client</button>:''
+         }    
         </div>
       </div>
 

@@ -39,9 +39,9 @@ export default function Header() {
                     <Link className="nav-link" to="/allprojects">All Proposals</Link>
                     </li>
                   </ul>
-                </div>
-                <div className="d-flex gap-3 align-items-center">
-                  <img src={searchicon} alt="search icon" />
+
+                  <div className="d-lg-flex d-md-grid d-grid gap-3 align-items-center">
+                  <img src={searchicon} alt="search icon" className='d-lg-block d-md-none d-none'/>
                   <img src={helpicon} alt="help icon" />
                   <img src={notification} alt="notification icon" />
                   <Dropdown
@@ -59,11 +59,14 @@ export default function Header() {
                     arrow
                   >
                     <Avatar
-                      size={{ xs: 16, sm: 24, md: 32, lg: 40, xl: 40, xxl: 70 }}
+                      size={{ xs: 16, sm: 24, md: 32, lg: 32, xl: 32, xxl: 50 }}
                       icon={<UserOutlined/>}
+                      className='d-lg-block d-md-none d-none'
                     />
                   </Dropdown>
                 </div>
+                </div>
+                
               </div>
             </nav>
         </div>
