@@ -201,11 +201,11 @@ export default function TDash() {
   }, [])
 
   const [filteredData, setFilteredData] = useState([]);
-  // const handleClientNameSearch = (e) => {
-  //   const value = e.target.value.toLowerCase();
-  //   const filteredData = alldata.filter(item => item.client_name.toLowerCase().includes(value));
-  //   setFilteredData(filteredData);
-  // };
+  const handleClientNameSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    const filteredData = alldata.filter(item => item.client_name.toLowerCase().includes(value));
+    setFilteredData(filteredData);
+  };
 
   // Function to filter data by country
   const handleCountrySearch = (e) => {
@@ -366,32 +366,40 @@ export default function TDash() {
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Project Name</span>,
       render: (text, record) => {
-        // Calculate the difference between proposal received date and action taken date
-        const proposalReceivedDate = new Date(record.created_at);
+        // Parse proposal received date
+        const proposalReceivedDateParts = record.pt_submit_date.split(' ')[0].split('-');
+        const proposalReceivedDate = new Date(`${proposalReceivedDateParts[2]}-${proposalReceivedDateParts[1]}-${proposalReceivedDateParts[0]}`);
         console.log(proposalReceivedDate);
-        const actionTakenDate = new Date(record.tm_action_date);
+    
+        // Parse action taken date (similarly as above)
+        const actionTakenDateParts = record.tm_action_date.split(' ')[0].split('-');
+        const actionTakenDate = new Date(`${actionTakenDateParts[2]}-${actionTakenDateParts[1]}-${actionTakenDateParts[0]}`);
         console.log(actionTakenDate);
         const differenceInDays = Math.floor((actionTakenDate - proposalReceivedDate) / (1000 * 60 * 60 * 24));
-
+    
         let projectNameStyle = {color:'green'}; // Style object to be applied to project name
         let delayDays = '';
         let redDot = false;
         // Case 1: Difference is 3 days, show red dot
-        if (differenceInDays === 3) {
-          // projectNameStyle = { color: 'yellow' }; // Apply red color
-          redDot = true;
+        if (differenceInDays == 3) {
+            redDot = true;
         }
         // Case 2: Difference is more than 5 days, show project name in red
         else if (differenceInDays > 5) {
-          projectNameStyle = { color: 'red' }; // Apply red color
-          delayDays = differenceInDays - 5;
-          redDot = false;
+            projectNameStyle = { color: 'red' }; // Apply red color
+            delayDays = differenceInDays-5;
+            redDot = false;
         }
-
+    
         return (
-          <span className='text-capitalize font14px fw-bold' style={projectNameStyle}>{redDot ? <span><FontAwesomeIcon icon={faCircle} style={{ color: 'red' }} /></span> : ''}{record.project_name}{delayDays ? ` (${delayDays} days)` : ''}</span>
+            <span className='text-capitalize font14px fw-bold' style={projectNameStyle}>
+                {redDot ? <span><FontAwesomeIcon icon={faCircle} size='2xs' style={{ color: 'red' }} /></span> : ''}
+                &nbsp;{record.project_name}
+                {delayDays ? ` (${delayDays} days)` : ''}
+            </span>
         );
-      }
+    }
+    
     },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
@@ -556,7 +564,7 @@ export default function TDash() {
 
                       {/* Filter by Client Name onChange={handleClientNameSearch}*/}
                       <div>
-                        <Input.Search style={{ marginRight: '10px' }} placeholder="Search by Client Name" />
+                        <Input.Search style={{ marginRight: '10px' }} placeholder="Search by Client Name" onChange={handleClientNameSearch} />
                       </div>
                       {/* Filter by Country  onChange={handleCountrySearch}  */}
                       <div>
@@ -600,10 +608,13 @@ export default function TDash() {
                           filterOption={filterOption}
                           onChange={handleCountrySearch}
                         >
-                          {countryList.map((country) => (
-                            <Option key={country.value} value={country.value}>
-                              {country.label}
-                            </Option>
+                          {countryList.map((item, index) => (
+                            // <Option key={country.value} value={country.value}>
+                            //   {country.label}
+                            // </Option>
+                             <Option key={index} value={item.id}>{item.name}
+                              {item.label}
+                             </Option>
                           ))}
                         </Select>
                       </div>
