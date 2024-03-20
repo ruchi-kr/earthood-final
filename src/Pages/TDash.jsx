@@ -162,6 +162,9 @@ export default function TDash() {
   const handleTabChange = (key) => {
     setFromDate('');
     setToDate('');
+    setCountry('');
+    setClient_id('');
+
     setActiveKey(key)
 
     setPagination(prevPagination => ({
@@ -547,15 +550,14 @@ export default function TDash() {
                       {/* Date Range Picker */}
                       <div className='d-flex align-items-center'>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                          <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
                         </div>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                          <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
                         </div>
-                       
-                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
+                        <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
                         {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
 
@@ -564,6 +566,7 @@ export default function TDash() {
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select client name"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -582,6 +585,7 @@ export default function TDash() {
                       <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select country"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -598,7 +602,7 @@ export default function TDash() {
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       <div className='d-grid mb-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                     </div>
                     {/* table */}
@@ -627,18 +631,17 @@ export default function TDash() {
                 <div className="row mx-0">
                   <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
                   <div className="d-flex justify-content-evenly align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
-                      {/* Date Range Picker */}
-                      <div className='d-flex align-items-center'>
+                       {/* Date Range Picker */}
+                       <div className='d-flex align-items-center'>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                          <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
                         </div>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                          <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
                         </div>
-                       
-                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
+                        <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
                         {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
 
@@ -647,6 +650,7 @@ export default function TDash() {
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select client name"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -665,6 +669,7 @@ export default function TDash() {
                       <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select country"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -681,7 +686,7 @@ export default function TDash() {
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       <div className='d-grid mb-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                     </div>
                     <Table columns={columnApprovedProposal} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
@@ -708,15 +713,14 @@ export default function TDash() {
                       {/* Date Range Picker */}
                       <div className='d-flex align-items-center'>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                          <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
                         </div>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                          <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
                         </div>
-                       
-                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
+                        <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
                         {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
 
@@ -725,6 +729,7 @@ export default function TDash() {
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select client name"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -743,6 +748,7 @@ export default function TDash() {
                       <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select country"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -759,7 +765,7 @@ export default function TDash() {
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       <div className='d-grid mb-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                     </div>
                     <Table columns={columnApprovedProposal} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />
@@ -786,15 +792,14 @@ export default function TDash() {
                       {/* Date Range Picker */}
                       <div className='d-flex align-items-center'>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
-                        <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ marginRight: '10px' }} format={dateFormat}  showTime={false} />
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>From Recd.Date </label>
+                          <DatePicker onChange={handleFromDateChange} placeholder="From Date" style={{ width: '110px', marginRight: '10px' }} format={dateFormat} showTime={false} />
                         </div>
                         <div className='d-grid mb-3'>
-                        <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
-                        <DatePicker onChange={handleToDateChange} placeholder="To Date" format={dateFormat}  showTime={false}/>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>To Recd.Date </label>
+                          <DatePicker onChange={handleToDateChange} placeholder="To Date" style={{ width: '110px' }} format={dateFormat} showTime={false} />
                         </div>
-                       
-                        <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button>
+                        <Button className='ms-1 py-1 px-2 btn btn-success btn-sm rounded-4' onClick={handleSearchByDateRange}>Search</Button>
                         {/* <FontAwesomeIcon icon={faMagnifyingGlass} size='xl'onClick={handleSearchByDateRange} />  */}
                       </div>
 
@@ -803,6 +808,7 @@ export default function TDash() {
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select client name"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -821,6 +827,7 @@ export default function TDash() {
                       <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                         <Select
                           showSearch
+                          allowClear
                           placeholder="Select country"
                           optionFilterProp="children"
                           filterOption={filterOption}
@@ -837,7 +844,7 @@ export default function TDash() {
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       <div className='d-grid mb-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                     </div>
                     <Table columns={columnSignedContract} loading={loader} dataSource={alldata} rowKey='proposal_id' pagination={pagination} onChange={handleTableChange} />

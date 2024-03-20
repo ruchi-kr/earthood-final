@@ -124,6 +124,12 @@ export default function PTDash({ callApi, openClientEdit }) {
   const [activeKey, setActiveKey] = useState('1');
 
   const handleTabChange = (key) => {
+    setCountry(null);
+    setClient_id(null);
+    setRegion(null);
+    setScope(null);
+    // setSearch(null);
+
     setActiveKey(key)
 
     setPagination(prevPagination => ({
@@ -514,6 +520,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select client name"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -532,6 +539,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select country"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -550,6 +558,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Region </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select region"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -567,7 +576,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                       </div>
                       <div className='d-grid mb-3 me-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search allowClear/>
                       </div>
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       
@@ -600,6 +609,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select client name"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -618,6 +628,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select country"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -635,6 +646,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select scope"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -651,7 +663,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                       </div>
                       <div className='d-grid mb-3 me-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       
@@ -685,6 +697,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select client name"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -703,6 +716,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select country"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -720,6 +734,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select scope"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -737,7 +752,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                       </div>
                       <div className='d-grid mb-3 me-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       
@@ -774,6 +789,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select client name"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -792,6 +808,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select country"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -809,6 +826,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select scope"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -826,7 +844,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                       </div>
                       <div className='d-grid mb-3 me-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       
@@ -861,6 +879,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select client name"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -879,6 +898,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select country"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -896,6 +916,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
                           <Select
                             showSearch
+                            allowClear
                             placeholder="Select scope"
                             optionFilterProp="children"
                             filterOption={filterOption}
@@ -913,7 +934,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                       </div>
                       <div className='d-grid mb-3 me-3'>
                         <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                        <Input.Search />
+                        <Input.Search  allowClear/>
                       </div>
                       {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
                       
