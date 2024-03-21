@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 // import groupicon from '../assets/Group 4.png'
 import axios from 'axios';
-import { API_HEADER, getDashboardData, getAllClients, getAllProposals, getCountryList, get_client_name_url, get_regions_url, get_scope_url } from '../config';
+import { API_HEADER, getDashboardData, getAllClients, getAllProposals, getCountryList, get_client_name_url, get_regions_url, get_sectoralscope_url } from '../config';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { faFileCircleQuestion, faFileCircleCheck, faFileArrowDown, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -208,7 +208,7 @@ export default function PTDash({ callApi, openClientEdit }) {
   };
   const getScope = async () => {
     try {
-      const result = await axios.get(`${get_scope_url}`);
+      const result = await axios.get(`${get_sectoralscope_url}`);
       setScopeList(result.data.data);
     } catch (error) {
       // Handle error

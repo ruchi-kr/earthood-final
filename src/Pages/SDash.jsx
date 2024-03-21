@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment';
 import { faFileCircleQuestion, faFileCircleCheck, faFileArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { API_HEADER, getDashboardData, getAllProposals, getCountryList, get_client_name_url, get_scope_url } from '../config';
+import { API_HEADER, getDashboardData, getAllProposals, getCountryList, get_client_name_url, get_sectoralscope_url } from '../config';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import viewicon from '../assets/viewicon.png';
@@ -198,7 +198,7 @@ export default function SDash() {
   };
   const getScope = async () => {
     try {
-      const result = await axios.get(`${get_scope_url}`);
+      const result = await axios.get(`${get_sectoralscope_url}`);
       setScopeList(result.data.data);
     } catch (error) {
       // Handle error
@@ -294,7 +294,7 @@ export default function SDash() {
       dataIndex: '',
       key: 'x',
       fixed: 'right',
-      width: 100,
+      width: 150,
       render: () => <a className='d-flex'><img src={viewicon} alt="view icon" />&nbsp;<button className='btn btn-success'>Send</button></a>,
     },
   ];
