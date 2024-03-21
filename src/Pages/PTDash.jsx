@@ -1,15 +1,17 @@
 import { Input, Table, Tabs, Tag, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 // import groupicon from '../assets/Group 4.png'
 import axios from 'axios';
-import { API_HEADER, getDashboardData, getAllClients, getAllProposals, getCountryList, get_client_name_url, get_regions_url, get_sectoralscope_url } from '../config';
+import { API_HEADER, getDashboardData, getAllClients, getAllProposals, getCountryList, get_client_name_url, get_regions_url, get_sectoralscope_url,get_proposal_detail_url } from '../config';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { faFileCircleQuestion, faFileCircleCheck, faFileArrowDown, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const { Option } = Select;
 export default function PTDash({ callApi, openClientEdit }) {
 
+  const navigate = useNavigate();
   let [totalclients, setTotalClients] = useState(0);
   let [status0, setStatus0] = useState(0);
   let [status1, setStatus1] = useState(0);
@@ -259,6 +261,16 @@ export default function PTDash({ callApi, openClientEdit }) {
     SetProposalLoad(true);
     SetClientLoad(true);
   };
+  const handlePtActions = async (record) => {
+    const payload = {
+      proposal_id: record.proposal_id
+    }
+
+    const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
+    const data = response.data.record;
+    console.log(data)
+    navigate('/saleactions', { state: { data } })
+  }
 
   const columnsClientListing = [
     {
@@ -286,9 +298,15 @@ export default function PTDash({ callApi, openClientEdit }) {
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Regions</span>,
       render: (text, record) => {
-        return (
-          <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.region}</span>
-        );
+        if (record.region) {
+          return (
+            <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen'>
+              {record.region}
+            </span>
+          );
+        } else {
+          return null;
+        }
       }
     },
     {
@@ -330,7 +348,81 @@ export default function PTDash({ callApi, openClientEdit }) {
       </a>,
     },
   ];
-
+const columnsProposalapprovedTeam = [
+  {
+    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
+    dataIndex: 'proposal_id',
+    fixed: 'left',
+    width: 70,
+    render: (text, record, index) => {
+      const pageIndex = (pagination1.current - 1) * pagination1.pageSize;
+      return pageIndex + index + 1;
+    },
+  },
+  {
+    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>EId</span>,
+    fixed: 'left',
+    dataIndex: 'earthood_id',
+  },
+  {
+    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Project Name</span>,
+    render: (text, record) => {
+      return (
+        <span className='text-capitalize textcolor font14px fw-bold'>{record.project_name}</span>
+      );
+    }
+  },
+  {
+    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
+    dataIndex: 'client_name',
+  },
+  {
+    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Scope</span>,
+    render: (text, record) => {
+      if (record.sector) {
+        return (
+          <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen'>
+            {record.sector}
+          </span>
+        );
+      } else {
+        return null;
+      }
+    }
+  },
+  // {
+  //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
+  //   dataIndex: 'contact_person',
+  // },
+  // {
+  //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Continent</span>,
+  //   dataIndex: 'region',
+  // },
+  {
+    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
+    render: (text, record) => {
+      if (record.country) {
+        return (
+          <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen'>
+            {record.country}
+          </span>
+        );
+      } else {
+        return null;
+      }
+    }
+  },
+  {
+    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Action</span>,
+    dataIndex: '',
+    key: 'x',
+    fixed: 'right',
+    width: 100,
+    render: (text, record) => <a className=''>
+      <EditOutlined style={{ marginRight: '8px', color: 'blue' }}  onClick={() => handlePtActions(record)}/>
+    </a>,
+  },
+]
   const columnsProposalTeam = [
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
@@ -761,7 +853,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                         {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
 
                       </div>
-                      <Table scroll={{ x: 1500 }} columns={columnsProposalTeam} loading={proposalLoad} dataSource={proposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange1} />
+                      <Table scroll={{ x: 1500 }} columns={columnsProposalapprovedTeam} loading={proposalLoad} dataSource={proposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange1} />
                     </div>
                   </div>
                 </div>

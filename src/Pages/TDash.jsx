@@ -448,7 +448,7 @@ export default function TDash() {
         <EyeOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => handlePtActions(record)} />
     },
   ];
-
+  
   const columnSignedContract = [
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
