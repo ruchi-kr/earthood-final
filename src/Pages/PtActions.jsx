@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {FileUploader} from "react-drag-drop-files"
 import { useLocation, useNavigate } from "react-router-dom";
 import { Form, Tabs, Select, Upload, message, Input } from "antd";
 import { InboxOutlined } from '@ant-design/icons';
@@ -20,6 +21,7 @@ import { pt_tm_proposalaction_url, get_pt_forwardToSales_url, get_sales_action_u
 import Header from "./Header";
 // import EditorBox from '../Components/EditorBox';
 const { Dragger } = Upload;
+const fileTypes = ["JPG", "PDF", "RAR", "XLS", "XLSX", "DOC", "DOCX", "ZIP"];
 
 const PtActions = () => {
   const { Option } = Select;
@@ -47,6 +49,7 @@ const PtActions = () => {
   const [stremarks, setStRemarks] = useState("");
   const [contractremarks, setContractRemarks] = useState("");
   const [projectstatus, setProjectstatus] = useState("");
+  const [file, setFile] = useState(null);
 
   const [formData, setFormData] = useState({
     project_name: "",
@@ -85,6 +88,7 @@ const PtActions = () => {
         setPtRemarks(data.pt_remarks);
         setStRemarks(data.sales_remarks);
         setContractRemarks(data.signed_contract);
+        setFile(data.signed_contract);
       }
 
       setProjectstatus(data.status);
@@ -275,6 +279,7 @@ const PtActions = () => {
       let payload = {
         proposal_id: projectid,
         type: 2,
+        signed_contract:file,
         remarks: contractremarks,
       };
       const response = await axios.post(
@@ -403,6 +408,14 @@ const PtActions = () => {
 
     fetchDataTechnicalReviewer();
   }, []);
+
+  const handleFileChange = (file) => {
+    setFile(file);
+  }
+
+  const handleFileDrop = (file) => {
+    setFile(file);
+  }
 
   return (
     <>
@@ -1155,7 +1168,10 @@ const PtActions = () => {
                   </form>
                 </div>
               </Tabs.TabPane>
-              <Tabs.TabPane
+              {/* Sales Action */}
+              {designation_id == 5 || designation_id >5 ? (
+                <>
+                 <Tabs.TabPane
                 tab={
                   <div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
                     <p>Sales Action</p>
@@ -1255,7 +1271,8 @@ const PtActions = () => {
                         </div>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Upload Signed Contract </label>
-                          <Dragger
+                          <FileUploader handleChange={handleFileChange} onDrop={handleFileDrop} name="file" types={fileTypes} />
+                          {/* <Dragger
                             className='col-6 mt-3 mb-5'
                             multiple={false}
                             onChange={(info) => {
@@ -1275,7 +1292,7 @@ const PtActions = () => {
                               <p className="ant-upload-text">Click or drag file to this area to upload</p>
                               <p className="ant-upload-hint">Single Upload Only.</p>
                             </div>
-                          </Dragger>
+                          </Dragger> */}
                         </div>
                         <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Add Remarks </label>
@@ -1317,7 +1334,8 @@ const PtActions = () => {
                         </div>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Uploaded Signed Contract </label>
-                          {/* <EditorBox /> */}
+                         
+                        
                         </div>
                         <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Add Remarks </label>
@@ -1341,6 +1359,11 @@ const PtActions = () => {
                   }
                 </div>
               </Tabs.TabPane>
+                </>
+              ):(
+                <></> 
+              )}
+             
             </Tabs>
           </div>
         </div>
