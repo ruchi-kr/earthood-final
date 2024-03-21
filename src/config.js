@@ -24,6 +24,8 @@ export const get_all_propoposal_url = `${user_api_url}/getAllProposals`;
 export const pt_tm_proposalaction_url = `${user_api_url}/tm_proposalaction`;
 export const mail_reminder_url = `${user_api_url}/reminder_settings`;
 export const get_regions_url = `${user_api_url}/get_regions`;
+export const get_pt_forwardToSales_url = `${user_api_url}/proposalteam/sentToSales`;
+export const get_sales_action_url = `${user_api_url}/sales_action`;
 
 const API_HEADER2 = {                                         
     headers: {

@@ -38,7 +38,7 @@ const AllProjects = () => {
     const data=response.data.record;
     console.log(data)
 
-    navigate('/projects', { state: { data } })
+    navigate('/ptactions', { state: { data } })
 
   }
 
@@ -78,13 +78,32 @@ const AllProjects = () => {
         }else if(record.status==1){
           msg='Proposal Submitted'
         }
+        else if(record.status==2){
+          msg='Rejected'
+        }
         else if(record.status==3){
           msg='Clarification Required'
           color='volcano';
         }
+        else if(record.status==4){
+          msg='Resubmit'
+          color='volcano';
+        }
         else if(record.status==5){
           msg='Approved'
-        }else{
+        }
+        else if(record.status==6){
+          msg='Forwarded to Sales'
+          color='blue';
+        }
+        else if(record.status==7){
+          msg='Forwarded to Client'
+          color='blue';
+        }
+        else if(record.status==8){
+          msg='Signed Contract Uploaded'
+        }
+        else{
           msg=record.status
         }
 

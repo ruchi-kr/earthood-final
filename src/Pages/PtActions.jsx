@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Form, Tabs, Select, Upload } from "antd";
+import { Form, Tabs, Select, Upload, message, Input } from "antd";
+import { InboxOutlined } from '@ant-design/icons';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
 import {
   API_HEADER,
@@ -13,13 +16,17 @@ import { get_program_url } from "../config";
 import { get_country_url } from "../config";
 import { get_assesment_url } from "../config";
 import { toast } from "react-toastify";
-import { pt_tm_proposalaction_url } from "../config";
+import { pt_tm_proposalaction_url, get_pt_forwardToSales_url, get_sales_action_url } from "../config";
 import Header from "./Header";
+// import EditorBox from '../Components/EditorBox';
+const { Dragger } = Upload;
 
 const PtActions = () => {
   const { Option } = Select;
 
   const navigate = useNavigate();
+
+  const designation_id = sessionStorage.getItem("designation_id")
   const [projectid, setProjectId] = useState(null);
   const [clientName, setClientName] = useState([]);
   const [sectoralScope, setSectoralScope] = useState([]);
@@ -36,6 +43,9 @@ const PtActions = () => {
   const [othername, setOtherName] = useState(null);
   const [action, setAction] = useState("");
   const [remarks, setRemarks] = useState("");
+  const [ptremarks, setPtRemarks] = useState("");
+  const [stremarks, setStRemarks] = useState("");
+  const [contractremarks, setContractRemarks] = useState("");
   const [projectstatus, setProjectstatus] = useState("");
 
   const [formData, setFormData] = useState({
@@ -72,6 +82,9 @@ const PtActions = () => {
       if (data.status > 1) {
         setAction(data.tm_action);
         setRemarks(data.tm_remarks);
+        setPtRemarks(data.pt_remarks);
+        setStRemarks(data.sales_remarks);
+        setContractRemarks(data.signed_contract);
       }
 
       setProjectstatus(data.status);
@@ -134,7 +147,15 @@ const PtActions = () => {
       "Content-Type": "multipart/form-data",
     },
   };
-
+  const handlePtRemarksChange = (content) => {
+    setPtRemarks(content);
+  };
+  const handleStRemarksChange = (content) => {
+    setStRemarks(content);
+  }
+  const handleContractRemarksChange = (content) => {
+    setContractRemarks(content);
+  }
   const handleActionChange = (e) => {
     setAction(e.target.value);
   };
@@ -174,6 +195,106 @@ const PtActions = () => {
     }
   };
 
+  const handleSubmitPtToSales = async () => {
+    try {
+      let payload = {
+        proposal_id: projectid,
+        remarks: ptremarks,
+      };
+      const response = await axios.post(
+        `${get_pt_forwardToSales_url}`,
+        payload,
+        API_HEADER
+      );
+      if (response.status === 200 && response.data.status == 1) {
+        setAction("");
+        setPtRemarks("");
+        toast.success("Forwarded to Sales successfully");
+        navigate("/allprojects");
+      } else {
+        console.error("Failed to submit data");
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+
+    }
+  }
+  const handleForwardClient = async () => {
+    try {
+      let payload = {
+        proposal_id: projectid,
+        type: 1,
+        remarks: stremarks,
+      };
+      const response = await axios.post(
+        `${get_sales_action_url}`,
+        payload,
+        API_HEADER
+      );
+      if (response.status === 200 && response.data.status == 1) {
+        setAction("");
+        setStRemarks("");
+        toast.success("Forwarded to Client successfully");
+        navigate("/allprojects");
+      } else {
+        console.error("Failed to submit data");
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+
+    }
+  }
+
+  const handleUpload = async (file) => {
+    try {
+      let payload = {
+        proposal_id: projectid,
+        type: 2,
+        // remarks: contractremarks,
+      };
+      const response = await axios.post(
+        `${get_sales_action_url}`,
+        payload,
+        API_HEADER
+      );
+      if (response.status === 200 && response.data.status == 1) {
+        message.success("Remarks and file uploaded successfully");
+        setProjectId('');
+        setContractRemarks('');
+      } else {
+        message.error("Failed to submit data");
+      }
+    } catch (error) {
+      console.error("Error occurred while posting data: ", error);
+      message.error("An error occurred while adding remarks and uploading file");
+    }
+  };
+
+  const handleUploadSignedContract = async () => {
+    try {
+      let payload = {
+        proposal_id: projectid,
+        type: 2,
+        remarks: contractremarks,
+      };
+      const response = await axios.post(
+        `${get_sales_action_url}`,
+        payload,
+        API_HEADER
+      );
+      if (response.status === 200 && response.data.status == 1) {
+        setAction("");
+        setContractRemarks("");
+        toast.success("Remarks added successfully");
+        navigate("/allprojects");
+      } else {
+        console.error("Failed to submit data");
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+
+    }
+  }
   const handleMyProjectChange = (event) => {
     setFormData({ ...formData, project_name: event.target.value });
   };
@@ -376,7 +497,7 @@ const PtActions = () => {
                         )}
                       </div>
                     </div>
-                    {}
+                    { }
                     <div className="row">
                       <div className="col-4 mb-3">
                         <label
@@ -464,7 +585,7 @@ const PtActions = () => {
                         />
                       </div>
                     </div>
-                    {}
+                    { }
                     <div className="row">
                       <div className="col-4 mb-3">
                         <label htmlFor="Implementation Fees" className="form-label">
@@ -532,7 +653,7 @@ const PtActions = () => {
                       </div>
                     </div>
 
-                    {}
+                    { }
                     <div className="row">
                       <div className="col-4 mb-3">
                         <label htmlFor="Scope(PO/POA)" className="form-label">
@@ -633,7 +754,7 @@ const PtActions = () => {
                       </div>
                     </div>
 
-                    {}
+                    { }
                     <p className="textlightgreen fw-bold m-3">
                       Assessment Team
                     </p>
@@ -989,7 +1110,7 @@ const PtActions = () => {
                         </tr>
                         <tr>
                           <td>F20 Document</td>
-                          {}
+                          { }
                           <td>
                             <a target="_blank" href={f20name}>
                               Document Link
@@ -1036,117 +1157,188 @@ const PtActions = () => {
               </Tabs.TabPane>
               <Tabs.TabPane
                 tab={
-                  <div className="border-0 shadow-lg textlightgreen rounded-0 px-5 py-2 text-center">
-                    <p>TM</p>
+                  <div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
+                    <p>Sales Action</p>
                   </div>
                 }
                 key="3"
               >
-                <div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
-                  {projectstatus === 1 || projectstatus === 4 ? (
+                <div className="col-10 border-0 bg-white p-5 mx-auto">
+                  {projectstatus == 5 ? (
                     <>
-                      <div>
-                        <label>Actions :</label>
-                        <span>
-                          <input
-                            type="radio"
-                            id="approve"
-                            name="technical_reviewer"
-                            value="1"
-                            // checked={action === 1}
-                            onChange={handleActionChange}
-                            className="mx-3"
-                          />
-                          <label htmlFor="approve">Approved</label>
-                        </span>
-                        <span>
-                          <input
-                            type="radio"
-                            id="clarification_required"
-                            name="technical_reviewer"
-                            value="3"
-                            // checked={action === 3}
-                            onChange={handleActionChange}
-                            className="mx-3"
-                          />
-                          <label htmlFor="clarification_required">
-                            Clarification Required
-                          </label>
-                        </span>
-                      </div>
-                      <div class="mt-3 mb-3" style={{ display: "flex" }}>
-                        <label>Remarks :</label>
-                        <textarea
-                          placeholder="Add Remarks"
-                          className="form-control"
-                          style={{ width: "70%", marginLeft: "10px" }}
-                          id="exampleFormControlTextarea1"
-                          rows={3}
-                          value={remarks}
-                          onChange={handleRemarksChange}
-                        ></textarea>
+
+                      <div class="mt-3 mb-3 d-grid">
+                        <label>PT Remarks </label>
+                        
+                        <ReactQuill
+                          theme="snow"
+                          value={ptremarks}
+                          onChange={handlePtRemarksChange}
+                        />
                       </div>
                       <button
-                        className="btn btn-outline-primary"
-                        onClick={handleSubmitAction}
+                        className="btn btn-outline-primary mt-5"
+                        onClick={handleSubmitPtToSales}
                       >
-                        Submit
+                        Forward to Sales
                       </button>
                     </>
-                  ) : (
+                  ) : (projectstatus == 6 && designation_id == 5) ? (
                     <>
-                      <div>
-                        <label>Actions :</label>
-                        <span>
-                          <input
-                            type="radio"
-                            id="approve"
-                            name="technical_reviewer"
-                            value="1"
-                            checked={action == 1}
-                            onChange={handleActionChange}
-                            className="mx-3"
-                            disabled
-                          />
-                          <label htmlFor="approve">Approved</label>
-                        </span>
-                        <span>
-                          <input
-                            type="radio"
-                            id="clarification_required"
-                            name="technical_reviewer"
-                            value="3"
-                            checked={action == 3}
-                            onChange={handleActionChange}
-                            className="mx-3"
-                            disabled
-                          />
-                          <label htmlFor="clarification_required">
-                            Clarification Required
-                          </label>
-                        </span>
+                      <div class="mt-3 mb-3 d-grid">
+                        <label>PT Remarks </label>
+                        <ReactQuill
+                          theme="snow"
+                          value={ptremarks}
+                          // onChange={handlePtRemarksChange}
+                          modules={{ toolbar: false }}
+                          readOnly={true}
+                          
+                          dangerouslySetInnerHTML={{ __html: ptremarks }}
+                        />
+                        
                       </div>
-                      <div class="mt-3 mb-3" style={{ display: "flex" }}>
-                        <label>Remarks :</label>
-                        <textarea
-                          placeholder="Add Remarks"
-                          className="form-control"
-                          style={{ width: "70%", marginLeft: "10px" }}
-                          id="exampleFormControlTextarea1"
-                          rows={3}
-                          value={remarks}
-                          onChange={handleRemarksChange}
-                          disabled
-                        ></textarea>
+                      <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                        <label>Sales Remarks </label>
+                      
+                        <ReactQuill theme="snow" value={stremarks} onChange={handleStRemarksChange} />
                       </div>
                       <button
-                        className="btn btn-outline-primary"
-                        onClick={handleApproved}
+                        className="btn btn-outline-primary mt-5"
+                        onClick={handleForwardClient}
                       >
-                        Submit
+                        Forward to Client
                       </button>
                     </>
-                  )}
+                  ) : (projectstatus == 6) ? (
+                    <>
+                      <div class="mt-3 mb-3 d-grid">
+                        <label>PT Remarks </label>
+                        
+                        <ReactQuill
+                          theme="snow"
+                          value={ptremarks}
+                          // onChange={handlePtRemarksChange}
+                          modules={{ toolbar: false }}
+                          readOnly={true}
+                          
+                          dangerouslySetInnerHTML={{ __html: ptremarks }}
+                        />
+                      </div>
+                    </>
+                  )
+                    : (projectstatus == 7 && designation_id == 5) ? (
+                      <>
+                        <div class="mt-3 mb-3 d-grid">
+                          <label>PT Remarks </label>
+                          <ReactQuill
+                          theme="snow"
+                          value={ptremarks}
+                          // onChange={handlePtRemarksChange}
+                          modules={{ toolbar: false }}
+                          readOnly={true}
+                          
+                          dangerouslySetInnerHTML={{ __html: ptremarks }}
+                        />
+                        </div>
+                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                          <label>Sales Remarks </label>
+                          <ReactQuill
+                          theme="snow"
+                          value={stremarks}
+                          // onChange={handlePtRemarksChange}
+                          modules={{ toolbar: false }}
+                          readOnly={true}
+                          
+                          dangerouslySetInnerHTML={{ __html: stremarks }}
+                        />
+                        </div>
+                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                          <label>Upload Signed Contract </label>
+                          <Dragger
+                            className='col-6 mt-3 mb-5'
+                            multiple={false}
+                            onChange={(info) => {
+                              const { status, originFileObj } = info.file;
+                              if (status == 1) {
+                                message.success(`${info.file.name} file uploaded successfully.`);
+                                handleUpload(originFileObj);
+                              } else if (status == 0) {
+                                message.error(`${info.file.name} file upload failed.`);
+                              }
+                            }}
+                          >
+                            <div className="">
+                              <p className="ant-upload-drag-icon">
+                                <InboxOutlined />
+                              </p>
+                              <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                              <p className="ant-upload-hint">Single Upload Only.</p>
+                            </div>
+                          </Dragger>
+                        </div>
+                        <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
+                          <label>Add Remarks </label>
+                        
+                          <ReactQuill theme="snow" value={contractremarks} onChange={handleContractRemarksChange} />
+                        </div>
+                        <button
+                          className="btn btn-outline-primary mt-5"
+                          onClick={handleUploadSignedContract}
+                        >
+                          Submit
+                        </button>
+                      </>
+                    ) : (projectstatus == 8 && designation_id == 5) ? (
+                      <>
+                        <div class="mt-3 mb-3 d-grid">
+                          <label>PT Remarks </label>
+                          <ReactQuill
+                          theme="snow"
+                          value={ptremarks}
+                          // onChange={handlePtRemarksChange}
+                          modules={{ toolbar: false }}
+                          readOnly={true}
+                          
+                          dangerouslySetInnerHTML={{ __html: ptremarks }}
+                        />
+                        </div>
+                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                          <label>Sales Remarks </label>
+                          <ReactQuill
+                          theme="snow"
+                          value={stremarks}
+                          onChange={handlePtRemarksChange}
+                          modules={{ toolbar: false }}
+                          readOnly={true}
+                          
+                          dangerouslySetInnerHTML={{ __html: stremarks }}
+                        />
+                        </div>
+                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                          <label>Uploaded Signed Contract </label>
+                          {/* <EditorBox /> */}
+                        </div>
+                        <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
+                          <label>Add Remarks </label>
+                          <ReactQuill
+                          theme="snow"
+                          value={contractremarks}
+                          // onChange={handlePtRemarksChange}
+                          modules={{ toolbar: false }}
+                          readOnly={true}
+                          
+                          dangerouslySetInnerHTML={{ __html: contractremarks }}
+                        />
+                          {/* <ReactQuill theme="snow" value={contractremarks} onChange={setValue} /> */}
+                        </div>
+                      </>
+                    )
+                      : (
+                        <>
+                        </>
+                      )
+                  }
                 </div>
               </Tabs.TabPane>
             </Tabs>

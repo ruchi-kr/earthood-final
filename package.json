@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@botshot-ecosystem/ck-editor-react": "^1.2.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -17,6 +16,7 @@
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",

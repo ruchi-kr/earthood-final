@@ -269,7 +269,7 @@ export default function PTDash({ callApi, openClientEdit }) {
     const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
     const data = response.data.record;
     console.log(data)
-    navigate('/saleactions', { state: { data } })
+    navigate('/ptactions', { state: { data } })
   }
 
   const columnsClientListing = [

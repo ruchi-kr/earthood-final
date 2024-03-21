@@ -8,7 +8,6 @@ import "bootstrap/dist/js/bootstrap.bundle.js";
 import AddProject from './Pages/AddProject';
 import AllProjects from './Pages/AllProjects';
 import PtActions from './Pages/PtActions';
-import SalesAction from './Pages/SalesAction';
 
 function App() {
   return (
@@ -22,7 +21,7 @@ function App() {
         <Route path="/projects" element={<AddProject/>}></Route>
         <Route path='/allprojects' element={<AllProjects/>}></Route>
         <Route path='/ptactions' element={<PtActions/>}></Route>
-        <Route path= '/saleactions' element={<SalesAction/>}></Route>
+        
       </Routes>
     </BrowserRouter>
   );

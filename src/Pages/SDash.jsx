@@ -1,16 +1,20 @@
 import { Input, Table, Tabs, DatePicker, Button, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { faFileCircleQuestion, faFileCircleCheck, faFileArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { API_HEADER, getDashboardData, getAllProposals, getCountryList, get_client_name_url, get_sectoralscope_url } from '../config';
+import { API_HEADER, getDashboardData, getAllProposals, getCountryList, get_client_name_url, get_sectoralscope_url,get_proposal_detail_url } from '../config';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import viewicon from '../assets/viewicon.png';
+import { EditOutlined } from '@ant-design/icons';
+
 const { Option } = Select;
 
 export default function SDash() {
-
+  
+  const navigate = useNavigate();
   const [proposal_received_pt, setProposal_received_pt] = useState(0)
   const [proposal_under_nego, setProposal_under_nego] = useState(0)
   // const [proposal_sent_client, setProposal_sent_client] = useState(0)
@@ -119,7 +123,16 @@ export default function SDash() {
     setPagination(pagination);
     Setloader(true);
   };
+  const handlePtActions = async (record) => {
+    const payload = {
+      proposal_id: record.proposal_id
+    }
 
+    const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
+    const data = response.data.record;
+    console.log(data)
+    navigate('/ptactions', { state: { data } })
+  }
   // date range search
   const dateFormat = 'DD/MM/YYYY';
   const [fromDate, setFromDate] = useState(null);
@@ -294,8 +307,10 @@ export default function SDash() {
       dataIndex: '',
       key: 'x',
       fixed: 'right',
-      width: 150,
-      render: () => <a className='d-flex'><img src={viewicon} alt="view icon" />&nbsp;<button className='btn btn-success'>Send</button></a>,
+      width: 100,
+      render: (record) =>
+        <EditOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => handlePtActions(record)} />,
+
     },
   ];
 
@@ -378,7 +393,9 @@ export default function SDash() {
       key: 'x',
       fixed: 'right',
       width: 100,
-      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;</a>,
+      render: (record) =>
+      <EditOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => handlePtActions(record)} />,
+
     },
   ];
 
@@ -470,7 +487,9 @@ export default function SDash() {
       key: 'x',
       fixed: 'right',
       width: 100,
-      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;</a>,
+      render: (record) =>
+      <EditOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => handlePtActions(record)} />,
+
     },
   ];
 

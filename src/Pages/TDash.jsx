@@ -527,7 +527,7 @@ export default function TDash() {
       key: 'x',
       fixed: 'right',
       width: 100,
-      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;</a>,
+      render: () => <EyeOutlined style={{ marginRight: '8px', color: 'blue' }} />,
     },
   ];
 
