@@ -2180,7 +2180,7 @@ const PtActions = () => {
                  <Tabs.TabPane
                 tab={
                   <div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
-                    <p>Sales Action</p>
+                    <p>Action</p>
                   </div>
                 }
                 key="3"
