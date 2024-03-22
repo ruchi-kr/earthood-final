@@ -38,6 +38,9 @@ export default function Header() {
                     <li className="nav-item textgrey btnhovergrey">
                     <Link className="nav-link" to="/allprojects">All Proposals</Link>
                     </li>
+                    <li className="nav-item textgrey btnhovergrey">
+                    <Link className="nav-link" to="/clients">All Clients</Link>
+                    </li>
                   </ul>
 
                   <div className="d-lg-flex d-md-grid d-grid gap-3 align-items-center">

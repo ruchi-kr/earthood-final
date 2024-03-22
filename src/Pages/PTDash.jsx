@@ -1,18 +1,19 @@
 import { Input, Table, Tabs, Tag, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 // import groupicon from '../assets/Group 4.png'
 import axios from 'axios';
-import { API_HEADER, getDashboardData, getAllClients, getAllProposals, getCountryList, get_client_name_url, get_regions_url, get_sectoralscope_url,get_proposal_detail_url } from '../config';
+import { useNavigate } from 'react-router-dom';
+import { get_proposal_detail_url } from '../config';
+import { API_HEADER, getDashboardData, getAllClients, getAllProposals, getCountryList, get_client_name_url, get_regions_url, get_scope_url } from '../config';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { faFileCircleQuestion, faFileCircleCheck, faFileArrowDown, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const { Option } = Select;
 export default function PTDash({ callApi, openClientEdit }) {
 
-  const navigate = useNavigate();
-  let [totalclients, setTotalClients] = useState(0);
+  // let [totalclients, setTotalClients] = useState(0);
+  const [approvedProposal, setApprovedProposal] = useState(0);
   let [status0, setStatus0] = useState(0);
   let [status1, setStatus1] = useState(0);
   let [status3, setStatus3] = useState(0);
@@ -20,6 +21,7 @@ export default function PTDash({ callApi, openClientEdit }) {
 
   let [clientData, setClientData] = useState([]);
   let [proposalList, setProposalList] = useState([]);
+  let [approvedProposalList, setApprovedProposalList] = useState([]);
   let [proposal_status, setProposalStatus] = useState(0);
 
   const [pagination, setPagination] = useState({
@@ -36,6 +38,7 @@ export default function PTDash({ callApi, openClientEdit }) {
 
   let [clientLoad, SetClientLoad] = useState(false);
   let [proposalLoad, SetProposalLoad] = useState(false);
+  let [approvedproposalLoad, SetApprovedProposalLoad] = useState(false);
 
   const getDashData = async () => {
 
@@ -45,7 +48,7 @@ export default function PTDash({ callApi, openClientEdit }) {
         API_HEADER);
       const dashboard = result.data.dashboard;
 
-      setTotalClients(dashboard.total_clients);
+      setApprovedProposal(dashboard.status5);
       setStatus0(dashboard.status0);
       setStatus1(dashboard.status1);
       setStatus3(dashboard.status3);
@@ -119,6 +122,38 @@ export default function PTDash({ callApi, openClientEdit }) {
 
   }
 
+
+  const getApprovedProposalListData = async () => {
+
+    try {
+
+      let payload = {
+        status: proposal_status,
+        page: pagination1.current,
+        limit: pagination1.pageSize,
+        country: country ? country : null,
+        client_id: client_id ? client_id : null,
+        region: region ? region : null,
+        scope: scope ? scope : null
+      }
+      const response = await axios.post(`${getAllProposals}`, payload, API_HEADER);
+      setApprovedProposalList(response.data.data);
+
+      setPagination1(prevPagination => ({
+        ...prevPagination,
+        total: response.data.count,
+      }));
+
+      SetApprovedProposalLoad(false);
+
+    }
+    catch (error) {
+      console.log(error)
+    }
+
+  }
+  
+
   useEffect(() => {
     getDashData();
   }, [callApi])
@@ -172,15 +207,26 @@ export default function PTDash({ callApi, openClientEdit }) {
     getProposalListData();
   }, [proposalLoad])
 
-  const handleTableChange = (pagination, filters, sorter) => {
-    setPagination(pagination);
-    SetClientLoad(true);
-  };
+  useEffect(() => {
+    getApprovedProposalListData();
+  }, [approvedproposalLoad])
+
+
+  // const handleTableChange = (pagination, filters, sorter) => {
+  //   setPagination(pagination);
+  //   SetClientLoad(true);
+  // };
 
   const handleTableChange1 = (pagination, filters, sorter) => {
     setPagination1(pagination);
     console.log(pagination)
     SetProposalLoad(true);
+  };
+
+  const handleTableChange2 = (pagination, filters, sorter) => {
+    setPagination1(pagination);
+    console.log(pagination)
+    SetApprovedProposalLoad(true);
   };
   const [country, setCountry] = useState(null);
   const [region, setRegion] = useState(null);
@@ -210,7 +256,7 @@ export default function PTDash({ callApi, openClientEdit }) {
   };
   const getScope = async () => {
     try {
-      const result = await axios.get(`${get_sectoralscope_url}`);
+      const result = await axios.get(`${get_scope_url}`);
       setScopeList(result.data.data);
     } catch (error) {
       // Handle error
@@ -261,168 +307,93 @@ export default function PTDash({ callApi, openClientEdit }) {
     SetProposalLoad(true);
     SetClientLoad(true);
   };
-  const handlePtActions = async (record) => {
-    const payload = {
-      proposal_id: record.proposal_id
-    }
 
+const navigate = useNavigate();
+  const editFormForClarification = async(record) =>{
+       
+    const payload={
+      proposal_id:record.proposal_id
+    }
+      
     const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
-    const data = response.data.record;
+    const data=response.data.record;
     console.log(data)
+
     navigate('/ptactions', { state: { data } })
+
   }
 
-  const columnsClientListing = [
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
-      dataIndex: 'id',
-      fixed: 'left',
-      width: 70,
-      render: (text, record, index) => {
-        const pageIndex = (pagination.current - 1) * pagination.pageSize;
-        return pageIndex + index + 1;
-      },
-    },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
-      render: (text, record) => {
-        return (
-          <span className='text-capitalize  font14px'>{record.name}</span>
-        );
-      }
-    },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
-      dataIndex: 'contact_person',
-    },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Regions</span>,
-      render: (text, record) => {
-        if (record.region) {
-          return (
-            <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen'>
-              {record.region}
-            </span>
-          );
-        } else {
-          return null;
-        }
-      }
-    },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
-      render: (text, record) => {
-        return (
-          <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.country}</span>
-        );
-      }
-    },
+  // const columnsClientListing = [
+  //   {
+  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
+  //     dataIndex: 'id',
+  //     fixed: 'left',
+  //     width: 70,
+  //     render: (text, record, index) => {
+  //       const pageIndex = (pagination.current - 1) * pagination.pageSize;
+  //       return pageIndex + index + 1;
+  //     },
+  //   },
+  //   {
+  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
+  //     render: (text, record) => {
+  //       return (
+  //         <span className='text-capitalize  font14px'>{record.name}</span>
+  //       );
+  //     }
+  //   },
+  //   {
+  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
+  //     dataIndex: 'contact_person',
+  //   },
+  //   {
+  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Regions</span>,
+  //     render: (text, record) => {
+  //       return (
+  //         <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.region}</span>
+  //       );
+  //     }
+  //   },
+  //   {
+  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
+  //     render: (text, record) => {
+  //       return (
+  //         <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.country}</span>
+  //       );
+  //     }
+  //   },
 
-    // {
-    //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Details</span>,
-    //   render: (text, record) => (
-    //     <span className='lh-1'>
-    //       <p className='textcolorblue'>{record.contact_email}</p>
-    //       <p className='textlightgreen'>{record.contact_mobile}</p>
-    //     </span>
-    //   )
-    // },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Status</span>,
-      render: (text, record) => {
-        let color = record.status === 1 ? "green" : "volcano";
-        return (
-          <Tag className='px-4 py-2 rounded-5 font12px fw-bold' color={color}>{record.status_msg}</Tag>
-        );
-      }
-    },
-    {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Action</span>,
-      dataIndex: '',
-      key: 'x',
-      fixed: 'right',
-      width: 100,
-      render: (text, record) => <a className=''>
-        <EditOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => openClientEdit(record.id, 1)} />
-        <EyeOutlined style={{ color: 'red' }} onClick={() => openClientEdit(record.id, 2)} />
-      </a>,
-    },
-  ];
-const columnsProposalapprovedTeam = [
-  {
-    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
-    dataIndex: 'proposal_id',
-    fixed: 'left',
-    width: 70,
-    render: (text, record, index) => {
-      const pageIndex = (pagination1.current - 1) * pagination1.pageSize;
-      return pageIndex + index + 1;
-    },
-  },
-  {
-    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>EId</span>,
-    fixed: 'left',
-    dataIndex: 'earthood_id',
-  },
-  {
-    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Project Name</span>,
-    render: (text, record) => {
-      return (
-        <span className='text-capitalize textcolor font14px fw-bold'>{record.project_name}</span>
-      );
-    }
-  },
-  {
-    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
-    dataIndex: 'client_name',
-  },
-  {
-    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Scope</span>,
-    render: (text, record) => {
-      if (record.sector) {
-        return (
-          <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen'>
-            {record.sector}
-          </span>
-        );
-      } else {
-        return null;
-      }
-    }
-  },
-  // {
-  //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
-  //   dataIndex: 'contact_person',
-  // },
-  // {
-  //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Continent</span>,
-  //   dataIndex: 'region',
-  // },
-  {
-    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
-    render: (text, record) => {
-      if (record.country) {
-        return (
-          <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen'>
-            {record.country}
-          </span>
-        );
-      } else {
-        return null;
-      }
-    }
-  },
-  {
-    title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Action</span>,
-    dataIndex: '',
-    key: 'x',
-    fixed: 'right',
-    width: 100,
-    render: (text, record) => <a className=''>
-      <EditOutlined style={{ marginRight: '8px', color: 'blue' }}  onClick={() => handlePtActions(record)}/>
-    </a>,
-  },
-]
+  //   // {
+  //   //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Details</span>,
+  //   //   render: (text, record) => (
+  //   //     <span className='lh-1'>
+  //   //       <p className='textcolorblue'>{record.contact_email}</p>
+  //   //       <p className='textlightgreen'>{record.contact_mobile}</p>
+  //   //     </span>
+  //   //   )
+  //   // },
+  //   {
+  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Status</span>,
+  //     render: (text, record) => {
+  //       let color = record.status === 1 ? "green" : "volcano";
+  //       return (
+  //         <Tag className='px-4 py-2 rounded-5 font12px fw-bold' color={color}>{record.status_msg}</Tag>
+  //       );
+  //     }
+  //   },
+  //   {
+  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Action</span>,
+  //     dataIndex: '',
+  //     key: 'x',
+  //     fixed: 'right',
+  //     width: 100,
+  //     render: (text, record) => <a className=''>
+  //       <EditOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => openClientEdit(record.id, 1)} />
+  //       <EyeOutlined style={{ color: 'red' }} onClick={() => openClientEdit(record.id, 2)} />
+  //     </a>,
+  //   },
+  // ];
+
   const columnsProposalTeam = [
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
@@ -494,7 +465,7 @@ const columnsProposalapprovedTeam = [
       fixed: 'right',
       width: 100,
       render: (text, record) => <a className=''>
-        <EditOutlined style={{ marginRight: '8px', color: 'blue' }} />
+        <EditOutlined onClick={() => editFormForClarification(record)}  style={{ marginRight: '8px', color: 'blue' }} />
       </a>,
     },
   ];
@@ -593,95 +564,6 @@ const columnsProposalapprovedTeam = [
           <div className="col-12">
             <Tabs defaultActiveKey='1' centered activeKey={activeKey} onChange={handleTabChange}>
 
-              <Tabs.TabPane
-                tab={
-                  <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
-                    <FontAwesomeIcon icon={faUser} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>Total Clients</p>
-                    <p className='textcolorblue stat_text' >{totalclients}</p>
-                  </div>
-                }
-                key='1'>
-
-                <div className='container-fluid'>
-                  <div className="row mx-0">
-                    <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
-                      <div className="d-flex justify-content-between align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
-                        {/* Date Range Picker */}
-
-
-                        {/* Filter by Client Name onChange={handleClientNameSearch}*/}
-                        <div className='d-flex mx-3'>
-                          <div className='d-grid mb-3 mx-3'>
-                            <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
-                            <Select
-                              showSearch
-                              allowClear
-                              placeholder="Select client name"
-                              optionFilterProp="children"
-                              filterOption={filterOption}
-                              onChange={handleClientNameSearch}
-                            >
-
-                              {clientname.map((client, index) => (
-                                <Option key={index} value={client.id} label={client.name}>
-                                  {client.name}
-                                </Option>
-                              ))}
-                            </Select>
-                          </div>
-                          {/* Filter by Country  onChange={handleCountrySearch}  */}
-                          <div className='d-grid mb-3 mx-3'>
-                            <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
-                            <Select
-                              showSearch
-                              allowClear
-                              placeholder="Select country"
-                              optionFilterProp="children"
-                              filterOption={filterOption}
-                              onChange={handleCountrySearch}
-                            >
-
-                              {countryList.map((country, index) => (
-                                <Option key={index} value={country.id} label={country.name}>
-                                  {country.name}
-                                </Option>
-                              ))}
-                            </Select>
-                          </div>
-                          {/* Filter by Country  onChange={handleCountrySearch}  */}
-                          <div className='d-grid mb-3 mx-3'>
-                            <label className='text-capitalize textcolumntitle font14px fw-bold'>Region </label>
-                            <Select
-                              showSearch
-                              allowClear
-                              placeholder="Select region"
-                              optionFilterProp="children"
-                              filterOption={filterOption}
-                              onChange={handleRegionSearch}
-                            >
-
-                              {regionList.map((region, index) => (
-                                <Option key={index} value={region.id} label={region.name}>
-                                  {region.name}
-                                </Option>
-                              ))}
-                            </Select>
-                          </div>
-
-                        </div>
-                        <div className='d-grid mb-3 me-3'>
-                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
-                          <Input.Search allowClear />
-                        </div>
-                        {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
-
-                      </div>
-                      <Table scroll={{ x: 1500 }} columns={columnsClientListing} loading={clientLoad} dataSource={clientData} rowKey='id' pagination={pagination} onChange={handleTableChange} />
-                    </div>
-                  </div>
-                </div>
-              </Tabs.TabPane>
               <Tabs.TabPane
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
@@ -853,7 +735,7 @@ const columnsProposalapprovedTeam = [
                         {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
 
                       </div>
-                      <Table scroll={{ x: 1500 }} columns={columnsProposalapprovedTeam} loading={proposalLoad} dataSource={proposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange1} />
+                      <Table scroll={{ x: 1500 }} columns={columnsProposalTeam} loading={proposalLoad} dataSource={proposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange1} />
                     </div>
                   </div>
                 </div>
@@ -951,7 +833,95 @@ const columnsProposalapprovedTeam = [
                 </div>
 
               </Tabs.TabPane>
+              <Tabs.TabPane
+                tab={
+                  <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
+                    <FontAwesomeIcon icon={faUser} size="2xl" className='iconcolor' />
+                    <p className='font14px textlightgreen text-capitalize mt-4'>Approved Proposals</p>
+                    <p className='textcolorblue stat_text' >{approvedProposal}</p>
+                  </div>
+                }
+                key='1'>
 
+                <div className='container-fluid'>
+                  <div className="row mx-0">
+                    <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
+                      <div className="d-flex justify-content-between align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
+                        {/* Date Range Picker */}
+
+
+                        {/* Filter by Client Name onChange={handleClientNameSearch}*/}
+                        <div className='d-flex mx-3'>
+                          <div className='d-grid mb-3 mx-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
+                            <Select
+                              showSearch
+                              allowClear
+                              placeholder="Select client name"
+                              optionFilterProp="children"
+                              filterOption={filterOption}
+                              onChange={handleClientNameSearch}
+                            >
+
+                              {clientname.map((client, index) => (
+                                <Option key={index} value={client.id} label={client.name}>
+                                  {client.name}
+                                </Option>
+                              ))}
+                            </Select>
+                          </div>
+                          {/* Filter by Country  onChange={handleCountrySearch}  */}
+                          <div className='d-grid mb-3 mx-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
+                            <Select
+                              showSearch
+                              allowClear
+                              placeholder="Select country"
+                              optionFilterProp="children"
+                              filterOption={filterOption}
+                              onChange={handleCountrySearch}
+                            >
+
+                              {countryList.map((country, index) => (
+                                <Option key={index} value={country.id} label={country.name}>
+                                  {country.name}
+                                </Option>
+                              ))}
+                            </Select>
+                          </div>
+                          {/* Filter by Country  onChange={handleCountrySearch}  */}
+                          <div className='d-grid mb-3 mx-3'>
+                            <label className='text-capitalize textcolumntitle font14px fw-bold'>Region </label>
+                            <Select
+                              showSearch
+                              allowClear
+                              placeholder="Select region"
+                              optionFilterProp="children"
+                              filterOption={filterOption}
+                              onChange={handleRegionSearch}
+                            >
+
+                              {regionList.map((region, index) => (
+                                <Option key={index} value={region.id} label={region.name}>
+                                  {region.name}
+                                </Option>
+                              ))}
+                            </Select>
+                          </div>
+
+                        </div>
+                        <div className='d-grid mb-3 me-3'>
+                          <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
+                          <Input.Search allowClear />
+                        </div>
+                        {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
+
+                      </div>
+                      <Table scroll={{ x: 1500 }} columns={columnsProposalTeam} loading={approvedproposalLoad} dataSource={approvedProposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange2} />
+                    </div>
+                  </div>
+                </div>
+              </Tabs.TabPane>
               <Tabs.TabPane
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
