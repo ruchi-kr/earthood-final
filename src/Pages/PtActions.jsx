@@ -54,6 +54,7 @@ const PtActions = () => {
   const [contractremarks, setContractRemarks] = useState("");
   const [projectstatus, setProjectstatus] = useState("");
   const [file, setFile] = useState(null);
+  const [signedFileName, setSignedFileName] = useState("");
 
   const [formData, setFormData] = useState({
     project_name: "",
@@ -147,6 +148,9 @@ const PtActions = () => {
 
       let url6 = `${BASE_DOCUMENT}/documents/${data.earthood_id}/${data.other_doc}`;
       setOtherName(url6);
+
+      let url7 = `${BASE_DOCUMENT}/documents/${data.earthood_id}/${data.signed_contract}`;
+      setSignedFileName(url7);
     }
   }, [location, myscope]);
 
@@ -353,6 +357,8 @@ const PtActions = () => {
 
     }
   }
+
+
   const handleMyProjectChange = (event) => {
     setFormData({ ...formData, project_name: event.target.value });
   };
@@ -2328,7 +2334,7 @@ const PtActions = () => {
                         </div>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Uploaded Signed Contract </label>
-                         <p className="mt-3">{file}</p>
+                         <p className="mt-3">{file}<a href={signedFileName} target="_blank" rel="noopener noreferrer" style={{color:"green"}}>Download</a></p>
                         
                         </div>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
