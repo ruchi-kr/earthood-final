@@ -167,12 +167,12 @@ export default function Dashboard() {
     <div className="bg-white mb-5">
     
       <Header/>
-     
-      <div className="d-flex justify-content-between align-items-center m-5 mt-4">
-        <div>
+     <div className="container-fluid">
+     <div className="d-flex justify-content-between align-items-center m-5 mt-4 row">
+        <div className='col-lg-6 col-md-6 col-12'>
           <h5 className='textcolorblue'>Welcome Back, {username}</h5>
         </div>
-        <div className="d-flex gap-2 align-items-center mx-5">   
+        <div className="d-flex gap-2 align-items-center mx-5 col-lg-6 col-md-6 col-12 align-self-end">   
          <button className='btn border-light-subtle textcolor bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
          {designation_id==6?
          <button className='btn border-0 btn-success text-white bg_green' style={{ fontSize: '14px' }} onClick={openClientAdd}>Add Client</button>:''
@@ -180,6 +180,8 @@ export default function Dashboard() {
         </div>
       </div>
 
+     </div>
+      
       {(() => {
         if (designation_id === 6) {
           return <PTDash callApi={callApi} openClientEdit={openClientEdit}/>

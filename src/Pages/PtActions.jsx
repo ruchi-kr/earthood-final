@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {FileUploader} from "react-drag-drop-files"
+import { FileUploader } from "react-drag-drop-files"
 import { useLocation, useNavigate } from "react-router-dom";
 import { MultiSelect } from "react-multi-select-component";
 import Summary from "../Components/Summary";
@@ -20,12 +20,12 @@ import { get_program_url } from "../config";
 import { get_country_url } from "../config";
 import { get_assesment_url } from "../config";
 import { toast } from "react-toastify";
-import { pt_tm_proposalaction_url, get_pt_forwardToSales_url, get_sales_action_url,pt_proposal_submit_url,proposal_summary_url } from "../config";
+import { pt_tm_proposalaction_url, get_pt_forwardToSales_url, get_sales_action_url, pt_proposal_submit_url, proposal_summary_url } from "../config";
 import Header from "./Header";
 
 // import EditorBox from '../Components/EditorBox';
 // const { Dragger } = Upload;
-const fileTypes = [ "PDF", "RAR", "DOC", "DOCX", "ZIP"];
+const fileTypes = ["PDF", "RAR", "DOC", "DOCX", "ZIP"];
 
 const PtActions = () => {
   const { Option } = Select;
@@ -102,12 +102,12 @@ const PtActions = () => {
 
       setProjectstatus(data.status);
       const scopes = data.scope.split(",").map(Number);
-			console.log(scopes, "Our scopes");
-			const filteredScopes = myscope.filter((scope) =>
-				scopes.includes(scope.value),
-			);
-			console.log(filteredScopes, "Our filtered Scopes");
-			setSelected(filteredScopes);
+      console.log(scopes, "Our scopes");
+      const filteredScopes = myscope.filter((scope) =>
+        scopes.includes(scope.value),
+      );
+      console.log(filteredScopes, "Our filtered Scopes");
+      setSelected(filteredScopes);
 
       setFormData({
         project_name: data.project_name,
@@ -326,10 +326,10 @@ const PtActions = () => {
 
 
   const handleUploadSignedContract = async (e) => {
-  
+
     e.preventDefault();
     try {
-      const formData= new FormData();
+      const formData = new FormData();
       formData.append("proposal_id", projectid);
       formData.append("signed_contract", file);
       console.log(file);
@@ -419,11 +419,11 @@ const PtActions = () => {
         const responsescope = await axios.get(`${get_scope_url}`);
 
         setMyScope(
-					responsescope.data.data.map((scope) => ({
-						value: scope.id,
-						label: scope.sector_name,
-					})),
-				);
+          responsescope.data.data.map((scope) => ({
+            value: scope.id,
+            label: scope.sector_name,
+          })),
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -484,36 +484,36 @@ const PtActions = () => {
   // }
 
   const handleFileF20Change = (file) => {
-		// const selectedFile = e.target.files[0];
-		setF20Name(file);
-	};
+    // const selectedFile = e.target.files[0];
+    setF20Name(file);
+  };
 
-	const handleFileRFPChange = (file) => {
-		// const selectedFile = e.target.files[0];
-		console.log(file);
-		setRfpName(file);
-	};
+  const handleFileRFPChange = (file) => {
+    // const selectedFile = e.target.files[0];
+    console.log(file);
+    setRfpName(file);
+  };
 
-	const handleFileF21Change = (file) => {
-		// const selectedFile = e.target.files[0];
-		setF21Name(file);
-	};
+  const handleFileF21Change = (file) => {
+    // const selectedFile = e.target.files[0];
+    setF21Name(file);
+  };
 
-	const handleFileF23Change = (file) => {
-		// const selectedFile = e.target.files[0];
-		setF23Name(file);
-	};
+  const handleFileF23Change = (file) => {
+    // const selectedFile = e.target.files[0];
+    setF23Name(file);
+  };
 
-	const handleFileCOIChange = (file) => {
-		// const selectedFile = e.target.files[0];
-		setCoiName(file);
-	};
+  const handleFileCOIChange = (file) => {
+    // const selectedFile = e.target.files[0];
+    setCoiName(file);
+  };
 
-	const handleFileOtherChange = (file) => {
-		// const selectedFile = e.target.files[0];
-		setOtherName(file);
-		console.log(othername);
-	};
+  const handleFileOtherChange = (file) => {
+    // const selectedFile = e.target.files[0];
+    setOtherName(file);
+    console.log(othername);
+  };
 
 
   return (
@@ -531,7 +531,7 @@ const PtActions = () => {
               indicator={{ Backgroundcolor: "#07B6AF" }}
               size="large"
             >
-                <Tabs.TabPane
+              <Tabs.TabPane
                 tab={
                   <div className="border-0 shadow-sm textlightgreen rounded-0 px-5 py-2 text-center">
                     <p>Proposal Details</p>
@@ -541,1311 +541,1311 @@ const PtActions = () => {
               >
 
                 {
-                  ( projectstatus==4||projectstatus==3||projectstatus==1) && designation_id ==6?
-                  <form>
-                  <div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="projectname" className="form-label">
-                          Proposal Name<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control borderlightgreen"
-                          id="project_name"
-                          placeholder="Project Name"
-                          required
-                          name="project_name"
-                          value={formData.project_name}
-                          onChange={handleMyProjectChange}
-                          
-                        />
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="eid" className="form-label">
-                          Earthood Id<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control borderlightgreen"
-                          id="earthood_id"
-                          placeholder="Earthood Id"
-                          name="earthood_id"
-                          required
-                          value={formData.earthood_id}
-                          onChange={handleEarthoodIdChange}
-                          
-                        />
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="clientname" className="form-label">
-                          Client Name<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="client_id"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="client_id"
-                            value={formData.client_id}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                client_id: e.target.value,
-                              })
-                            }
-                          
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {clientName.map((option) => (
-                              <option key={option.id} value={option.id}>
-                                {option.name}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                    { }
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label
-                          htmlFor="country"
-                          className="form-label"
-                          required
-                        >
-                          Country<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="country"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="country"
-                            value={formData.country}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                country: e.target.value,
-                              })
-                            }
-                            
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {country.map((option) => (
-                              <option key={option.id} value={option.id}>
-                                {option.name}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Program" className="form-label">
-                          Program<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="program"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="program"
-                            value={formData.program}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                program: e.target.value,
-                              })
-                            }
-                            
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {program.map((option) => (
-                              <option key={option.id} value={option.id}>
-                                {option.program_name}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Program Id" className="form-label">
-                          Program Id<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="program_id"
-                          placeholder="Program Id"
-                          required
-                          name="program_id"
-                          className="form-control borderlightgreen"
-                          value={formData.program_id}
-                          onChange={handleProgramIdChange}
-                          
-                        />
-                      </div>
-                    </div>
-                    { }
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Implementation Fees" className="form-label">
-                          Implementation Fees
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control borderlightgreen"
-                          id="implemented_fees"
-                          placeholder="Implementation Fees"
-                          required
-                          name="implemented_fees"
-                          value={formData.implemented_fees}
-                          onChange={handleFeesChange}
-                          
-                        />
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Proposal Date" className="form-label">
-                          Proposal Date<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control borderlightgreen"
-                          id="proposaldate"
-                          required
-                          name="created_at"
-                          value={formData.created_at}
-                          onChange={handleDateChange}
-                          
-                        />
-                      </div>
-
-                      <div className="col-4 mb-3">
-												<label htmlFor="Scope" className="form-label">
-													Scope<span style={{ color: "red" }}>*</span>
-												</label>
-												{loading ? (
-													<p>Loading...</p>
-												) : (
-													<MultiSelect
-														options={myscope}
-														value={selected}
-														onChange={setSelected}
-														labelledBy="Select"
-														
-													/>
-												)}
-											</div>
-                    </div>
-
-                    { }
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Scope(PO/POA)" className="form-label">
-                          Scope(PO/POA)<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <select
-                          id="scope_pa"
-                          className="form-select borderlightgreen form-select-sm"
-                          aria-label="Default select example"
-                          name="scope_pa"
-                          value={formData.scope_pa}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              scope_pa: e.target.value,
-                            })
-                          }
-                          
-                        >
-                          <option selected>Select</option>
-                          <option value={1}>PO</option>
-                          <option value={2}>POA</option>
-                        </select>
-                      </div>
-                      <div className="col-4 mb-3">
-                        <div>
-                          <label htmlFor="Sectoral Scope" className="form-label">
-                            Sectoral Scope
-                            <span style={{ color: "red" }}>*</span>
-                          </label>
-
-                          {loading ? (
-                            <p>Loading...</p>
-                          ) : (
-                            <select
-                              id="sectoral_scope"
-                              className="form-select borderlightgreen form-select-sm"
-                              aria-label="Default select example"
-                              name="sectoral_scope"
-                              value={formData.sectoral_scope}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  sectoral_scope: e.target.value,
-                                })
-                              }
-                             
-                            >
-                              <option selected value={""}>
-                                Select
-                              </option>
-                              {sectoralScope.map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.scope}
-                                </option>
-                              ))}
-                            </select>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-4 mb-3">
-                        <div>
-                          <label htmlFor="Sectoral Scope" className="form-label">
-                            SBU Head<span style={{ color: "red" }}>*</span>
-                          </label>
-
-                          {loading ? (
-                            <p>Loading...</p>
-                          ) : (
-                            <select
-                              id="sbu_head"
-                              className="form-select borderlightgreen form-select-sm"
-                              aria-label="Default select example"
-                              name="sbu_head"
+                  (projectstatus == 4 || projectstatus == 3 || projectstatus == 1) && designation_id == 6 ?
+                    <form>
+                      <div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
+                        <div className="row">
+                          <div className="col-4 mb-3">
+                            <label htmlFor="projectname" className="form-label">
+                              Proposal Name<span style={{ color: "red" }}>*</span>
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control borderlightgreen"
+                              id="project_name"
+                              placeholder="Project Name"
                               required
-                              value={formData.sbu_head}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  sbu_head: e.target.value,
-                                })
-                              }
-                             
-                            >
-                              <option selected value={""}>
-                                Select
-                              </option>
-                              {atlist
-                                .filter((option) => option.designation_id === 9)
-                                .map((option) => (
+                              name="project_name"
+                              value={formData.project_name}
+                              onChange={handleMyProjectChange}
+
+                            />
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="eid" className="form-label">
+                              Earthood Id<span style={{ color: "red" }}>*</span>
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control borderlightgreen"
+                              id="earthood_id"
+                              placeholder="Earthood Id"
+                              name="earthood_id"
+                              required
+                              value={formData.earthood_id}
+                              onChange={handleEarthoodIdChange}
+
+                            />
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="clientname" className="form-label">
+                              Client Name<span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="client_id"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="client_id"
+                                value={formData.client_id}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    client_id: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {clientName.map((option) => (
                                   <option key={option.id} value={option.id}>
                                     {option.name}
                                   </option>
                                 ))}
-                            </select>
-                          )}
+                              </select>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </div>
-
-                    { }
-                    <p className="textlightgreen fw-bold m-3">
-                      Assessment Team
-                    </p>
-                    <hr />
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="teamleader" className="form-label">
-                          Team Leader<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="team_leader"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="team_leader"
-                            required
-                            value={formData.team_leader}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                team_leader: e.target.value,
-                              })
-                            }
-                         
-                          >
-                            <option selected value={""}>
-                              Select 
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="taexpert" className="form-label">
-                          Select TA Expert
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="ta_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="ta_expert"
-                            required
-                            value={formData.ta_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                ta_expert: e.target.value,
-                              })
-                            }
-                           
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="validator" className="form-label">
-                          Validator
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="validator_verifier"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="validator_verifier"
-                            value={formData.validator_verifier}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                validator_verifier: e.target.value,
-                              })
-                            }
-                            
-                          >
-                            <option selected value={""}>
-                              Select 
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="financeexpert" className="form-label">
-                          Finance Expert
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="finance_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="finance_expert"
-                            value={formData.finance_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                finance_expert: e.target.value,
-                              })
-                            }
-                           
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="teamleader" className="form-label">
-                          Local Expert<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="local_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="local_expert"
-                            value={formData.local_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                local_expert: e.target.value,
-                              })
-                            }
-                            
-                            required
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="methexpert" className="form-label">
-                          Meth Expert
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="meth_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="meth_expert"
-                            value={formData.meth_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                meth_expert: e.target.value,
-                              })
-                            }
-                            
-                          >
-                            <option selected value={""}>
-                              Select 
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="taexpert" className="form-label">
-                          Trainee Validator
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="trainee_validator"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="trainee_validator"
-                            value={formData.trainee_validator}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                trainee_validator: e.target.value,
-                              })
-                            }
-                           
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="technicalreviewer" className="form-label">
-                          Technical Reviewer
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="technical_reviewer"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="technical_reviewer"
-                            required
-                            value={formData.technical_reviewer}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                technical_reviewer: e.target.value,
-                              })
-                            }
-                           
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 7)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="technicalreviewer" className="form-label">
-                          Expert to Technical Reviewer
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="expert_tr"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="expert_tr"
-                            required
-                            value={formData.expert_tr}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                expert_tr: e.target.value,
-                              })
-                            }
-                           
-                          >
-                            <option selected value={""}>
-                              Select 
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 7)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                :(
-                  <form>
-                  <div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="projectname" className="form-label">
-                          Project Name<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control borderlightgreen"
-                          id="project_name"
-                          placeholder="Project Name"
-                          required
-                          name="project_name"
-                          value={formData.project_name}
-                          onChange={handleMyProjectChange}
-                          readOnly
-                          disabled
-                        />
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="eid" className="form-label">
-                          Earthood Id<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control borderlightgreen"
-                          id="earthood_id"
-                          placeholder="Earthood Id"
-                          name="earthood_id"
-                          required
-                          value={formData.earthood_id}
-                          onChange={handleEarthoodIdChange}
-                          readOnly
-                          disabled
-                        />
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="clientname" className="form-label">
-                          Client Name<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="client_id"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="client_id"
-                            value={formData.client_id}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                client_id: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select 
-                            </option>
-                            {clientName.map((option) => (
-                              <option key={option.id} value={option.id}>
-                                {option.name}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                    { }
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label
-                          htmlFor="country"
-                          className="form-label"
-                          required
-                        >
-                          Country<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="country"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="country"
-                            value={formData.country}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                country: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {country.map((option) => (
-                              <option key={option.id} value={option.id}>
-                                {option.name}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Program" className="form-label">
-                          Program<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="program"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="program"
-                            value={formData.program}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                program: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {program.map((option) => (
-                              <option key={option.id} value={option.id}>
-                                {option.program_name}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Program Id" className="form-label">
-                          Program Id<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="program_id"
-                          placeholder="Program Id"
-                          required
-                          name="program_id"
-                          className="form-control borderlightgreen"
-                          value={formData.program_id}
-                          onChange={handleProgramIdChange}
-                          readOnly
-                          disabled
-                        />
-                      </div>
-                    </div>
-                    { }
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Implementation Fees" className="form-label">
-                          Implementation Fees
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control borderlightgreen"
-                          id="implemented_fees"
-                          placeholder="Implementation Fees"
-                          required
-                          name="implemented_fees"
-                          value={formData.implemented_fees}
-                          onChange={handleFeesChange}
-                          readOnly
-                          disabled
-                        />
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Proposal Date" className="form-label">
-                          Proposal Date<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control borderlightgreen"
-                          id="proposaldate"
-                          required
-                          name="created_at"
-                          value={formData.created_at}
-                          onChange={handleDateChange}
-                          readOnly
-                          disabled
-                        />
-                      </div>
-
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Scope" className="form-label">
-                          Scope<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          // <Select
-                          //   mode="multiple"
-                          //   style={{ width: "100%" }}
-                          //   placeholder="Select"
-                          //   value={formData.scope}
-                          //   allowClear
-                          //   disabled
-                          //   onChange={(selectedValues) =>
-                          //     setFormData({
-                          //       ...formData,
-                          //       scope: selectedValues,
-                          //     })
-                          //   }
-                          // >
-                          //   {myscope.map((option) => (
-                          //     <Option key={option.id} value={option.id}>
-                          //       {option.sector_name}
-                          //     </Option>
-                          //   ))}
-                          // </Select>
-                          <MultiSelect
-														options={myscope}
-														value={selected}
-														onChange={setSelected}
-														labelledBy="Select"
-                            disabled
-													/>
-                        )}
-                      </div>
-                    </div>
-
-                    { }
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="Scope(PO/POA)" className="form-label">
-                          Scope(PO/POA)<span style={{ color: "red" }}>*</span>
-                        </label>
-                        <select
-                          id="scope_pa"
-                          className="form-select borderlightgreen form-select-sm"
-                          aria-label="Default select example"
-                          name="scope_pa"
-                          value={formData.scope_pa}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              scope_pa: e.target.value,
-                            })
-                          }
-                          disabled
-                        >
-                          <option selected>Select</option>
-                          <option value={1}>PO</option>
-                          <option value={2}>POA</option>
-                        </select>
-                      </div>
-                      <div className="col-4 mb-3">
-                        <div>
-                          <label htmlFor="Sectoral Scope" className="form-label">
-                            Sectoral Scope
-                            <span style={{ color: "red" }}>*</span>
-                          </label>
-
-                          {loading ? (
-                            <p>Loading...</p>
-                          ) : (
-                            <select
-                              id="sectoral_scope"
-                              className="form-select borderlightgreen form-select-sm"
-                              aria-label="Default select example"
-                              name="sectoral_scope"
-                              value={formData.sectoral_scope}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  sectoral_scope: e.target.value,
-                                })
-                              }
-                              disabled
-                            >
-                              <option selected value={""}>
-                                Select
-                              </option>
-                              {sectoralScope.map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.scope}
-                                </option>
-                              ))}
-                            </select>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-4 mb-3">
-                        <div>
-                          <label htmlFor="Sectoral Scope" className="form-label">
-                            SBU Head<span style={{ color: "red" }}>*</span>
-                          </label>
-
-                          {loading ? (
-                            <p>Loading...</p>
-                          ) : (
-                            <select
-                              id="sbu_head"
-                              className="form-select borderlightgreen form-select-sm"
-                              aria-label="Default select example"
-                              name="sbu_head"
+                        { }
+                        <div className="row">
+                          <div className="col-4 mb-3">
+                            <label
+                              htmlFor="country"
+                              className="form-label"
                               required
-                              value={formData.sbu_head}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  sbu_head: e.target.value,
-                                })
-                              }
-                              disabled
                             >
-                              <option selected value={""}>
-                                Select
-                              </option>
-                              {atlist
-                                .filter((option) => option.designation_id === 9)
-                                .map((option) => (
+                              Country<span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="country"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="country"
+                                value={formData.country}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    country: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {country.map((option) => (
                                   <option key={option.id} value={option.id}>
                                     {option.name}
                                   </option>
                                 ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="Program" className="form-label">
+                              Program<span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="program"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="program"
+                                value={formData.program}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    program: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {program.map((option) => (
+                                  <option key={option.id} value={option.id}>
+                                    {option.program_name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="Program Id" className="form-label">
+                              Program Id<span style={{ color: "red" }}>*</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="program_id"
+                              placeholder="Program Id"
+                              required
+                              name="program_id"
+                              className="form-control borderlightgreen"
+                              value={formData.program_id}
+                              onChange={handleProgramIdChange}
+
+                            />
+                          </div>
+                        </div>
+                        { }
+                        <div className="row">
+                          <div className="col-4 mb-3">
+                            <label htmlFor="Implementation Fees" className="form-label">
+                              Implementation Fees
+                              <span style={{ color: "red" }}>*</span>
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control borderlightgreen"
+                              id="implemented_fees"
+                              placeholder="Implementation Fees"
+                              required
+                              name="implemented_fees"
+                              value={formData.implemented_fees}
+                              onChange={handleFeesChange}
+
+                            />
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="Proposal Date" className="form-label">
+                              Proposal Date<span style={{ color: "red" }}>*</span>
+                            </label>
+                            <input
+                              type="date"
+                              className="form-control borderlightgreen"
+                              id="proposaldate"
+                              required
+                              name="created_at"
+                              value={formData.created_at}
+                              onChange={handleDateChange}
+
+                            />
+                          </div>
+
+                          <div className="col-4 mb-3">
+                            <label htmlFor="Scope" className="form-label">
+                              Scope<span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <MultiSelect
+                                options={myscope}
+                                value={selected}
+                                onChange={setSelected}
+                                labelledBy="Select"
+
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        { }
+                        <div className="row">
+                          <div className="col-4 mb-3">
+                            <label htmlFor="Scope(PO/POA)" className="form-label">
+                              Scope(PO/POA)<span style={{ color: "red" }}>*</span>
+                            </label>
+                            <select
+                              id="scope_pa"
+                              className="form-select borderlightgreen form-select-sm"
+                              aria-label="Default select example"
+                              name="scope_pa"
+                              value={formData.scope_pa}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  scope_pa: e.target.value,
+                                })
+                              }
+
+                            >
+                              <option selected>Select</option>
+                              <option value={1}>PO</option>
+                              <option value={2}>POA</option>
                             </select>
-                          )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <div>
+                              <label htmlFor="Sectoral Scope" className="form-label">
+                                Sectoral Scope
+                                <span style={{ color: "red" }}>*</span>
+                              </label>
+
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="sectoral_scope"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="sectoral_scope"
+                                  value={formData.sectoral_scope}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      sectoral_scope: e.target.value,
+                                    })
+                                  }
+
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {sectoralScope.map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.scope}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-4 mb-3">
+                            <div>
+                              <label htmlFor="Sectoral Scope" className="form-label">
+                                SBU Head<span style={{ color: "red" }}>*</span>
+                              </label>
+
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="sbu_head"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="sbu_head"
+                                  required
+                                  value={formData.sbu_head}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      sbu_head: e.target.value,
+                                    })
+                                  }
+
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 9)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        { }
+                        <p className="textlightgreen fw-bold m-3">
+                          Assessment Team
+                        </p>
+                        <hr />
+                        <div className="row">
+                          <div className="col-4 mb-3">
+                            <label htmlFor="teamleader" className="form-label">
+                              Team Leader<span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="team_leader"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="team_leader"
+                                required
+                                value={formData.team_leader}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    team_leader: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 8)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="taexpert" className="form-label">
+                              Select TA Expert
+                              <span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="ta_expert"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="ta_expert"
+                                required
+                                value={formData.ta_expert}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    ta_expert: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 8)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="validator" className="form-label">
+                              Validator
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="validator_verifier"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="validator_verifier"
+                                value={formData.validator_verifier}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    validator_verifier: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 8)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-4 mb-3">
+                            <label htmlFor="financeexpert" className="form-label">
+                              Finance Expert
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="finance_expert"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="finance_expert"
+                                value={formData.finance_expert}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    finance_expert: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 8)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="teamleader" className="form-label">
+                              Local Expert<span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="local_expert"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="local_expert"
+                                value={formData.local_expert}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    local_expert: e.target.value,
+                                  })
+                                }
+
+                                required
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 8)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="methexpert" className="form-label">
+                              Meth Expert
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="meth_expert"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="meth_expert"
+                                value={formData.meth_expert}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    meth_expert: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 8)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-4 mb-3">
+                            <label htmlFor="taexpert" className="form-label">
+                              Trainee Validator
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="trainee_validator"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="trainee_validator"
+                                value={formData.trainee_validator}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    trainee_validator: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 8)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="technicalreviewer" className="form-label">
+                              Technical Reviewer
+                              <span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="technical_reviewer"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="technical_reviewer"
+                                required
+                                value={formData.technical_reviewer}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    technical_reviewer: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 7)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
+                          <div className="col-4 mb-3">
+                            <label htmlFor="technicalreviewer" className="form-label">
+                              Expert to Technical Reviewer
+                              <span style={{ color: "red" }}>*</span>
+                            </label>
+                            {loading ? (
+                              <p>Loading...</p>
+                            ) : (
+                              <select
+                                id="expert_tr"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="expert_tr"
+                                required
+                                value={formData.expert_tr}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    expert_tr: e.target.value,
+                                  })
+                                }
+
+                              >
+                                <option selected value={""}>
+                                  Select
+                                </option>
+                                {atlist
+                                  .filter((option) => option.designation_id === 7)
+                                  .map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
+                    : (
+                      <form>
+                        <div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
+                          <div className="row">
+                            <div className="col-4 mb-3">
+                              <label htmlFor="projectname" className="form-label">
+                                Project Name<span style={{ color: "red" }}>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control borderlightgreen"
+                                id="project_name"
+                                placeholder="Project Name"
+                                required
+                                name="project_name"
+                                value={formData.project_name}
+                                onChange={handleMyProjectChange}
+                                readOnly
+                                disabled
+                              />
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="eid" className="form-label">
+                                Earthood Id<span style={{ color: "red" }}>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control borderlightgreen"
+                                id="earthood_id"
+                                placeholder="Earthood Id"
+                                name="earthood_id"
+                                required
+                                value={formData.earthood_id}
+                                onChange={handleEarthoodIdChange}
+                                readOnly
+                                disabled
+                              />
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="clientname" className="form-label">
+                                Client Name<span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="client_id"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="client_id"
+                                  value={formData.client_id}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      client_id: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {clientName.map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                            </div>
+                          </div>
+                          { }
+                          <div className="row">
+                            <div className="col-4 mb-3">
+                              <label
+                                htmlFor="country"
+                                className="form-label"
+                                required
+                              >
+                                Country<span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="country"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="country"
+                                  value={formData.country}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      country: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {country.map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="Program" className="form-label">
+                                Program<span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="program"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="program"
+                                  value={formData.program}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      program: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {program.map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.program_name}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="Program Id" className="form-label">
+                                Program Id<span style={{ color: "red" }}>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                id="program_id"
+                                placeholder="Program Id"
+                                required
+                                name="program_id"
+                                className="form-control borderlightgreen"
+                                value={formData.program_id}
+                                onChange={handleProgramIdChange}
+                                readOnly
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          { }
+                          <div className="row">
+                            <div className="col-4 mb-3">
+                              <label htmlFor="Implementation Fees" className="form-label">
+                                Implementation Fees
+                                <span style={{ color: "red" }}>*</span>
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control borderlightgreen"
+                                id="implemented_fees"
+                                placeholder="Implementation Fees"
+                                required
+                                name="implemented_fees"
+                                value={formData.implemented_fees}
+                                onChange={handleFeesChange}
+                                readOnly
+                                disabled
+                              />
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="Proposal Date" className="form-label">
+                                Proposal Date<span style={{ color: "red" }}>*</span>
+                              </label>
+                              <input
+                                type="date"
+                                className="form-control borderlightgreen"
+                                id="proposaldate"
+                                required
+                                name="created_at"
+                                value={formData.created_at}
+                                onChange={handleDateChange}
+                                readOnly
+                                disabled
+                              />
+                            </div>
 
-                    { }
-                    <p className="textlightgreen fw-bold m-3">
-                      Assessment Team
-                    </p>
-                    <hr />
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="teamleader" className="form-label">
-                          Team Leader<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="team_leader"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="team_leader"
-                            required
-                            value={formData.team_leader}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                team_leader: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="taexpert" className="form-label">
-                          Select TA Expert
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="ta_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="ta_expert"
-                            required
-                            value={formData.ta_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                ta_expert: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="validator" className="form-label">
-                          Validator
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="validator_verifier"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="validator_verifier"
-                            value={formData.validator_verifier}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                validator_verifier: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="financeexpert" className="form-label">
-                          Finance Expert
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="finance_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="finance_expert"
-                            value={formData.finance_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                finance_expert: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select 
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="teamleader" className="form-label">
-                          Local Expert<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="local_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="local_expert"
-                            value={formData.local_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                local_expert: e.target.value,
-                              })
-                            }
-                            disabled
-                            required
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="methexpert" className="form-label">
-                          Meth Expert
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="meth_expert"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="meth_expert"
-                            value={formData.meth_expert}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                meth_expert: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-4 mb-3">
-                        <label htmlFor="taexpert" className="form-label">
-                          Trainee Validator
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="trainee_validator"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="trainee_validator"
-                            value={formData.trainee_validator}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                trainee_validator: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 8)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="technicalreviewer" className="form-label">
-                          Technical Reviewer
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="technical_reviewer"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="technical_reviewer"
-                            required
-                            value={formData.technical_reviewer}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                technical_reviewer: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 7)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-4 mb-3">
-                        <label htmlFor="technicalreviewer" className="form-label">
-                          Expert to Technical Reviewer
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <select
-                            id="expert_tr"
-                            className="form-select borderlightgreen form-select-sm"
-                            aria-label="Default select example"
-                            name="expert_tr"
-                            required
-                            value={formData.expert_tr}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                expert_tr: e.target.value,
-                              })
-                            }
-                            disabled
-                          >
-                            <option selected value={""}>
-                              Select 
-                            </option>
-                            {atlist
-                              .filter((option) => option.designation_id === 7)
-                              .map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                )
+                            <div className="col-4 mb-3">
+                              <label htmlFor="Scope" className="form-label">
+                                Scope<span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                // <Select
+                                //   mode="multiple"
+                                //   style={{ width: "100%" }}
+                                //   placeholder="Select"
+                                //   value={formData.scope}
+                                //   allowClear
+                                //   disabled
+                                //   onChange={(selectedValues) =>
+                                //     setFormData({
+                                //       ...formData,
+                                //       scope: selectedValues,
+                                //     })
+                                //   }
+                                // >
+                                //   {myscope.map((option) => (
+                                //     <Option key={option.id} value={option.id}>
+                                //       {option.sector_name}
+                                //     </Option>
+                                //   ))}
+                                // </Select>
+                                <MultiSelect
+                                  options={myscope}
+                                  value={selected}
+                                  onChange={setSelected}
+                                  labelledBy="Select"
+                                  disabled
+                                />
+                              )}
+                            </div>
+                          </div>
+
+                          { }
+                          <div className="row">
+                            <div className="col-4 mb-3">
+                              <label htmlFor="Scope(PO/POA)" className="form-label">
+                                Scope(PO/POA)<span style={{ color: "red" }}>*</span>
+                              </label>
+                              <select
+                                id="scope_pa"
+                                className="form-select borderlightgreen form-select-sm"
+                                aria-label="Default select example"
+                                name="scope_pa"
+                                value={formData.scope_pa}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    scope_pa: e.target.value,
+                                  })
+                                }
+                                disabled
+                              >
+                                <option selected>Select</option>
+                                <option value={1}>PO</option>
+                                <option value={2}>POA</option>
+                              </select>
+                            </div>
+                            <div className="col-4 mb-3">
+                              <div>
+                                <label htmlFor="Sectoral Scope" className="form-label">
+                                  Sectoral Scope
+                                  <span style={{ color: "red" }}>*</span>
+                                </label>
+
+                                {loading ? (
+                                  <p>Loading...</p>
+                                ) : (
+                                  <select
+                                    id="sectoral_scope"
+                                    className="form-select borderlightgreen form-select-sm"
+                                    aria-label="Default select example"
+                                    name="sectoral_scope"
+                                    value={formData.sectoral_scope}
+                                    onChange={(e) =>
+                                      setFormData({
+                                        ...formData,
+                                        sectoral_scope: e.target.value,
+                                      })
+                                    }
+                                    disabled
+                                  >
+                                    <option selected value={""}>
+                                      Select
+                                    </option>
+                                    {sectoralScope.map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.scope}
+                                      </option>
+                                    ))}
+                                  </select>
+                                )}
+                              </div>
+                            </div>
+                            <div className="col-4 mb-3">
+                              <div>
+                                <label htmlFor="Sectoral Scope" className="form-label">
+                                  SBU Head<span style={{ color: "red" }}>*</span>
+                                </label>
+
+                                {loading ? (
+                                  <p>Loading...</p>
+                                ) : (
+                                  <select
+                                    id="sbu_head"
+                                    className="form-select borderlightgreen form-select-sm"
+                                    aria-label="Default select example"
+                                    name="sbu_head"
+                                    required
+                                    value={formData.sbu_head}
+                                    onChange={(e) =>
+                                      setFormData({
+                                        ...formData,
+                                        sbu_head: e.target.value,
+                                      })
+                                    }
+                                    disabled
+                                  >
+                                    <option selected value={""}>
+                                      Select
+                                    </option>
+                                    {atlist
+                                      .filter((option) => option.designation_id === 9)
+                                      .map((option) => (
+                                        <option key={option.id} value={option.id}>
+                                          {option.name}
+                                        </option>
+                                      ))}
+                                  </select>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          { }
+                          <p className="textlightgreen fw-bold m-3">
+                            Assessment Team
+                          </p>
+                          <hr />
+                          <div className="row">
+                            <div className="col-4 mb-3">
+                              <label htmlFor="teamleader" className="form-label">
+                                Team Leader<span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="team_leader"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="team_leader"
+                                  required
+                                  value={formData.team_leader}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      team_leader: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 8)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="taexpert" className="form-label">
+                                Select TA Expert
+                                <span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="ta_expert"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="ta_expert"
+                                  required
+                                  value={formData.ta_expert}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      ta_expert: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 8)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="validator" className="form-label">
+                                Validator
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="validator_verifier"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="validator_verifier"
+                                  value={formData.validator_verifier}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      validator_verifier: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 8)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-4 mb-3">
+                              <label htmlFor="financeexpert" className="form-label">
+                                Finance Expert
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="finance_expert"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="finance_expert"
+                                  value={formData.finance_expert}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      finance_expert: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 8)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="teamleader" className="form-label">
+                                Local Expert<span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="local_expert"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="local_expert"
+                                  value={formData.local_expert}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      local_expert: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                  required
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 8)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="methexpert" className="form-label">
+                                Meth Expert
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="meth_expert"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="meth_expert"
+                                  value={formData.meth_expert}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      meth_expert: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 8)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-4 mb-3">
+                              <label htmlFor="taexpert" className="form-label">
+                                Trainee Validator
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="trainee_validator"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="trainee_validator"
+                                  value={formData.trainee_validator}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      trainee_validator: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 8)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="technicalreviewer" className="form-label">
+                                Technical Reviewer
+                                <span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="technical_reviewer"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="technical_reviewer"
+                                  required
+                                  value={formData.technical_reviewer}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      technical_reviewer: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 7)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                            <div className="col-4 mb-3">
+                              <label htmlFor="technicalreviewer" className="form-label">
+                                Expert to Technical Reviewer
+                                <span style={{ color: "red" }}>*</span>
+                              </label>
+                              {loading ? (
+                                <p>Loading...</p>
+                              ) : (
+                                <select
+                                  id="expert_tr"
+                                  className="form-select borderlightgreen form-select-sm"
+                                  aria-label="Default select example"
+                                  name="expert_tr"
+                                  required
+                                  value={formData.expert_tr}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      expert_tr: e.target.value,
+                                    })
+                                  }
+                                  disabled
+                                >
+                                  <option selected value={""}>
+                                    Select
+                                  </option>
+                                  {atlist
+                                    .filter((option) => option.designation_id === 7)
+                                    .map((option) => (
+                                      <option key={option.id} value={option.id}>
+                                        {option.name}
+                                      </option>
+                                    ))}
+                                </select>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    )
                 }
 
 
                 <div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
-                  {(projectstatus == 1 || projectstatus == 4)&& designation_id==3 ? (
+                  {(projectstatus <5) && designation_id == 3 ? (
                     <>
                       <div>
                         <label>Actions :</label>
@@ -1928,26 +1928,28 @@ const PtActions = () => {
                           </label>
                         </span>
                       </div>
-                      <div class="mt-3 mb-3" style={{ display: "flex" }}>
-                        <label>Remarks :</label>
-                        <textarea
-                          placeholder="Add Remarks"
-                          className="form-control"
-                          style={{ width: "70%", marginLeft: "10px" }}
-                          id="exampleFormControlTextarea1"
-                          rows={3}
-                          value={remarks}
-                          onChange={handleRemarksChange}
-                          disabled
-                        ></textarea>
-                      </div>
+                      
+                          <div class="mt-3 mb-3" style={{ display: "flex" }}>
+                            <label>Remarks :</label>
+                            <textarea
+                              placeholder="Add Remarks"
+                              className="form-control"
+                              style={{ width: "70%", marginLeft: "10px" }}
+                              id="exampleFormControlTextarea1"
+                              rows={3}
+                              value={remarks}
+                              onChange={handleRemarksChange}
+                              disabled
+                            ></textarea>
+                          </div>
+
                       <button
-                                className="btn btn-outline-primary"
-                                onClick={handleApproved}
-                                style={{display:'none' }}
-                              >
-                                Submit
-                              </button>
+                        className="btn btn-outline-primary"
+                        onClick={handleApproved}
+                        style={{ display: 'none' }}
+                      >
+                        Submit
+                      </button>
                     </>
                   )}
                 </div>
@@ -1962,7 +1964,7 @@ const PtActions = () => {
               >
                 <div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
 
-                  { projectstatus == 3&& designation_id==6 ?
+                  {projectstatus == 3 && designation_id == 6 ?
                     <form
                       onSubmit={handleSubmitFiles}
                       method="POST"
@@ -1980,17 +1982,17 @@ const PtActions = () => {
                           <tr>
                             <td>RFP Document</td>
                             <td>
-                            <FileUploader
-															handleChange={handleFileRFPChange}
-															// onDrop={handleDropRfp}
-															name="rfp_doc"
-															types={fileTypes}
-															multiple="false"
-															// required
-														/>
-														<span>
-															{rfpname && `File name: ${rfpname[0].name}`}
-														</span>
+                              <FileUploader
+                                handleChange={handleFileRFPChange}
+                                // onDrop={handleDropRfp}
+                                name="rfp_doc"
+                                types={fileTypes}
+                                multiple="false"
+                              // required
+                              />
+                              <span>
+                                {rfpname && `File name: ${rfpname[0].name}`}
+                              </span>
 
                             </td>
                             <td>
@@ -2002,16 +2004,16 @@ const PtActions = () => {
                           <tr>
                             <td>F20 Document</td>
                             <td>
-                             <FileUploader
-															handleChange={handleFileF20Change}
-															name="f20_doc"
-															types={fileTypes}
-															multiple="false"
-															// required
-														/>
-														<span>
-															{f20name && `File name: ${f20name[0].name}`}
-														</span>
+                              <FileUploader
+                                handleChange={handleFileF20Change}
+                                name="f20_doc"
+                                types={fileTypes}
+                                multiple="false"
+                              // required
+                              />
+                              <span>
+                                {f20name && `File name: ${f20name[0].name}`}
+                              </span>
 
                             </td>
                             <td>
@@ -2023,16 +2025,16 @@ const PtActions = () => {
                           <tr>
                             <td>F21 Document</td>
                             <td>
-                            <FileUploader
-															handleChange={handleFileF21Change}
-															name="f21_doc"
-															types={fileTypes}
-															multiple="false"
-															// required
-														/>
-														<span>
-															{f21name && `File name: ${f21name[0].name}`}
-														</span>
+                              <FileUploader
+                                handleChange={handleFileF21Change}
+                                name="f21_doc"
+                                types={fileTypes}
+                                multiple="false"
+                              // required
+                              />
+                              <span>
+                                {f21name && `File name: ${f21name[0].name}`}
+                              </span>
                             </td>
                             <td>
                               <a target="_blank" href={f21name}>
@@ -2043,16 +2045,16 @@ const PtActions = () => {
                           <tr>
                             <td>F23 Document</td>
                             <td>
-                            <FileUploader
-															handleChange={handleFileF23Change}
-															name="f23_doc"
-															types={fileTypes}
-															multiple="false"
-															// required
-														/>
-														<span>
-															{f23name && `File name: ${f23name[0].name}`}
-														</span>
+                              <FileUploader
+                                handleChange={handleFileF23Change}
+                                name="f23_doc"
+                                types={fileTypes}
+                                multiple="false"
+                              // required
+                              />
+                              <span>
+                                {f23name && `File name: ${f23name[0].name}`}
+                              </span>
                             </td>
                             <td>
                               <a target="_blank" href={f23name}>
@@ -2064,16 +2066,16 @@ const PtActions = () => {
                             <td>COI Document</td>
 
                             <td>
-                            <FileUploader
-															handleChange={handleFileCOIChange}
-															name="coi_doc"
-															types={fileTypes}
-															multiple="false"
-															// required
-														/>
-														<span>
-															{coiname && `File name: ${coiname[0].name}`}
-														</span>
+                              <FileUploader
+                                handleChange={handleFileCOIChange}
+                                name="coi_doc"
+                                types={fileTypes}
+                                multiple="false"
+                              // required
+                              />
+                              <span>
+                                {coiname && `File name: ${coiname[0].name}`}
+                              </span>
                             </td>
                             <td>
                               <a target="_blank" href={coiname}>
@@ -2087,16 +2089,16 @@ const PtActions = () => {
                             <td>Other Documents</td>
 
                             <td>
-                            <FileUploader
-															handleChange={handleFileOtherChange}
-															name="other_doc"
-															types={fileTypes}
-															// multiple={true}
-															// required
-														/>
-														<span>
-															{othername && `File name: ${othername[0].name}`}
-														</span>
+                              <FileUploader
+                                handleChange={handleFileOtherChange}
+                                name="other_doc"
+                                types={fileTypes}
+                              // multiple={true}
+                              // required
+                              />
+                              <span>
+                                {othername && `File name: ${othername[0].name}`}
+                              </span>
                             </td>
                             <td>
                               <a target="_blank" href={othername}>
@@ -2184,201 +2186,201 @@ const PtActions = () => {
                 </div>
               </Tabs.TabPane>
               {/* Sales Action */}
-              {projectstatus == 5 || projectstatus > 5 ? (
+              {(projectstatus == 5 || projectstatus > 5) && (designation_id > 4) ? (
                 <>
-                 <Tabs.TabPane
-                tab={
-                  <div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
-                    <p>Action</p>
-                  </div>
-                }
-                key="3"
-              >
-                <div className="col-10 border-0 bg-white p-5 mx-auto">
-                  {projectstatus == 5 ? (
-                    <>
-
-                      <div class="mt-3 mb-3 d-grid">
-                        <label>PT Remarks </label>
-                        
-                        <ReactQuill
-                          theme="snow"
-                          value={ptremarks}
-                          onChange={handlePtRemarksChange}
-                        />
+                  <Tabs.TabPane
+                    tab={
+                      <div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
+                        <p>Action</p>
                       </div>
-                      <button
-                        className="btn btn-outline-primary mt-5"
-                        onClick={handleSubmitPtToSales}
-                      >
-                        Forward to Sales
-                      </button>
-                    </>
-                  ) : (projectstatus == 6 && designation_id == 5) ? (
-                    <>
-                      <div class="mt-3 mb-3 d-grid">
-                        <label>PT Remarks </label>
-                        <ReactQuill
-                          theme="snow"
-                          value={ptremarks}
-                          // onChange={handlePtRemarksChange}
-                          modules={{ toolbar: false }}
-                          readOnly={true}
-                          
-                          dangerouslySetInnerHTML={{ __html: ptremarks }}
-                        />
-                        
-                      </div>
-                      <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
-                        <label>Sales Remarks </label>
-                      
-                        <ReactQuill theme="snow" value={stremarks} onChange={handleStRemarksChange} />
-                      </div>
-                      <button
-                        className="btn btn-outline-primary mt-5"
-                        onClick={handleForwardClient}
-                      >
-                        Forward to Client
-                      </button>
-                    </>
-                  ) : (projectstatus == 6) ? (
-                    <>
-                      <div class="mt-3 mb-3 d-grid">
-                        <label>PT Remarks </label>
-                        
-                        <ReactQuill
-                          theme="snow"
-                          value={ptremarks}
-                          // onChange={handlePtRemarksChange}
-                          modules={{ toolbar: false }}
-                          readOnly={true}
-                          
-                          dangerouslySetInnerHTML={{ __html: ptremarks }}
-                        />
-                      </div>
-                    </>
-                  )
-                    : (projectstatus == 7 && designation_id == 5) ? (
-                      <>
-                        <div class="mt-3 mb-3 d-grid">
-                          <label>PT Remarks </label>
-                          <ReactQuill
-                          theme="snow"
-                          value={ptremarks}
-                          // onChange={handlePtRemarksChange}
-                          modules={{ toolbar: false }}
-                          readOnly={true}
-                          
-                          dangerouslySetInnerHTML={{ __html: ptremarks }}
-                        />
-                        </div>
-                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
-                          <label>Sales Remarks </label>
-                          <ReactQuill
-                          theme="snow"
-                          value={stremarks}
-                          // onChange={handlePtRemarksChange}
-                          modules={{ toolbar: false }}
-                          readOnly={true}
-                          
-                          dangerouslySetInnerHTML={{ __html: stremarks }}
-                        />
-                        </div>
-                        <form encType="multipart/form-data" onSubmit={handleUploadSignedContract}>
-                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
-                          <label>Upload Signed Contract </label>
-                          <FileUploader handleChange={handleFileChange} name="signed_contract" types={fileTypes}
-                           mutiple={false} />
-                           <span>
-                            {file &&`file name : ${file.name}`}
-                           </span>
-                          
-                        </div>
-                        <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
-                          <label>Add Remarks </label>
-                        
-                          <ReactQuill theme="snow" value={contractremarks} onChange={handleContractRemarksChange} />
-                        </div>
-                        <button
-                          className="btn btn-outline-primary mt-5"
-                          // onClick={handleUploadSignedContract}
-                          type="submit"
-                        >
-                          Submit
-                        </button>
-                        </form>
-                       
-                      </>
-                    ) : (projectstatus == 8 && designation_id == 5) ? (
-                      <>
-                        <div class="mt-3 mb-3 d-grid">
-                          <label>PT Remarks </label>
-                          <ReactQuill
-                          theme="snow"
-                          value={ptremarks}
-                          // onChange={handlePtRemarksChange}
-                          modules={{ toolbar: false }}
-                          readOnly={true}
-                          
-                          dangerouslySetInnerHTML={{ __html: ptremarks }}
-                        />
-                        </div>
-                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
-                          <label>Sales Remarks </label>
-                          <ReactQuill
-                          theme="snow"
-                          value={stremarks}
-                          onChange={handlePtRemarksChange}
-                          modules={{ toolbar: false }}
-                          readOnly={true}
-                          
-                          dangerouslySetInnerHTML={{ __html: stremarks }}
-                        />
-                        </div>
-                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
-                          <label>Uploaded Signed Contract </label>
-                         <p className="mt-3"><a href={signedFileName} target="_blank" rel="noopener noreferrer" style={{color:"green"}}>{file}</a></p>
-                        
-                        </div>
-                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
-                          <label>Add Remarks </label>
-                          <ReactQuill
-                          theme="snow"
-                          value={contractremarks}
-                          // onChange={handlePtRemarksChange}
-                          modules={{ toolbar: false }}
-                          readOnly={true}
-                          
-                          dangerouslySetInnerHTML={{ __html: contractremarks }}
-                        />
-                          {/* <ReactQuill theme="snow" value={contractremarks} onChange={setValue} /> */}
-                        </div>
-                      </>
-                    )
-                      : (
+                    }
+                    key="3"
+                  >
+                    <div className="col-10 border-0 bg-white p-5 mx-auto">
+                      {projectstatus == 5 ? (
                         <>
+
+                          <div class="mt-3 mb-3 d-grid">
+                            <label>PT Remarks </label>
+
+                            <ReactQuill
+                              theme="snow"
+                              value={ptremarks}
+                              onChange={handlePtRemarksChange}
+                            />
+                          </div>
+                          <button
+                            className="btn btn-outline-primary mt-5"
+                            onClick={handleSubmitPtToSales}
+                          >
+                            Forward to Sales
+                          </button>
+                        </>
+                      ) : (projectstatus == 6 && designation_id == 5) ? (
+                        <>
+                          <div class="mt-3 mb-3 d-grid">
+                            <label>PT Remarks </label>
+                            <ReactQuill
+                              theme="snow"
+                              value={ptremarks}
+                              // onChange={handlePtRemarksChange}
+                              modules={{ toolbar: false }}
+                              readOnly={true}
+
+                              dangerouslySetInnerHTML={{ __html: ptremarks }}
+                            />
+
+                          </div>
+                          <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                            <label>Sales Remarks </label>
+
+                            <ReactQuill theme="snow" value={stremarks} onChange={handleStRemarksChange} />
+                          </div>
+                          <button
+                            className="btn btn-outline-primary mt-5"
+                            onClick={handleForwardClient}
+                          >
+                            Forward to Client
+                          </button>
+                        </>
+                      ) : (projectstatus == 6) ? (
+                        <>
+                          <div class="mt-3 mb-3 d-grid">
+                            <label>PT Remarks </label>
+
+                            <ReactQuill
+                              theme="snow"
+                              value={ptremarks}
+                              // onChange={handlePtRemarksChange}
+                              modules={{ toolbar: false }}
+                              readOnly={true}
+
+                              dangerouslySetInnerHTML={{ __html: ptremarks }}
+                            />
+                          </div>
                         </>
                       )
-                  }
+                        : (projectstatus == 7 && designation_id == 5) ? (
+                          <>
+                            <div class="mt-3 mb-3 d-grid">
+                              <label>PT Remarks </label>
+                              <ReactQuill
+                                theme="snow"
+                                value={ptremarks}
+                                // onChange={handlePtRemarksChange}
+                                modules={{ toolbar: false }}
+                                readOnly={true}
+
+                                dangerouslySetInnerHTML={{ __html: ptremarks }}
+                              />
+                            </div>
+                            <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                              <label>Sales Remarks </label>
+                              <ReactQuill
+                                theme="snow"
+                                value={stremarks}
+                                // onChange={handlePtRemarksChange}
+                                modules={{ toolbar: false }}
+                                readOnly={true}
+
+                                dangerouslySetInnerHTML={{ __html: stremarks }}
+                              />
+                            </div>
+                            <form encType="multipart/form-data" onSubmit={handleUploadSignedContract}>
+                              <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                                <label>Upload Signed Contract </label>
+                                <FileUploader handleChange={handleFileChange} name="signed_contract" types={fileTypes}
+                                  mutiple={false} />
+                                <span>
+                                  {file && `file name : ${file.name}`}
+                                </span>
+
+                              </div>
+                              <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
+                                <label>Add Remarks </label>
+
+                                <ReactQuill theme="snow" value={contractremarks} onChange={handleContractRemarksChange} />
+                              </div>
+                              <button
+                                className="btn btn-outline-primary mt-5"
+                                // onClick={handleUploadSignedContract}
+                                type="submit"
+                              >
+                                Submit
+                              </button>
+                            </form>
+
+                          </>
+                        ) : (projectstatus == 8 && designation_id == 5) ? (
+                          <>
+                            <div class="mt-3 mb-3 d-grid">
+                              <label>PT Remarks </label>
+                              <ReactQuill
+                                theme="snow"
+                                value={ptremarks}
+                                // onChange={handlePtRemarksChange}
+                                modules={{ toolbar: false }}
+                                readOnly={true}
+
+                                dangerouslySetInnerHTML={{ __html: ptremarks }}
+                              />
+                            </div>
+                            <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                              <label>Sales Remarks </label>
+                              <ReactQuill
+                                theme="snow"
+                                value={stremarks}
+                                onChange={handlePtRemarksChange}
+                                modules={{ toolbar: false }}
+                                readOnly={true}
+
+                                dangerouslySetInnerHTML={{ __html: stremarks }}
+                              />
+                            </div>
+                            <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                              <label>Uploaded Signed Contract </label>
+                              <p className="mt-3"><a href={signedFileName} target="_blank" rel="noopener noreferrer" style={{ color: "green" }}>{file}</a></p>
+
+                            </div>
+                            <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
+                              <label>Add Remarks </label>
+                              <ReactQuill
+                                theme="snow"
+                                value={contractremarks}
+                                // onChange={handlePtRemarksChange}
+                                modules={{ toolbar: false }}
+                                readOnly={true}
+
+                                dangerouslySetInnerHTML={{ __html: contractremarks }}
+                              />
+                              {/* <ReactQuill theme="snow" value={contractremarks} onChange={setValue} /> */}
+                            </div>
+                          </>
+                        )
+                          : (
+                            <>
+                            </>
+                          )
+                      }
+                    </div>
+                  </Tabs.TabPane>
+                </>
+              ) : (
+                <></>
+              )}
+              {/* Summary tab (4) */}
+              <Tabs.TabPane
+                tab={
+                  <div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
+                    <p>Summary</p>
+                  </div>
+                }
+                key="4"
+              >
+                <div className="col-10 border-0 bg-white p-5 mx-auto">
+                  <Summary proposalId={projectid} />
                 </div>
               </Tabs.TabPane>
-                </>
-              ):(
-                <></> 
-              )}
-             {/* Summary tab (4) */}
-							<Tabs.TabPane
-								tab={
-									<div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
-										<p>Summary</p>
-									</div>
-								}
-								key="4"
-							>
-								<div className="col-10 border-0 bg-white p-5 mx-auto">
-									<Summary proposalId={projectid} />
-								</div>
-							</Tabs.TabPane>
             </Tabs>
           </div>
         </div>

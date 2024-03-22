@@ -112,7 +112,7 @@
 }
 
 .stat_text {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
 }
 
@@ -121,7 +121,23 @@
   justify-content: center;
   margin-top: 16px; /* Adjust as needed */
 }
+/* sm screen */
+@media only screen and (max-width: 415px) {
+  .tab_dashboard_size {
+    height: 90px;
+    width: 90px;
+  } 
 
+  .font14px{
+    font-size: 8px;
+  }
+  .iconcolor{
+    display: none;
+  }
+  .stat_text{
+    font-size: 10px;
+  }
+}
 
  /* md screen  */
 @media (min-width: 420px) and (max-width: 920px) {

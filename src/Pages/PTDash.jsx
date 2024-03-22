@@ -13,7 +13,7 @@ const { Option } = Select;
 export default function PTDash({ callApi, openClientEdit }) {
 
   // let [totalclients, setTotalClients] = useState(0);
-  const [approvedProposal, setApprovedProposal] = useState(0);
+  const [status5, setStatus5] = useState(0);
   let [status0, setStatus0] = useState(0);
   let [status1, setStatus1] = useState(0);
   let [status3, setStatus3] = useState(0);
@@ -21,7 +21,7 @@ export default function PTDash({ callApi, openClientEdit }) {
 
   let [clientData, setClientData] = useState([]);
   let [proposalList, setProposalList] = useState([]);
-  let [approvedProposalList, setApprovedProposalList] = useState([]);
+  // let [approvedProposalList, setApprovedProposalList] = useState([]);
   let [proposal_status, setProposalStatus] = useState(0);
 
   const [pagination, setPagination] = useState({
@@ -38,7 +38,6 @@ export default function PTDash({ callApi, openClientEdit }) {
 
   let [clientLoad, SetClientLoad] = useState(false);
   let [proposalLoad, SetProposalLoad] = useState(false);
-  let [approvedproposalLoad, SetApprovedProposalLoad] = useState(false);
 
   const getDashData = async () => {
 
@@ -48,7 +47,7 @@ export default function PTDash({ callApi, openClientEdit }) {
         API_HEADER);
       const dashboard = result.data.dashboard;
 
-      setApprovedProposal(dashboard.status5);
+      setStatus5(dashboard.status5);
       setStatus0(dashboard.status0);
       setStatus1(dashboard.status1);
       setStatus3(dashboard.status3);
@@ -123,36 +122,36 @@ export default function PTDash({ callApi, openClientEdit }) {
   }
 
 
-  const getApprovedProposalListData = async () => {
+  // const getApprovedProposalListData = async () => {
 
-    try {
+  //   try {
 
-      let payload = {
-        status: proposal_status,
-        page: pagination1.current,
-        limit: pagination1.pageSize,
-        country: country ? country : null,
-        client_id: client_id ? client_id : null,
-        region: region ? region : null,
-        scope: scope ? scope : null
-      }
-      const response = await axios.post(`${getAllProposals}`, payload, API_HEADER);
-      setApprovedProposalList(response.data.data);
+  //     let payload = {
+  //       status: proposal_status,
+  //       page: pagination1.current,
+  //       limit: pagination1.pageSize,
+  //       country: country ? country : null,
+  //       client_id: client_id ? client_id : null,
+  //       region: region ? region : null,
+  //       scope: scope ? scope : null
+  //     }
+  //     const response = await axios.post(`${getAllProposals}`, payload, API_HEADER);
+  //     setApprovedProposalList(response.data.data);
 
-      setPagination1(prevPagination => ({
-        ...prevPagination,
-        total: response.data.count,
-      }));
+  //     setPagination1(prevPagination => ({
+  //       ...prevPagination,
+  //       total: response.data.count,
+  //     }));
 
-      SetApprovedProposalLoad(false);
+  //     SetApprovedProposalLoad(false);
 
-    }
-    catch (error) {
-      console.log(error)
-    }
+  //   }
+  //   catch (error) {
+  //     console.log(error)
+  //   }
 
-  }
-  
+  // }
+
 
   useEffect(() => {
     getDashData();
@@ -180,23 +179,24 @@ export default function PTDash({ callApi, openClientEdit }) {
     }));
 
     if (key == 1) {
-      SetClientLoad(true);
-    }
-    else if (key == 2) {
       setProposalStatus(0);
       SetProposalLoad(true);
     }
-    else if (key == 3) {
+    else if (key == 2) {
       setProposalStatus(1);
       SetProposalLoad(true);
-    } else if (key == 4) {
+    } else if (key == 3) {
       setProposalStatus(3);
       SetProposalLoad(true);
+    }
+    else if (key == 4) {
+      setProposalStatus(5);
+      SetProposalLoad(true);
+
     } else if (key == 5) {
       setProposalStatus(6);
       SetProposalLoad(true);
     }
-
   };
 
   useEffect(() => {
@@ -207,9 +207,9 @@ export default function PTDash({ callApi, openClientEdit }) {
     getProposalListData();
   }, [proposalLoad])
 
-  useEffect(() => {
-    getApprovedProposalListData();
-  }, [approvedproposalLoad])
+  // useEffect(() => {
+  //   getApprovedProposalListData();
+  // }, [approvedproposalLoad])
 
 
   // const handleTableChange = (pagination, filters, sorter) => {
@@ -223,11 +223,7 @@ export default function PTDash({ callApi, openClientEdit }) {
     SetProposalLoad(true);
   };
 
-  const handleTableChange2 = (pagination, filters, sorter) => {
-    setPagination1(pagination);
-    console.log(pagination)
-    SetApprovedProposalLoad(true);
-  };
+
   const [country, setCountry] = useState(null);
   const [region, setRegion] = useState(null);
   const [scope, setScope] = useState(null);
@@ -308,18 +304,23 @@ export default function PTDash({ callApi, openClientEdit }) {
     SetClientLoad(true);
   };
 
-const navigate = useNavigate();
-  const editFormForClarification = async(record) =>{
-       
-    const payload={
-      proposal_id:record.proposal_id
-    }
-      
-    const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
-    const data=response.data.record;
-    console.log(data)
+  const navigate = useNavigate();
+  const editFormForClarification = async (record) => {
 
-    navigate('/ptactions', { state: { data } })
+    const payload = {
+      proposal_id: record.proposal_id
+    }
+
+    const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
+    const data = response.data.record;
+    console.log(data)
+    // {(projectstatus <3) ? navigate('/projects', { state: { data } }) : (projectstatus == 3 || projectstatus == 4 || projectstatus == 5 )? navigate('/ptactions', { state: { data } }) :(<></>)}
+    if(proposal_status <3) {
+      navigate('/projects', { state: { data } })
+    } else if(proposal_status == 3 || proposal_status == 4 || proposal_status == 5 ) {
+      navigate('/ptactions', { state: { data } })
+    } 
+    // navigate('/ptactions', { state: { data } })
 
   }
 
@@ -467,7 +468,7 @@ const navigate = useNavigate();
       fixed: 'right',
       width: 100,
       render: (text, record) => <a className=''>
-        <EditOutlined onClick={() => editFormForClarification(record)}  style={{ marginRight: '8px', color: 'blue' }} />
+        <EditOutlined onClick={() => editFormForClarification(record)} style={{ marginRight: '8px', color: 'blue' }} />
       </a>,
     },
   ];
@@ -570,7 +571,7 @@ const navigate = useNavigate();
 
               <Tabs.TabPane
                 tab={
-                  <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
+                  <div className='border-1 borderlightgreen bg-white rounded-3 p-lg-2 p-md-1 p-1 mx-1 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
                     <p className='font14px textlightgreen text-capitalize text mt-4 text-wrap'>Proposal Under Preparation</p>
                     <p className='textcolorblue stat_text'>{status0}</p>
@@ -842,7 +843,7 @@ const navigate = useNavigate();
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faUser} size="2xl" className='iconcolor' />
                     <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Approved Proposals</p>
-                    <p className='textcolorblue stat_text' >{approvedProposal}</p>
+                    <p className='textcolorblue stat_text' >{status5}</p>
                   </div>
                 }
                 key='4'>
@@ -921,7 +922,7 @@ const navigate = useNavigate();
                         {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
 
                       </div>
-                      <Table scroll={{ x: 1500 }} columns={columnsProposalTeam} loading={approvedproposalLoad} dataSource={approvedProposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange2} />
+                      <Table scroll={{ x: 1500 }} columns={columnsProposalTeam} loading={proposalLoad} dataSource={proposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange1} />
                     </div>
                   </div>
                 </div>
@@ -1009,9 +1010,9 @@ const navigate = useNavigate();
                         {/* <Button className='mx-2' onClick={handleSearchByDateRange}>Search</Button> */}
 
                       </div>
-                      <Table 
-                      scroll={{ x: 1500 }}
-                      columns={columnsProposalsubmittedTeam} loading={proposalLoad} dataSource={proposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange1} />
+                      <Table
+                        scroll={{ x: 1500 }}
+                        columns={columnsProposalsubmittedTeam} loading={proposalLoad} dataSource={proposalList} rowKey='proposal_id' pagination={pagination1} onChange={handleTableChange1} />
                     </div>
                   </div>
                 </div>
