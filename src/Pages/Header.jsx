@@ -10,6 +10,9 @@ import logo from '../assets/logo.png';
 export default function Header() {
 
     const navigate=useNavigate();
+      
+   const designation_id=sessionStorage.getItem('designation_id');
+
 
     const logout = () => {
         sessionStorage.clear();
@@ -31,9 +34,17 @@ export default function Header() {
                     <li className="nav-item">
                       <Link className="nav-link active textgrey btnhovergrey" aria-current="page" to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="nav-item textgrey btnhovergrey">
+
+                    {
+                      designation_id==6?(
+                        <>
+                         <li className="nav-item textgrey btnhovergrey">
                       <Link className="nav-link " to="/projects">Add Proposal</Link>
                     </li>
+                        </>
+                      ):''
+                    }
+                   
                   
                     <li className="nav-item textgrey btnhovergrey">
                     <Link className="nav-link" to="/allprojects">All Proposals</Link>

@@ -32,7 +32,7 @@ export default function Login() {
                 sessionStorage.setItem('user', JSON.stringify(result.data.user));
 
                 navigate('/dashboard')
-                // window.location.reload()
+                window.location.reload()
 
             }else{
 

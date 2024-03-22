@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {FileUploader} from "react-drag-drop-files"
 import { useLocation, useNavigate } from "react-router-dom";
+import { MultiSelect } from "react-multi-select-component";
+
 import { Form, Tabs, Select, Upload, message, Input } from "antd";
 import { InboxOutlined } from '@ant-design/icons';
 import ReactQuill from 'react-quill';
@@ -20,8 +22,8 @@ import { toast } from "react-toastify";
 import { pt_tm_proposalaction_url, get_pt_forwardToSales_url, get_sales_action_url,pt_proposal_submit_url } from "../config";
 import Header from "./Header";
 // import EditorBox from '../Components/EditorBox';
-const { Dragger } = Upload;
-const fileTypes = ["JPG", "PDF", "RAR", "XLS", "XLSX", "DOC", "DOCX", "ZIP"];
+// const { Dragger } = Upload;
+const fileTypes = [ "PDF", "RAR", "DOC", "DOCX", "ZIP"];
 
 const PtActions = () => {
   const { Option } = Select;
@@ -42,6 +44,8 @@ const PtActions = () => {
   const [f23name, setF23Name] = useState(null);
   const [coiname, setCoiName] = useState(null);
   const [rfpname, setRfpName] = useState(null);
+  const [selected, setSelected] = useState([]);
+
   const [othername, setOtherName] = useState(null);
   const [action, setAction] = useState("");
   const [remarks, setRemarks] = useState("");
@@ -60,7 +64,7 @@ const PtActions = () => {
     program_id: "",
     implemented_fees: "",
     created_at: "",
-    scope: "",
+    scope: [],
     scope_pa: "",
     sectoral_scope: "",
     team_leader: "",
@@ -82,6 +86,8 @@ const PtActions = () => {
       const { data } = location.state;
       setProjectId(data.id);
 
+
+
       if (data.status > 1) {
         setAction(data.tm_action);
         setRemarks(data.tm_remarks);
@@ -93,6 +99,12 @@ const PtActions = () => {
 
       setProjectstatus(data.status);
       const scopes = data.scope.split(",").map(Number);
+			console.log(scopes, "Our scopes");
+			const filteredScopes = myscope.filter((scope) =>
+				scopes.includes(scope.value),
+			);
+			console.log(filteredScopes, "Our filtered Scopes");
+			setSelected(filteredScopes);
 
       setFormData({
         project_name: data.project_name,
@@ -103,7 +115,7 @@ const PtActions = () => {
         program_id: data.program_id,
         implemented_fees: data.implemented_fees,
         created_at: data.proposal_date,
-        scope: scopes,
+        scope: selected,
         scope_pa: data.scope_pa,
         sectoral_scope: data.sectoral_scope,
         team_leader: data.team_leader,
@@ -136,7 +148,7 @@ const PtActions = () => {
       let url6 = `${BASE_DOCUMENT}/documents/${data.earthood_id}/${data.other_doc}`;
       setOtherName(url6);
     }
-  }, [location]);
+  }, [location, myscope]);
 
   const CONFIG_Token = {
     headers: {
@@ -279,12 +291,12 @@ const PtActions = () => {
 
     try {
       const formData = new FormData();
-      formData.append("f20_doc", f20name);
-      formData.append("f21_doc", f21name);
-      formData.append("f23_doc", f23name);
-      formData.append("rfp_doc", rfpname);
-      formData.append("coi_doc", coiname);
-      formData.append("other_doc", othername);
+      formData.append("f20_doc", f20name[0]);
+      formData.append("f21_doc", f21name[0]);
+      formData.append("f23_doc", f23name[0]);
+      formData.append("rfp_doc", rfpname[0]);
+      formData.append("coi_doc", coiname[0]);
+      formData.append("other_doc", othername[0]);
 
       formData.append("proposal_id", projectid);
 
@@ -312,7 +324,7 @@ const PtActions = () => {
       let payload = {
         proposal_id: projectid,
         type: 2,
-        signed_contract:file,
+        signed_contract:file[0],
         remarks: contractremarks,
       };
       const response = await axios.post(
@@ -390,7 +402,12 @@ const PtActions = () => {
       try {
         const responsescope = await axios.get(`${get_scope_url}`);
 
-        setMyScope(responsescope.data.data);
+        setMyScope(
+					responsescope.data.data.map((scope) => ({
+						value: scope.id,
+						label: scope.sector_name,
+					})),
+				);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -446,9 +463,42 @@ const PtActions = () => {
     setFile(file);
   }
 
-  const handleFileDrop = (file) => {
-    setFile(file);
-  }
+  // const handleFileDrop = (file) => {
+  //   setFile(file);
+  // }
+
+  const handleFileF20Change = (file) => {
+		// const selectedFile = e.target.files[0];
+		setF20Name(file);
+	};
+
+	const handleFileRFPChange = (file) => {
+		// const selectedFile = e.target.files[0];
+		console.log(file);
+		setRfpName(file);
+	};
+
+	const handleFileF21Change = (file) => {
+		// const selectedFile = e.target.files[0];
+		setF21Name(file);
+	};
+
+	const handleFileF23Change = (file) => {
+		// const selectedFile = e.target.files[0];
+		setF23Name(file);
+	};
+
+	const handleFileCOIChange = (file) => {
+		// const selectedFile = e.target.files[0];
+		setCoiName(file);
+	};
+
+	const handleFileOtherChange = (file) => {
+		// const selectedFile = e.target.files[0];
+		setOtherName([...othername, file]);
+		console.log(othername);
+	};
+
 
   return (
     <>
@@ -667,34 +717,21 @@ const PtActions = () => {
                       </div>
 
                       <div className="col-4 mb-3">
-                        <label htmlFor="Scope" className="form-label">
-                          Scope<span style={{ color: "red" }}>*</span>
-                        </label>
-                        {loading ? (
-                          <p>Loading...</p>
-                        ) : (
-                          <Select
-                            mode="multiple"
-                            style={{ width: "100%" }}
-                            placeholder="Select"
-                            value={formData.scope}
-                            allowClear
-                           
-                            onChange={(selectedValues) =>
-                              setFormData({
-                                ...formData,
-                                scope: selectedValues,
-                              })
-                            }
-                          >
-                            {myscope.map((option) => (
-                              <Option key={option.id} value={option.id}>
-                                {option.sector_name}
-                              </Option>
-                            ))}
-                          </Select>
-                        )}
-                      </div>
+												<label htmlFor="Scope" className="form-label">
+													Scope<span style={{ color: "red" }}>*</span>
+												</label>
+												{loading ? (
+													<p>Loading...</p>
+												) : (
+													<MultiSelect
+														options={myscope}
+														value={selected}
+														onChange={setSelected}
+														labelledBy="Select"
+														
+													/>
+												)}
+											</div>
                     </div>
 
                     { }
@@ -1328,26 +1365,33 @@ const PtActions = () => {
                         {loading ? (
                           <p>Loading...</p>
                         ) : (
-                          <Select
-                            mode="multiple"
-                            style={{ width: "100%" }}
-                            placeholder="Select"
-                            value={formData.scope}
-                            allowClear
+                          // <Select
+                          //   mode="multiple"
+                          //   style={{ width: "100%" }}
+                          //   placeholder="Select"
+                          //   value={formData.scope}
+                          //   allowClear
+                          //   disabled
+                          //   onChange={(selectedValues) =>
+                          //     setFormData({
+                          //       ...formData,
+                          //       scope: selectedValues,
+                          //     })
+                          //   }
+                          // >
+                          //   {myscope.map((option) => (
+                          //     <Option key={option.id} value={option.id}>
+                          //       {option.sector_name}
+                          //     </Option>
+                          //   ))}
+                          // </Select>
+                          <MultiSelect
+														options={myscope}
+														value={selected}
+														onChange={setSelected}
+														labelledBy="Select"
                             disabled
-                            onChange={(selectedValues) =>
-                              setFormData({
-                                ...formData,
-                                scope: selectedValues,
-                              })
-                            }
-                          >
-                            {myscope.map((option) => (
-                              <Option key={option.id} value={option.id}>
-                                {option.sector_name}
-                              </Option>
-                            ))}
-                          </Select>
+													/>
                         )}
                       </div>
                     </div>
@@ -1919,7 +1963,17 @@ const PtActions = () => {
                           <tr>
                             <td>RFP Document</td>
                             <td>
-                              <input class="form-control" type="file" id="formRpf" accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip" />
+                            <FileUploader
+															handleChange={handleFileRFPChange}
+															// onDrop={handleDropRfp}
+															name="rfp_doc"
+															types={fileTypes}
+															multiple="false"
+															// required
+														/>
+														<span>
+															{rfpname && `File name: ${rfpname[0].name}`}
+														</span>
 
                             </td>
                             <td>
@@ -1931,7 +1985,16 @@ const PtActions = () => {
                           <tr>
                             <td>F20 Document</td>
                             <td>
-                              <input class="form-control" type="file" id="formF20" accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip" />
+                             <FileUploader
+															handleChange={handleFileF20Change}
+															name="f20_doc"
+															types={fileTypes}
+															multiple="false"
+															// required
+														/>
+														<span>
+															{f20name && `File name: ${f20name[0].name}`}
+														</span>
 
                             </td>
                             <td>
@@ -1943,8 +2006,16 @@ const PtActions = () => {
                           <tr>
                             <td>F21 Document</td>
                             <td>
-                              <input class="form-control" type="file" id="formF21" accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip" />
-
+                            <FileUploader
+															handleChange={handleFileF21Change}
+															name="f21_doc"
+															types={fileTypes}
+															multiple="false"
+															// required
+														/>
+														<span>
+															{f21name && `File name: ${f21name[0].name}`}
+														</span>
                             </td>
                             <td>
                               <a target="_blank" href={f21name}>
@@ -1955,8 +2026,16 @@ const PtActions = () => {
                           <tr>
                             <td>F23 Document</td>
                             <td>
-                              <input class="form-control" type="file" id="formF23" accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip" />
-
+                            <FileUploader
+															handleChange={handleFileF23Change}
+															name="f23_doc"
+															types={fileTypes}
+															multiple="false"
+															// required
+														/>
+														<span>
+															{f23name && `File name: ${f23name[0].name}`}
+														</span>
                             </td>
                             <td>
                               <a target="_blank" href={f23name}>
@@ -1968,8 +2047,16 @@ const PtActions = () => {
                             <td>COI Document</td>
 
                             <td>
-                              <input class="form-control" type="file" id="formcoi" accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip" />
-
+                            <FileUploader
+															handleChange={handleFileCOIChange}
+															name="coi_doc"
+															types={fileTypes}
+															multiple="false"
+															// required
+														/>
+														<span>
+															{coiname && `File name: ${coiname[0].name}`}
+														</span>
                             </td>
                             <td>
                               <a target="_blank" href={coiname}>
@@ -1983,8 +2070,16 @@ const PtActions = () => {
                             <td>Other Documents</td>
 
                             <td>
-                              <input class="form-control" type="file" id="formother" accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip" />
-
+                            <FileUploader
+															handleChange={handleFileOtherChange}
+															name="other_doc"
+															types={fileTypes}
+															multiple={true}
+															// required
+														/>
+														<span>
+															{othername && `File name: ${othername.name}`}
+														</span>
                             </td>
                             <td>
                               <a target="_blank" href={othername}>
@@ -2072,7 +2167,7 @@ const PtActions = () => {
                 </div>
               </Tabs.TabPane>
               {/* Sales Action */}
-              {designation_id == 5 || designation_id >5 ? (
+              {projectstatus == 5 || projectstatus > 5 ? (
                 <>
                  <Tabs.TabPane
                 tab={
@@ -2172,30 +2267,15 @@ const PtActions = () => {
                           dangerouslySetInnerHTML={{ __html: stremarks }}
                         />
                         </div>
+                        <form enctype="multipart/form-data" onSubmit={handleUploadSignedContract}>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Upload Signed Contract </label>
-                          <FileUploader handleChange={handleFileChange} onDrop={handleFileDrop} name="file" types={fileTypes} />
-                          {/* <Dragger
-                            className='col-6 mt-3 mb-5'
-                            multiple={false}
-                            onChange={(info) => {
-                              const { status, originFileObj } = info.file;
-                              if (status == 1) {
-                                message.success(`${info.file.name} file uploaded successfully.`);
-                                handleUpload(originFileObj);
-                              } else if (status == 0) {
-                                message.error(`${info.file.name} file upload failed.`);
-                              }
-                            }}
-                          >
-                            <div className="">
-                              <p className="ant-upload-drag-icon">
-                                <InboxOutlined />
-                              </p>
-                              <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                              <p className="ant-upload-hint">Single Upload Only.</p>
-                            </div>
-                          </Dragger> */}
+                          <FileUploader handleChange={handleFileChange} name="file" types={fileTypes}
+                           mutiple={false} />
+                           <span>
+                            {/* {file &&`file name : ${file[0].name}`} */}
+                           </span>
+                          
                         </div>
                         <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Add Remarks </label>
@@ -2204,10 +2284,13 @@ const PtActions = () => {
                         </div>
                         <button
                           className="btn btn-outline-primary mt-5"
-                          onClick={handleUploadSignedContract}
+                          // onClick={handleUploadSignedContract}
+                          type="submit"
                         >
                           Submit
                         </button>
+                        </form>
+                       
                       </>
                     ) : (projectstatus == 8 && designation_id == 5) ? (
                       <>
