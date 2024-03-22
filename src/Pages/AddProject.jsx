@@ -57,7 +57,7 @@ const AddProject = () => {
 	const [f23name, setF23Name] = useState(null);
 
 	const [rfpname, setRFPName] = useState(null);
-	const [othername, setOtherName] = useState([]);
+	const [othername, setOtherName] = useState(null);
 	const [coiname, setCoiName] = useState(null);
 
 	const [formData, setFormData] = useState({
@@ -409,7 +409,7 @@ const AddProject = () => {
 
 	const handleFileOtherChange = (file) => {
 		// const selectedFile = e.target.files[0];
-		setOtherName([...othername, file]);
+		setOtherName(file);
 		console.log(othername);
 	};
 
@@ -423,7 +423,7 @@ const AddProject = () => {
 			formData.append("f23_doc", f23name[0]);
 			formData.append("rfp_doc", rfpname[0]);
 			formData.append("coi_doc", coiname[0]);
-			formData.append("other_doc", othername);
+			formData.append("other_doc", othername[0]);
 
 			formData.append("proposal_id", projectid);
 
@@ -1311,11 +1311,11 @@ const AddProject = () => {
 															handleChange={handleFileOtherChange}
 															name="other_doc"
 															types={fileTypes}
-															multiple={true}
+															// multiple={true}
 															// required
 														/>
 														<span>
-															{othername && `File name: ${othername.name}`}
+															{othername && `File name: ${othername[0].name}`}
 														</span>
 													</td>
 												</tr>

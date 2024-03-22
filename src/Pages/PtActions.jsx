@@ -261,30 +261,30 @@ const PtActions = () => {
     }
   }
 
-  const handleUpload = async (file) => {
-    try {
-      let payload = {
-        proposal_id: projectid,
-        type: 2,
-        // remarks: contractremarks,
-      };
-      const response = await axios.post(
-        `${get_sales_action_url}`,
-        payload,
-        API_HEADER
-      );
-      if (response.status === 200 && response.data.status == 1) {
-        message.success("Remarks and file uploaded successfully");
-        setProjectId('');
-        setContractRemarks('');
-      } else {
-        message.error("Failed to submit data");
-      }
-    } catch (error) {
-      console.error("Error occurred while posting data: ", error);
-      message.error("An error occurred while adding remarks and uploading file");
-    }
-  };
+  // const handleUpload = async (file) => {
+  //   try {
+  //     let payload = {
+  //       proposal_id: projectid,
+  //       type: 2,
+  //       // remarks: contractremarks,
+  //     };
+  //     const response = await axios.post(
+  //       `${get_sales_action_url}`,
+  //       payload,
+  //       API_HEADER
+  //     );
+  //     if (response.status === 200 && response.data.status == 1) {
+  //       message.success("Remarks and file uploaded successfully");
+  //       setProjectId('');
+  //       setContractRemarks('');
+  //     } else {
+  //       message.error("Failed to submit data");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error occurred while posting data: ", error);
+  //     message.error("An error occurred while adding remarks and uploading file");
+  //   }
+  // };
 
   const handleSubmitFiles = async (e) => {
     e.preventDefault();
@@ -503,7 +503,7 @@ const PtActions = () => {
 
 	const handleFileOtherChange = (file) => {
 		// const selectedFile = e.target.files[0];
-		setOtherName([...othername, file]);
+		setOtherName(file);
 		console.log(othername);
 	};
 
@@ -2082,11 +2082,11 @@ const PtActions = () => {
 															handleChange={handleFileOtherChange}
 															name="other_doc"
 															types={fileTypes}
-															multiple={true}
+															// multiple={true}
 															// required
 														/>
 														<span>
-															{othername && `File name: ${othername.name}`}
+															{othername && `File name: ${othername[0].name}`}
 														</span>
                             </td>
                             <td>
@@ -2281,7 +2281,7 @@ const PtActions = () => {
                           <FileUploader handleChange={handleFileChange} name="signed_contract" types={fileTypes}
                            mutiple={false} />
                            <span>
-                            {/* {file &&`file name : ${file[0].name}`} */}
+                            {file &&`file name : ${file[0].name}`}
                            </span>
                           
                         </div>
