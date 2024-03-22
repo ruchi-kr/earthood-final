@@ -319,18 +319,26 @@ const PtActions = () => {
   };
 
 
-  const handleUploadSignedContract = async () => {
+  const handleUploadSignedContract = async (e) => {
+  
+    e.preventDefault();
     try {
-      let payload = {
-        proposal_id: projectid,
-        type: 2,
-        signed_contract:file[0],
-        remarks: contractremarks,
-      };
+      const formData= new FormData();
+      formData.append("proposal_id", projectid);
+      formData.append("signed_contract", file);
+      console.log(file);
+      formData.append("type", 2);
+      formData.append("remarks", contractremarks);
+      // let payload = {
+      //   proposal_id: projectid,
+      //   type: 2,
+      //   signed_contract:file[0],
+      //   remarks: contractremarks,
+      // };
       const response = await axios.post(
         `${get_sales_action_url}`,
-        payload,
-        API_HEADER
+        formData,
+        CONFIG_Token2
       );
       if (response.status === 200 && response.data.status == 1) {
         setAction("");
@@ -2267,10 +2275,10 @@ const PtActions = () => {
                           dangerouslySetInnerHTML={{ __html: stremarks }}
                         />
                         </div>
-                        <form enctype="multipart/form-data" onSubmit={handleUploadSignedContract}>
+                        <form encType="multipart/form-data" onSubmit={handleUploadSignedContract}>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Upload Signed Contract </label>
-                          <FileUploader handleChange={handleFileChange} name="file" types={fileTypes}
+                          <FileUploader handleChange={handleFileChange} name="signed_contract" types={fileTypes}
                            mutiple={false} />
                            <span>
                             {/* {file &&`file name : ${file[0].name}`} */}
