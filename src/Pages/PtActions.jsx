@@ -93,7 +93,7 @@ const PtActions = () => {
         setRemarks(data.tm_remarks);
         setPtRemarks(data.pt_remarks);
         setStRemarks(data.sales_remarks);
-        setContractRemarks(data.signed_contract);
+        setContractRemarks(data.signed_contract_remarks);
         setFile(data.signed_contract);
       }
 
@@ -2281,7 +2281,7 @@ const PtActions = () => {
                           <FileUploader handleChange={handleFileChange} name="signed_contract" types={fileTypes}
                            mutiple={false} />
                            <span>
-                            {file &&`file name : ${file[0].name}`}
+                            {file &&`file name : ${file.name}`}
                            </span>
                           
                         </div>
@@ -2328,10 +2328,10 @@ const PtActions = () => {
                         </div>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Uploaded Signed Contract </label>
-                         
+                         <p className="mt-3">{file}</p>
                         
                         </div>
-                        <div class="mt-5 mb-3 d-grid" style={{ display: "flex" }}>
+                        <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Add Remarks </label>
                           <ReactQuill
                           theme="snow"
