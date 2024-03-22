@@ -543,7 +543,7 @@ export default function TDash() {
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor  tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>proposal received</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>proposal received</p>
                     <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_received_pt}</p>
                   </div>
                 }
@@ -630,7 +630,7 @@ export default function TDash() {
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor  tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>proposal sent for clarification</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>proposal sent for clarification</p>
                     <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_sent_clarify}</p>
 
                   </div>
@@ -713,7 +713,7 @@ export default function TDash() {
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>approved proposal</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>approved proposal</p>
                     <p className='textcolorblue' style={{ fontSize: '35px' }}>{approved_proposal}</p>
                   </div>
                 }
@@ -796,7 +796,7 @@ export default function TDash() {
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-5 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileSignature} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>signed contract</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>signed contract</p>
                     <p className='textcolorblue' style={{ fontSize: '35px' }}>{signed_contract}</p>
                   </div>
                 }

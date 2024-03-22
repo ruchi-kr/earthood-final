@@ -68,10 +68,12 @@
   border-radius: 14px;
 }
 
-.tab_dashboard_size {
-  height: 159px;
-  width: 250px;
-}
+/* .tab_dashboard_size {
+  height: 180px;
+  /* width: 100%; */
+  /* height: 50%; */
+  /* width: 150px; */
+/* } */
 .otpinput::-webkit-inner-spin-button,
 .otpinput::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -118,4 +120,31 @@
   display: flex;
   justify-content: center;
   margin-top: 16px; /* Adjust as needed */
+}
+
+
+ /* md screen  */
+@media (min-width: 420px) and (max-width: 920px) {
+  .tab_dashboard_size {
+    height: 200px;
+    width: 100px;
+  } 
+}
+
+/* nest hub screen*/
+@media (min-width: 1020px) and (max-width: 1250px){
+  .tab_dashboard_size {
+    height: 159px;
+    width: 280px;
+  } 
+  
+}
+/* lg screen  */
+@media only screen and (min-width: 950px) {
+  .tab_dashboard_size {
+    height: 180px;
+    /* width: 100%; */
+    /* height: 50%; */
+    width: 150px;
+  }  
 }

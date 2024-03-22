@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {FileUploader} from "react-drag-drop-files"
 import { useLocation, useNavigate } from "react-router-dom";
 import { MultiSelect } from "react-multi-select-component";
+import Summary from "../Components/Summary";
 
 import { Form, Tabs, Select, Upload, message, Input } from "antd";
 import { InboxOutlined } from '@ant-design/icons';
@@ -19,8 +20,9 @@ import { get_program_url } from "../config";
 import { get_country_url } from "../config";
 import { get_assesment_url } from "../config";
 import { toast } from "react-toastify";
-import { pt_tm_proposalaction_url, get_pt_forwardToSales_url, get_sales_action_url,pt_proposal_submit_url } from "../config";
+import { pt_tm_proposalaction_url, get_pt_forwardToSales_url, get_sales_action_url,pt_proposal_submit_url,proposal_summary_url } from "../config";
 import Header from "./Header";
+
 // import EditorBox from '../Components/EditorBox';
 // const { Dragger } = Upload;
 const fileTypes = [ "PDF", "RAR", "DOC", "DOCX", "ZIP"];
@@ -521,7 +523,7 @@ const PtActions = () => {
         <div className="row">
           <div className="col-12">
             <h2 className="text-center textcolorblue fw-bolder p-2 text-capitalize bg-light">
-              project details
+              proposal details
             </h2>
             <Tabs
               defaultActiveKey="1"
@@ -531,8 +533,8 @@ const PtActions = () => {
             >
                 <Tabs.TabPane
                 tab={
-                  <div className="border-0 shadow-lg textlightgreen rounded-0 px-5 py-2 text-center">
-                    <p>Project Details</p>
+                  <div className="border-0 shadow-sm textlightgreen rounded-0 px-5 py-2 text-center">
+                    <p>Proposal Details</p>
                   </div>
                 }
                 key="1"
@@ -545,7 +547,7 @@ const PtActions = () => {
                     <div className="row">
                       <div className="col-4 mb-3">
                         <label htmlFor="projectname" className="form-label">
-                          Project Name<span style={{ color: "red" }}>*</span>
+                          Proposal Name<span style={{ color: "red" }}>*</span>
                         </label>
                         <input
                           type="text"
@@ -1940,18 +1942,19 @@ const PtActions = () => {
                         ></textarea>
                       </div>
                       <button
-                        className="btn btn-outline-primary"
-                        onClick={handleApproved}
-                      >
-                        Submit
-                      </button>
+                                className="btn btn-outline-primary"
+                                onClick={handleApproved}
+                                style={{display:'none' }}
+                              >
+                                Submit
+                              </button>
                     </>
                   )}
                 </div>
               </Tabs.TabPane>
               <Tabs.TabPane
                 tab={
-                  <div className="border-0 shadow-lg textlightgreen rounded-0 px-5 py-2 text-center">
+                  <div className="border-0 shadow-sm textlightgreen rounded-0 px-5 py-2 text-center">
                     <p>Attachment</p>
                   </div>
                 }
@@ -2334,7 +2337,7 @@ const PtActions = () => {
                         </div>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
                           <label>Uploaded Signed Contract </label>
-                         <p className="mt-3">{file}<a href={signedFileName} target="_blank" rel="noopener noreferrer" style={{color:"green"}}>Download</a></p>
+                         <p className="mt-3"><a href={signedFileName} target="_blank" rel="noopener noreferrer" style={{color:"green"}}>{file}</a></p>
                         
                         </div>
                         <div class="mt-3 mb-3 d-grid" style={{ display: "flex" }}>
@@ -2363,7 +2366,19 @@ const PtActions = () => {
               ):(
                 <></> 
               )}
-             
+             {/* Summary tab (4) */}
+							<Tabs.TabPane
+								tab={
+									<div className="border-0 textlightgreen shadow-sm rounded-0 px-5 py-2 text-center">
+										<p>Summary</p>
+									</div>
+								}
+								key="4"
+							>
+								<div className="col-10 border-0 bg-white p-5 mx-auto">
+									<Summary proposalId={projectid} />
+								</div>
+							</Tabs.TabPane>
             </Tabs>
           </div>
         </div>

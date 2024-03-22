@@ -504,7 +504,7 @@ export default function SDash() {
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>Proposal received</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Proposal received</p>
                     <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_received_pt}</p>
                   </div>
                 }
@@ -602,7 +602,7 @@ export default function SDash() {
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor  tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>Proposal under negotiation</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Proposal under negotiation</p>
                     <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_under_nego}</p>
 
                   </div>
@@ -700,7 +700,7 @@ export default function SDash() {
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>Signed contract</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Signed contract</p>
                     <p className='textcolorblue' style={{ fontSize: '35px' }}>{signed_contract}</p>
                   </div>
                 }

@@ -409,9 +409,10 @@ const navigate = useNavigate();
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>EId</span>,
       fixed: 'left',
       dataIndex: 'earthood_id',
+      width: 120,
     },
     {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Project Name</span>,
+      title: <span className='text-capitalize textcolumntitle font14px fw-bold text-truncate'>Project Name</span>,
       render: (text, record) => {
         return (
           <span className='text-capitalize textcolor font14px fw-bold'>{record.project_name}</span>
@@ -446,6 +447,7 @@ const navigate = useNavigate();
     // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
+      // width:120,
       render: (text, record) => {
         if (record.country) {
           return (
@@ -494,10 +496,11 @@ const navigate = useNavigate();
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>EId</span>,
       fixed: 'left',
       dataIndex: 'earthood_id',
+      width: 120,
     },
 
     {
-      title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Project Name</span>,
+      title: <span className='text-capitalize textcolumntitle font14px fw-bold text-truncate'>Project Name</span>,
       render: (text, record) => {
         return (
           <span className='text-capitalize textcolor font14px fw-bold'>{record.project_name}</span>
@@ -532,6 +535,7 @@ const navigate = useNavigate();
     // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
+      width: 100,
       render: (text, record) => {
         if (record.country) {
           return (
@@ -568,11 +572,11 @@ const navigate = useNavigate();
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize text mt-4'>Proposal Under Preparation</p>
+                    <p className='font14px textlightgreen text-capitalize text mt-4 text-wrap'>Proposal Under Preparation</p>
                     <p className='textcolorblue stat_text'>{status0}</p>
                   </div>
                 }
-                key='2'>
+                key='1'>
 
                 <div className='container-fluid'>
                   <div className="row mx-0">
@@ -656,11 +660,11 @@ const navigate = useNavigate();
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize text mt-4'>Proposal Under Approval</p>
+                    <p className='font14px textlightgreen text-capitalize text mt-4 text-wrap'>Proposal Under Approval</p>
                     <p className='textcolorblue stat_text'>{status1}</p>
                   </div>
                 }
-                key='3'>
+                key='2'>
 
                 <div className='container-fluid'>
                   <div className="row mx-0">
@@ -747,12 +751,12 @@ const navigate = useNavigate();
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
 
-                    <p className='font14px textlightgreen text-capitalize mt-4'>Proposal Under Modification</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Proposal Under Modification</p>
                     <p className='textcolorblue stat_text' >{status3}</p>
 
                   </div>
                 }
-                key='4'>
+                key='3'>
 
                 <div className='container-fluid'>
                   <div className="row mx-0">
@@ -837,11 +841,11 @@ const navigate = useNavigate();
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faUser} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>Approved Proposals</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Approved Proposals</p>
                     <p className='textcolorblue stat_text' >{approvedProposal}</p>
                   </div>
                 }
-                key='1'>
+                key='4'>
 
                 <div className='container-fluid'>
                   <div className="row mx-0">
@@ -926,7 +930,7 @@ const navigate = useNavigate();
                 tab={
                   <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4'>Proposal Submitted to Sales</p>
+                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Proposal Submitted to Sales</p>
                     <p className='textcolorblue stat_text' >{status6}</p>
                   </div>
                 }

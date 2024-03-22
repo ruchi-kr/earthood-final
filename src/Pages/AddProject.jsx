@@ -423,7 +423,7 @@ const AddProject = () => {
 			formData.append("f23_doc", f23name[0]);
 			formData.append("rfp_doc", rfpname[0]);
 			formData.append("coi_doc", coiname[0]);
-			formData.append("other_doc", othername[0]);
+			formData.append("other_doc", othername);
 
 			formData.append("proposal_id", projectid);
 

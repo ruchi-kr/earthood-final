@@ -39,7 +39,7 @@ const AllProjects = () => {
 		const data = response.data.record;
 		// console.log(data)
 
-		navigate("/ptactions", { state: { data } });
+		navigate("/projects", { state: { data } });
 	};
 
 	const columns = [
