@@ -1,4 +1,5 @@
 import { Input, Table, Tabs, Tag, Select } from 'antd'
+// import '../Dash.css'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 // import groupicon from '../assets/Group 4.png'
@@ -122,36 +123,7 @@ export default function PTDash({ callApi, openClientEdit }) {
   }
 
 
-  // const getApprovedProposalListData = async () => {
-
-  //   try {
-
-  //     let payload = {
-  //       status: proposal_status,
-  //       page: pagination1.current,
-  //       limit: pagination1.pageSize,
-  //       country: country ? country : null,
-  //       client_id: client_id ? client_id : null,
-  //       region: region ? region : null,
-  //       scope: scope ? scope : null
-  //     }
-  //     const response = await axios.post(`${getAllProposals}`, payload, API_HEADER);
-  //     setApprovedProposalList(response.data.data);
-
-  //     setPagination1(prevPagination => ({
-  //       ...prevPagination,
-  //       total: response.data.count,
-  //     }));
-
-  //     SetApprovedProposalLoad(false);
-
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //   }
-
-  // }
-
+  
 
   useEffect(() => {
     getDashData();
@@ -207,15 +179,7 @@ export default function PTDash({ callApi, openClientEdit }) {
     getProposalListData();
   }, [proposalLoad])
 
-  // useEffect(() => {
-  //   getApprovedProposalListData();
-  // }, [approvedproposalLoad])
 
-
-  // const handleTableChange = (pagination, filters, sorter) => {
-  //   setPagination(pagination);
-  //   SetClientLoad(true);
-  // };
 
   const handleTableChange1 = (pagination, filters, sorter) => {
     setPagination1(pagination);
@@ -314,86 +278,14 @@ export default function PTDash({ callApi, openClientEdit }) {
     const response = await axios.post(`${get_proposal_detail_url}`, payload, API_HEADER)
     const data = response.data.record;
     console.log(data)
-    // {(projectstatus <3) ? navigate('/projects', { state: { data } }) : (projectstatus == 3 || projectstatus == 4 || projectstatus == 5 )? navigate('/ptactions', { state: { data } }) :(<></>)}
     if(proposal_status <3) {
       navigate('/projects', { state: { data } })
     } else if(proposal_status == 3 || proposal_status == 4 || proposal_status == 5 ) {
       navigate('/ptactions', { state: { data } })
     } 
-    // navigate('/ptactions', { state: { data } })
 
   }
 
-  // const columnsClientListing = [
-  //   {
-  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
-  //     dataIndex: 'id',
-  //     fixed: 'left',
-  //     width: 70,
-  //     render: (text, record, index) => {
-  //       const pageIndex = (pagination.current - 1) * pagination.pageSize;
-  //       return pageIndex + index + 1;
-  //     },
-  //   },
-  //   {
-  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Client Name</span>,
-  //     render: (text, record) => {
-  //       return (
-  //         <span className='text-capitalize  font14px'>{record.name}</span>
-  //       );
-  //     }
-  //   },
-  //   {
-  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Person</span>,
-  //     dataIndex: 'contact_person',
-  //   },
-  //   {
-  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Regions</span>,
-  //     render: (text, record) => {
-  //       return (
-  //         <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.region}</span>
-  //       );
-  //     }
-  //   },
-  //   {
-  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
-  //     render: (text, record) => {
-  //       return (
-  //         <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.country}</span>
-  //       );
-  //     }
-  //   },
-
-  //   // {
-  //   //   title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Contact Details</span>,
-  //   //   render: (text, record) => (
-  //   //     <span className='lh-1'>
-  //   //       <p className='textcolorblue'>{record.contact_email}</p>
-  //   //       <p className='textlightgreen'>{record.contact_mobile}</p>
-  //   //     </span>
-  //   //   )
-  //   // },
-  //   {
-  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Status</span>,
-  //     render: (text, record) => {
-  //       let color = record.status === 1 ? "green" : "volcano";
-  //       return (
-  //         <Tag className='px-4 py-2 rounded-5 font12px fw-bold' color={color}>{record.status_msg}</Tag>
-  //       );
-  //     }
-  //   },
-  //   {
-  //     title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Action</span>,
-  //     dataIndex: '',
-  //     key: 'x',
-  //     fixed: 'right',
-  //     width: 100,
-  //     render: (text, record) => <a className=''>
-  //       <EditOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => openClientEdit(record.id, 1)} />
-  //       <EyeOutlined style={{ color: 'red' }} onClick={() => openClientEdit(record.id, 2)} />
-  //     </a>,
-  //   },
-  // ];
 
   const columnsProposalTeam = [
     {
@@ -565,15 +457,15 @@ export default function PTDash({ callApi, openClientEdit }) {
     <>
 
       <div className='container-fluid'>
-        <div className="row mx-2">
+        <div className="row mx-lg-2 mx-md-1 mx-sm-1 mx-0">
           <div className="col-12">
             <Tabs defaultActiveKey='1' centered activeKey={activeKey} onChange={handleTabChange}>
 
               <Tabs.TabPane
                 tab={
-                  <div className='border-1 borderlightgreen bg-white rounded-3 p-lg-2 p-md-1 p-1 mx-1 text-center tabactivecolor tab_dashboard_size'>
+                  <div className='border-1 borderlightgreen bg-white rounded-3 p-lg-2 p-md-1 p-sm-1 mx-lg-2 mx-md-1 mx-sm-0 mx-0 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize text mt-4 text-wrap'>Proposal Under Preparation</p>
+                    <p className='font14px textlightgreen text-capitalize mt-lg-4 mt-md-2 mt-sm-2 mt-2 text-wrap'>Proposal Under Preparation</p>
                     <p className='textcolorblue stat_text'>{status0}</p>
                   </div>
                 }
@@ -583,12 +475,10 @@ export default function PTDash({ callApi, openClientEdit }) {
                   <div className="row mx-0">
                     <div className="col-12 border-2 border border-light-subtle p-0 rounded-3">
                       <div className="d-flex justify-content-between align-items-center py-4 px-0 bg-white border-0 shadow-sm rounded-top-3">
-                        {/* Date Range Picker */}
-
-
+                        
                         {/* Filter by Client Name onChange={handleClientNameSearch}*/}
-                        <div className='d-flex mx-3'>
-                          <div className='d-grid mb-3 mx-3'>
+                        <div className='d-flex'>
+                          <div className='d-grid mb-3 mx-lg-3 mx-md-1'>
                             <label className='text-capitalize textcolumntitle font14px fw-bold'>Client Name </label>
                             <Select
                               showSearch
@@ -607,7 +497,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                             </Select>
                           </div>
                           {/* Filter by Country  onChange={handleCountrySearch}  */}
-                          <div className='d-grid mb-3 mx-3'>
+                          <div className='d-grid mb-3 mx-lg-3 mx-md-1  col-2'>
                             <label className='text-capitalize textcolumntitle font14px fw-bold'>Country </label>
                             <Select
                               showSearch
@@ -625,7 +515,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                               ))}
                             </Select>
                           </div>
-                          <div className='d-grid mb-3 mx-3'>
+                          <div className='d-grid mb-3 mx-lg-3 mx-md-1 col-2'>
                             <label className='text-capitalize textcolumntitle font14px fw-bold'>Scope </label>
                             <Select
                               showSearch
@@ -644,7 +534,7 @@ export default function PTDash({ callApi, openClientEdit }) {
                             </Select>
                           </div>
                         </div>
-                        <div className='d-grid mb-3 me-3'>
+                        <div className='d-grid mb-3 me-lg-3 col-2' >
                           <label className='text-capitalize textcolumntitle font14px fw-bold'>Search </label>
                           <Input.Search allowClear />
                         </div>
@@ -659,9 +549,9 @@ export default function PTDash({ callApi, openClientEdit }) {
               </Tabs.TabPane>
               <Tabs.TabPane
                 tab={
-                  <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
+                  <div className='border-1 borderlightgreen bg-white rounded-3 p-lg-2 p-md-1 p-sm-1 mx-lg-2 mx-md-1 mx-sm-0 mx-0 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileArrowDown} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize text mt-4 text-wrap'>Proposal Under Approval</p>
+                    <p className='font14px textlightgreen text-capitalize text-center mt-lg-4 mt-md-2 mt-sm-2 mt-2 text-wrap'>Proposal Under Approval</p>
                     <p className='textcolorblue stat_text'>{status1}</p>
                   </div>
                 }
@@ -749,10 +639,10 @@ export default function PTDash({ callApi, openClientEdit }) {
 
               <Tabs.TabPane
                 tab={
-                  <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
+                  <div className='border-1 borderlightgreen bg-white rounded-3 p-lg-2 p-md-1 p-sm-1 mx-lg-2 mx-md-1 mx-sm-0 mx-0 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleQuestion} size="2xl" className='iconcolor' />
 
-                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Proposal Under Modification</p>
+                    <p className='font14px textlightgreen text-capitalize text-center mt-lg-4 mt-md-2 mt-sm-2 mt-2 text-wrap'>Proposal Under Modification</p>
                     <p className='textcolorblue stat_text' >{status3}</p>
 
                   </div>
@@ -840,10 +730,10 @@ export default function PTDash({ callApi, openClientEdit }) {
               </Tabs.TabPane>
               <Tabs.TabPane
                 tab={
-                  <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
+                  <div className='border-1 borderlightgreen bg-white rounded-3 p-lg-2 p-md-1 p-sm-1 mx-lg-2 mx-md-1 mx-sm-0 mx-0 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faUser} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Approved Proposals</p>
-                    <p className='textcolorblue stat_text' >{status5}</p>
+                    <p className='font14px textlightgreen text-capitalize text-center mt-lg-4 mt-md-2 mt-sm-2 mt-2 text-wrap'>Approved Proposals</p>
+                    <p className='textcolorblue stat_text'>{status5}</p>
                   </div>
                 }
                 key='4'>
@@ -929,9 +819,9 @@ export default function PTDash({ callApi, openClientEdit }) {
               </Tabs.TabPane>
               <Tabs.TabPane
                 tab={
-                  <div className='border-1 borderlightgreen bg-white rounded-3 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
+                  <div className='border-1 borderlightgreen bg-white rounded-3 p-lg-2 p-md-1 p-sm-1 mx-lg-2 mx-md-1 mx-sm-0 mx-0 text-center tabactivecolor tab_dashboard_size'>
                     <FontAwesomeIcon icon={faFileCircleCheck} size="2xl" className='iconcolor' />
-                    <p className='font14px textlightgreen text-capitalize mt-4 text-wrap'>Proposal Submitted to Sales</p>
+                    <p className='font14px textlightgreen text-capitalize mt-lg-4 mt-md-2 mt-sm-2 mt-2 text-wrap'>Proposal Submitted to Sales</p>
                     <p className='textcolorblue stat_text' >{status6}</p>
                   </div>
                 }

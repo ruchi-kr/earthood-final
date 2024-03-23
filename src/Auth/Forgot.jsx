@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+// import '../App.css'
 import axios from 'axios'
 import { Button, Form, Input, Modal } from 'antd';
 import { toast } from 'react-toastify';
@@ -18,6 +19,7 @@ export default function Forgot() {
 
   let navigate=useNavigate();
 
+  // send otp function
   const sendOtp = (event) => {
     event.preventDefault();
 
@@ -47,6 +49,7 @@ export default function Forgot() {
   
   }
 
+  // otp verification function
   const verifyotp = (event) => {
     event.preventDefault();
     const requestData = { user_id, password:newpassword, password_confirmation:confirmpassword, otp }
@@ -99,7 +102,7 @@ export default function Forgot() {
                     <img className='mb-5' width='165px' height='29px' src={logo} alt="earthoodlogo" />
                   </div>
                   <p className='text-center' style={{ fontSize: '40px', fontWeight: '700', lineHeight: '40px' }}><span className='textcolorblue'>Recover your</span><br /><span className='textcolor'>account</span></p>
-                  <p className='textgrey text-center'>Upon entering the registered email address you will receive an OTP to recover your account.</p>
+                  {/* <p className='textgrey text-center'>Upon entering the registered email address you will receive an OTP to recover your account.</p> */}
                  
                   <Form layout="vertical">
                   <Form.Item
@@ -141,6 +144,7 @@ export default function Forgot() {
                   </Form.Item>
 
                   <Form.Item
+                    className='otpinput'
                     name="otp"
                     label="Enter 4 Digit Code"
                     rules={[
@@ -154,7 +158,7 @@ export default function Forgot() {
                     ]}
                     hasFeedback
                   >
-                    <Input type="number" min="0"  maxLength={4} value={otp} onChange={(e) => setOtp(e.target.value)}/>
+                    <Input type="number" className='otpinput' min="0"  maxLength={4} value={otp} onChange={(e) => setOtp(e.target.value)}/>
                   </Form.Item>
 
 

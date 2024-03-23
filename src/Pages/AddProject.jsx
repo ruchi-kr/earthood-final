@@ -1,4 +1,5 @@
 import { Form, Select, Tabs, Upload, message } from "antd";
+import '../App.css';
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
@@ -450,33 +451,34 @@ const AddProject = () => {
 	return (
 		<>
 			<Header />
-			<div className="container-fluid bg-light">
+			<div className="container-fluid">
 				<div className="row">
 					<div className="col-12">
-						<h2 className="text-center textcolorblue fw-bolder p-2 text-capitalize bg-light">
+						<h2 className="text-center textcolorblue fw-bolder p-2 text-capitalize my-5">
 							Proposal Details
 						</h2>
 						<Tabs
 							defaultActiveKey="1"
 							activeKey={activeTab}
-							centered
+							// centered
+							className="mx-3"
 							indicator={{ Backgroundcolor: "#07B6AF" }}
-							size="large"
+							// size="large"
 						>
 							<Tabs.TabPane
 								tab={
-									<div className="border-0 shadow-lg textlightgreen rounded-0 px-5 py-2 text-center">
-										<p>Proposal Details</p>
+									<div className="border-0 textlightgreen rounded-0 px-3 py-2 text-center borderlightgreen">
+										<p className="fs-lg-4 fs-md-5 fs-6">Proposal Details</p>
 									</div>
 								}
 								key="1"
 							>
 								<form onSubmit={handleSubmit} method="POST">
-									<div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
+									<div className="col-12 border-0 p-5 mx-auto">
 										<div className="row">
-											<div className="col-4 mb-3">
-												<label htmlFor="projectname" className="form-label">
-													Project Name<span style={{ color: "red" }}>*</span>
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="projectname" className="form-label lightgreen">
+													Proposal Name<span style={{ color: "red" }}>*</span>
 												</label>
 												<input
 													type="text"
@@ -494,8 +496,8 @@ const AddProject = () => {
 													<div className="error text-danger">{error}</div>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="eid" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="eid" className="form-label lightgreen">
 													Earthood Id<span style={{ color: "red" }}>*</span>
 												</label>
 												<input
@@ -516,8 +518,8 @@ const AddProject = () => {
 													</div>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="clientname" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="clientname" className="form-label lightgreen">
 													Client Name<span style={{ color: "red" }}>*</span>
 												</label>
 												{loading ? (
@@ -550,10 +552,10 @@ const AddProject = () => {
 										</div>
 										{}
 										<div className="row">
-											<div className="col-4 mb-3">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
 												<label
 													htmlFor="country"
-													className="form-label"
+													className="form-label lightgreen"
 													required
 												>
 													Country<span style={{ color: "red" }}>*</span>
@@ -585,8 +587,8 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="Program" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="Program" className="form-label lightgreen">
 													Program<span style={{ color: "red" }}>*</span>
 												</label>
 												{loading ? (
@@ -616,8 +618,8 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="Program Id" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="Program Id" className="form-label lightgreen">
 													Program Id<span style={{ color: "red" }}>*</span>
 												</label>
 												<input
@@ -641,10 +643,10 @@ const AddProject = () => {
 										</div>
 										{}
 										<div className="row">
-											<div className="col-4 mb-3">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
 												<label
 													htmlFor="Implementation Fees"
-													className="form-label"
+													className="form-label lightgreen"
 												>
 													Implementation Fees
 													<span style={{ color: "red" }}>*</span>
@@ -667,8 +669,8 @@ const AddProject = () => {
 													</div>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="Proposal Date" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="Proposal Date" className="form-label lightgreen">
 													Proposal Date<span style={{ color: "red" }}>*</span>
 												</label>
 												<input
@@ -688,8 +690,8 @@ const AddProject = () => {
 													</div>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="Scope(PO/POA)" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="Scope(PO/POA)" className="form-label lightgreen ">
 													Scope(PO/POA)<span style={{ color: "red" }}>*</span>
 												</label>
 												<select
@@ -713,11 +715,11 @@ const AddProject = () => {
 										</div>
 
 										<div className="row">
-											<div className="col-4 mb-3">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
 												<div>
 													<label
 														htmlFor="Sectoral Scope"
-														className="form-label"
+														className="form-label lightgreen"
 													>
 														Sectoral Scope
 														<span style={{ color: "red" }}>*</span>
@@ -740,7 +742,7 @@ const AddProject = () => {
 															}
 														>
 															<option selected value={""}>
-																Sectoral Scope
+															Select Sectoral Scope
 															</option>
 															{sectoralScope.map((option) => (
 																<option key={option.id} value={option.id}>
@@ -752,8 +754,8 @@ const AddProject = () => {
 												</div>
 											</div>
 
-											<div className="col-4 mb-3">
-												<label htmlFor="Scope" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="Scope" className="form-label lightgreen">
 													Scope<span style={{ color: "red" }}>*</span>
 												</label>
 
@@ -769,11 +771,11 @@ const AddProject = () => {
 												)}
 											</div>
 
-											<div className="col-4 mb-3">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
 												<div>
 													<label
 														htmlFor="Sectoral Scope"
-														className="form-label"
+														className="form-label lightgreen"
 													>
 														SBU Head<span style={{ color: "red" }}>*</span>
 													</label>
@@ -811,13 +813,13 @@ const AddProject = () => {
 											</div>
 										</div>
 
-										<p className="textlightgreen fw-bold m-3">
+										<p className="textlightgreen fw-bold my-3 fs-5">
 											Assessment Team
 										</p>
-										<hr />
+										<hr className="mb-5 lightgreen"/>
 										<div className="row">
-											<div className="col-4 mb-3">
-												<label htmlFor="teamleader" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="teamleader" className="form-label lightgreen">
 													Team Leader<span style={{ color: "red" }}>*</span>
 												</label>
 												{loading ? (
@@ -850,8 +852,8 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="taexpert" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="taexpert" className="form-label lightgreen">
 													Select TA Expert
 													<span style={{ color: "red" }}>*</span>
 												</label>
@@ -885,8 +887,8 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="teamleader" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="teamleader" className="form-label lightgreen">
 													Local Expert<span style={{ color: "red" }}>*</span>
 												</label>
 												{loading ? (
@@ -907,7 +909,7 @@ const AddProject = () => {
 														}
 													>
 														<option selected value={""}>
-															Local Experts
+															Select Local Experts
 														</option>
 														{atlist
 															.filter((option) => option.designation_id === 8)
@@ -921,8 +923,8 @@ const AddProject = () => {
 											</div>
 										</div>
 										<div className="row">
-											<div className="col-4 mb-3">
-												<label htmlFor="financeexpert" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="financeexpert" className="form-label lightgreen">
 													Finance Expert
 												</label>
 												{loading ? (
@@ -954,8 +956,8 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div className="col-4 mb-3">
-												<label htmlFor="validator" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="validator" className="form-label lightgreen">
 													Validator
 												</label>
 												{loading ? (
@@ -988,8 +990,8 @@ const AddProject = () => {
 												)}
 											</div>
 
-											<div className="col-4 mb-3">
-												<label htmlFor="methexpert" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="methexpert" className="form-label lightgreen">
 													Meth Expert
 												</label>
 												{loading ? (
@@ -1023,8 +1025,8 @@ const AddProject = () => {
 											</div>
 										</div>
 										<div className="row">
-											<div className="col-4 mb-3">
-												<label htmlFor="taexpert" className="form-label">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
+												<label htmlFor="taexpert" className="form-label lightgreen">
 													Trainee Validator/Verifier
 												</label>
 												{loading ? (
@@ -1056,10 +1058,10 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div className="col-4 mb-3">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
 												<label
 													htmlFor="technicalreviewer"
-													className="form-label"
+													className="form-label lightgreen"
 												>
 													Technical Reviewer
 													<span style={{ color: "red" }}>*</span>
@@ -1094,10 +1096,10 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div className="col-4 mb-3">
+											<div className="col-lg-4 col-md-4 col-12 mb-3">
 												<label
 													htmlFor="technicalreviewer"
-													className="form-label"
+													className="form-label lightgreen"
 												>
 													Expert to Technical Reviewer
 													<span style={{ color: "red" }}>*</span>
@@ -1132,10 +1134,10 @@ const AddProject = () => {
 													</select>
 												)}
 											</div>
-											<div>
+											<div className="col-12 d-flex justify-content-end">
 												<button
 													type="submit"
-													className="btn btn-outline-primary"
+													className="btn btn-success mt-5" 
 												>
 													Save & Next
 												</button>
@@ -1146,39 +1148,32 @@ const AddProject = () => {
 							</Tabs.TabPane>
 							<Tabs.TabPane
 								tab={
-									<div className="border-0 shadow-lg textlightgreen rounded-0 px-5 py-2 text-center">
-										<p>Attachment</p>
+									<div className="border-0 textlightgreen rounded-0 px-3 py-2 text-center">
+										<p className="fs-lg-4 fs-md-5 fs-6">Attachment</p>
 									</div>
 								}
 								key="2"
 							>
-								<div className="col-10 border-0 bg-white shadow-sm p-5 mx-auto">
+								<div className="container">
+									<div className="row">
+									<div className="col-12 border-0 p-5 mx-auto">
 									<form
 										onSubmit={handleSubmitFiles}
 										method="POST"
 										encType="multipart/form-data"
 									>
-										<table className="table table-bordered table-responsive">
+										<table className="table table-bordered table-responsive table-hover">
 											<thead>
 												<tr>
-													<th>Document name </th>
-													<th>Select File</th>
+													<th className="text-center lightgreen p-3 fw-bolder fs-5">Document name </th>
+													<th className="text-center lightgreen p-3 fw-bolder fs-5">Select File</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td>RFP Document</td>
-													<td>
-														{/* <input
-															onDrop={handleDropRfp}
-															onDragOver={(e) => e.preventDefault()}
-															type="file"
-															id="fileInput"
-															name="rfp"
-															onChange={handleFileRFPChange}
-															accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip"
-															required
-														/> */}
+													<td className="text-center lightgreen p-3">RFP Document</td>
+													<td className="p-3">
+														
 														<FileUploader
 															handleChange={handleFileRFPChange}
 															// onDrop={handleDropRfp}
@@ -1193,18 +1188,9 @@ const AddProject = () => {
 													</td>
 												</tr>
 												<tr>
-													<td>F20 Document</td>
-													<td>
-														{/* <input
-															onDrop={handleDropF20}
-															onDragOver={(e) => e.preventDefault()}
-															type="file"
-															id="fileInput"
-															name="f20"
-															onChange={handleFileF20Change}
-															accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip"
-															required
-														/> */}
+													<td className="text-center lightgreen p-3">F20 Document</td>
+													<td className="p-3">
+														
 														<FileUploader
 															handleChange={handleFileF20Change}
 															name="f20_doc"
@@ -1218,18 +1204,9 @@ const AddProject = () => {
 													</td>
 												</tr>
 												<tr>
-													<td>F21 Document</td>
-													<td>
-														{/* <input
-															onDrop={handleDropF21}
-															onDragOver={(e) => e.preventDefault()}
-															type="file"
-															id="fileInput"
-															name="f21"
-															onChange={handleFileF21Change}
-															accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip"
-															required
-														/> */}
+													<td className="text-center lightgreen p-3">F21 Document</td>
+													<td className="p-3">
+														
 														<FileUploader
 															handleChange={handleFileF21Change}
 															name="f21_doc"
@@ -1243,18 +1220,9 @@ const AddProject = () => {
 													</td>
 												</tr>
 												<tr>
-													<td>F23 Document</td>
-													<td>
-														{/* <input
-															onDrop={handleDropF23}
-															onDragOver={(e) => e.preventDefault()}
-															type="file"
-															id="fileInput"
-															name="f23"
-															onChange={handleFileF23Change}
-															accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip"
-															required
-														/> */}
+													<td className="text-center lightgreen p-3">F23 Document</td>
+													<td className="p-3">
+														
 														<FileUploader
 															handleChange={handleFileF23Change}
 															name="f23_doc"
@@ -1268,19 +1236,10 @@ const AddProject = () => {
 													</td>
 												</tr>
 												<tr>
-													<td>COI Document</td>
+													<td className="text-center lightgreen p-3">COI Document</td>
 
-													<td>
-														{/* <input
-																onDrop={handleDropCoi}
-																onDragOver={(e) => e.preventDefault()}
-																type="file"
-																id="fileInput"
-																name="coi"
-																onChange={handleFileCOIChange}
-																accept=".jpg,.pdf,.rar,.xls,.xlsx,.doc,.docx,.zip"
-																required
-															/> */}
+													<td className="p-3">
+													
 														<FileUploader
 															handleChange={handleFileCOIChange}
 															name="coi_doc"
@@ -1295,18 +1254,10 @@ const AddProject = () => {
 												</tr>
 
 												<tr>
-													<td>Other Documents</td>
+													<td className="text-center lightgreen p-3">Other Documents</td>
 
-													<td>
-														{/* <input
-															onDrop={handleDropOther}
-															onDragOver={(e) => e.preventDefault()}
-															type="file"
-															id="fileInput"
-															name="other"
-															onChange={handleFileOtherChange}
-															accept=".jpg,.pdf,.rar,.zip,.xls,.xlsx,.doc,.docx"
-														/> */}
+													<td className="p-3">
+														
 														<FileUploader
 															handleChange={handleFileOtherChange}
 															name="other_doc"
@@ -1321,21 +1272,27 @@ const AddProject = () => {
 												</tr>
 											</tbody>
 										</table>
+										<div className="col-12 d-flex justify-content-end gap-3">
 										<button
 											onClick={handleBackToTab1}
-											className="btn btn-outline-primary"
+											className="btn btn-success mt-5"
 										>
-											Back
+											Previous
 										</button>
 										<button
-											style={{ marginLeft: "10px" }}
+											// style={{ marginLeft: "10px" }}
 											type="submit"
-											className="btn btn-outline-primary"
+											className="btn btn-success mt-5"
 										>
 											Save
 										</button>
+										</div>
+										
 									</form>
 								</div>
+									</div>
+								</div>
+							
 							</Tabs.TabPane>
 						</Tabs>
 					</div>

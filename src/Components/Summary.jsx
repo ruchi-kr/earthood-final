@@ -59,6 +59,6 @@ const Summary = ({ proposalId }) => {
 		fetchSummary();
 	}, [proposalId]);
 
-	return <Table columns={columns} dataSource={summaryData} />;
+	return <Table scroll={{ x: 1500 }} columns={columns} dataSource={summaryData} />;
 };
 export default Summary;

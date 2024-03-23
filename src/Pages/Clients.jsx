@@ -110,6 +110,8 @@ export default function PTDash({ callApi1, openClientEdits }) {
   let [clientLoad, SetClientLoad] = useState(false);
   let [proposalLoad, SetProposalLoad] = useState(false);
 
+
+
   const getDashData = async () => {
 
     try {
@@ -344,7 +346,7 @@ export default function PTDash({ callApi1, openClientEdits }) {
     SetClientLoad(true);
   };
 
-
+// columns for client listings
   const columnsClientListing = [
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>S.No</span>,
@@ -399,6 +401,7 @@ export default function PTDash({ callApi1, openClientEdits }) {
     },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Country</span>,
+      width:100,
       render: (text, record) => {
         return (
           <span className='text-capitalize textcolorgreen fw-bold p-2 rounded-4 border-0 bg_lightgreen '>{record.country}</span>
@@ -417,6 +420,7 @@ export default function PTDash({ callApi1, openClientEdits }) {
     // },
     {
       title: <span className='text-capitalize textcolumntitle font14px fw-bold'>Status</span>,
+      width:100,
       render: (text, record) => {
         let color = record.status === 1 ? "green" : "volcano";
         return (
@@ -429,7 +433,7 @@ export default function PTDash({ callApi1, openClientEdits }) {
       dataIndex: '',
       key: 'x',
       fixed: 'right',
-      width: 100,
+      width: 80,
       render: (text, record) => <a className=''>
         <EditOutlined style={{ marginRight: '8px', color: 'blue' }} onClick={() => openClientEdit(record.id, 1)} />
         <EyeOutlined style={{ color: 'red' }} onClick={() => openClientEdit(record.id, 2)} />

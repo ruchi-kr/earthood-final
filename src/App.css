@@ -1,3 +1,4 @@
+/* font family for all text */
 * {
   font-family: "Source Serif 4", serif;
   font-optical-sizing: auto;
@@ -6,12 +7,13 @@
   font-variation-settings: "slnt" 0;
 }
 
+/* for text color */
 .textcolor {
   color: #1ea74a;
 }
 .textcolorgreen {
-	color: #027a48;
-  }
+  color: #027a48;
+}
 .textlightgreen {
   color: #008c87;
 }
@@ -22,8 +24,8 @@
   background-color: white !important;
 }
 .textcolumntitle {
-	color: #475467;
-  }
+  color: #475467;
+}
 .textgrey {
   color: #515151;
 }
@@ -41,16 +43,20 @@
 .bg_lightgreen {
   background-color: #ecfdf3;
 }
+
+/* for box */
 .boxwidth {
   width: 359px;
   height: 517px;
   top: 157px;
   gap: 25px;
 }
+/* for dropdown hovering */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
+/* for border color */
 .borderlightgreen {
   border: 1px solid #07b6af;
 }
@@ -58,10 +64,21 @@
   border: 1px solid #1ea74a;
 }
 
+/* for font size */
 .font14px {
   font-size: 14px;
 }
+.font12px {
+  font-size: 12px;
+}
+.font16px {
+  font-size: 16px;
+}
+.font20px {
+  font-size: 20px;
+}
 
+/* for button hover */
 .btnhovergrey:hover {
   background-color: rgb(81, 81, 81, 0.1);
   color: #fff;
@@ -71,15 +88,18 @@
 /* .tab_dashboard_size {
   height: 180px;
   /* width: 100%; */
-  /* height: 50%; */
-  /* width: 150px; */
+/* height: 50%; */
+/* width: 150px; */
 /* } */
+
+/* for otp input */
 .otpinput::-webkit-inner-spin-button,
 .otpinput::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
+/* login page background */
 .loginbg {
   height: 100%;
   width: 100%;
@@ -100,60 +120,74 @@
       400px 0;
   }
 }
+
+/* for blur login box */
 .blurloginbox {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-.ant-tabs-tab-active .ant-tabs-tab {
+/* for active tab color */
+/* .ant-tabs-tab-active .ant-tabs-tab {
   background-color: #1890ff;
   color: #fff;
   border-color: #1890ff;
-}
+} */
 
+/* for dashboard tab counter color */
 .stat_text {
   font-size: 30px;
   font-weight: 600;
 }
 
+/* for table pagination */
 .table-pagination {
   display: flex;
   justify-content: center;
   margin-top: 16px; /* Adjust as needed */
 }
+
+/* media queries for responsive design */
 /* sm screen */
 @media only screen and (max-width: 415px) {
   .tab_dashboard_size {
-    height: 90px;
-    width: 90px;
-  } 
-
-  .font14px{
-    font-size: 8px;
+    height: 50px;
+    width: 80px;
   }
-  .iconcolor{
+
+  .font14px {
+    font-size: 5px;
+  }
+  .iconcolor {
     display: none;
   }
-  .stat_text{
-    font-size: 10px;
+  .stat_text {
+    font-size: 8px;
   }
 }
 
- /* md screen  */
+/* md screen  */
 @media (min-width: 420px) and (max-width: 920px) {
   .tab_dashboard_size {
     height: 200px;
     width: 100px;
-  } 
+  }
 }
 
 /* nest hub screen*/
-@media (min-width: 1020px) and (max-width: 1250px){
+@media (min-width: 1020px) and (max-width: 1250px) {
   .tab_dashboard_size {
     height: 159px;
+    width: 250px;
+    /* width: 284.19px; */
+  }
+}
+/* nest hub max screen */
+@media (min-width: 1250px) {
+  .tab_dashboard_size {
+    height: 180px;
     width: 280px;
-  } 
-  
+  }
 }
 /* lg screen  */
 @media only screen and (min-width: 950px) {
@@ -161,6 +195,7 @@
     height: 180px;
     /* width: 100%; */
     /* height: 50%; */
-    width: 150px;
-  }  
+    /* width: 284.19px; */
+    width: 180px;
+  }
 }

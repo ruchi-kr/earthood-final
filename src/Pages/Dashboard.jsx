@@ -168,18 +168,21 @@ export default function Dashboard() {
     
       <Header/>
      <div className="container-fluid">
-     <div className="d-flex justify-content-between align-items-center m-5 mt-4 row">
-        <div className='col-lg-6 col-md-6 col-12'>
+      <div className="row mx-lg-3 mx-md-2 mx-0">
+        <div className="col-12">
+        <div className="d-flex justify-content-between align-items-center my-4">
+        <div className=''>
           <h5 className='textcolorblue'>Welcome Back, {username}</h5>
         </div>
-        <div className="d-flex gap-2 align-items-center mx-5 col-lg-6 col-md-6 col-12 align-self-end">   
+        <div className="d-flex gap-2 align-items-center">   
          <button className='btn border-light-subtle textcolor bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
-         {designation_id==6?
+         {designation_id==6 ?
          <button className='btn border-0 btn-success text-white bg_green' style={{ fontSize: '14px' }} onClick={openClientAdd}>Add Client</button>:''
          }    
         </div>
       </div>
-
+        </div>
+      </div>
      </div>
       
       {(() => {
